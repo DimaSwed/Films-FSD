@@ -38,6 +38,7 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-router-dom": "^7.1.0",
+    "use-debounce": "^10.0.4",
     "yup": "^1.6.1"
   },
   "devDependencies": {
