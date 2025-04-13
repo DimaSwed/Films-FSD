@@ -2,11 +2,11 @@ import { FC, useEffect } from 'react'
 import { AppBar, Box, Button, CssBaseline, Stack, Typography } from '@mui/material'
 import { Link, useSearchParams } from 'react-router-dom'
 
-import { useAuth } from '@/features/auth/hooks/use-auth'
-import { useAuthStatus } from '@/features/auth/hooks/use-auth-status'
+import { useAuth } from '@/features/auth/'
+import { useAuthStatus } from '@/features/auth/'
 import { ChangeThemeButton } from '@/features/theme'
 import { SettingsButton } from '@/features/settings'
-import { SearchMovieButton } from '@/features/search-movie/ui/search-movie-button'
+import { SearchMovieButton } from '@/features/search-movie/'
 import {
   appBarStyles,
   boxStyles,

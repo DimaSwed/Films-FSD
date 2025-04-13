@@ -1,1 +1,2 @@
-export * from './header/Header'
+export * from './header/ui/header'
+export * from './sidebar/ui/sidebar'
