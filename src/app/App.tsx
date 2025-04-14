@@ -1,11 +1,21 @@
-import { Box, Typography } from '@mui/material'
+import { Outlet } from 'react-router-dom'
+import { Box } from '@mui/material'
+import { Header } from '@/widgets'
+import { Sidebar } from '@/widgets'
+import { useAuthCallbackHandler } from '@/shared/utils/use-auth-callback-handler'
 
 export function App() {
+  useAuthCallbackHandler()
+
   return (
-    <Box width="100%" minHeight="100vh" p={4} sx={{ backgroundColor: 'background.paper' }}>
-      <Typography variant="h2" align="center" gutterBottom color="primary">
-        Film SPA
-      </Typography>
-    </Box>
+    <>
+      <Header />
+      <Box sx={{ display: 'flex' }}>
+        <Box width="100%" minHeight="100vh" p={4} sx={{ backgroundColor: 'background.paper' }}>
+          <Outlet />
+        </Box>
+        <Sidebar />
+      </Box>
+    </>
   )
 }

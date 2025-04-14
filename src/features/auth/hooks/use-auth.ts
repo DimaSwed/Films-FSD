@@ -22,16 +22,20 @@ export const useAuth = () => {
     onSuccess: (data) => {
       if (data.session_id) {
         Cookies.set('session_id', data.session_id, { expires: 7 })
-        queryClient.invalidateQueries({ queryKey: ['auth-status'] })
-        navigate('/', { replace: true })
+        // queryClient.invalidateQueries({ queryKey: ['auth-status'] })
+        queryClient.invalidateQueries({ queryKey: ['session-id'] })
+        queryClient.invalidateQueries({ queryKey: ['user-details'] })
+        // navigate('/profile')
       }
     }
   })
 
   const logout = () => {
     Cookies.remove('session_id')
-    queryClient.invalidateQueries({ queryKey: ['auth-status'] })
-    navigate('/', { replace: true })
+    // queryClient.invalidateQueries({ queryKey: ['auth-status'] })
+    queryClient.invalidateQueries({ queryKey: ['session-id'] })
+    queryClient.invalidateQueries({ queryKey: ['user-details'] })
+    navigate('/')
   }
 
   return {

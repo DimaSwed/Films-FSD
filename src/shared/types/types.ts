@@ -45,3 +45,19 @@ export interface IGenreLists {
   id: number
   name: string
 }
+
+export interface IApiError extends Error {
+  response?: {
+    data?: {
+      status_code?: number
+      status_message?: string
+    }
+    status?: number
+  }
+}
+
+export interface ITMDBError {
+  status_code: number
+  status_message: string
+  success?: boolean
+}

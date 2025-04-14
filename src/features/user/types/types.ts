@@ -9,3 +9,12 @@ export interface IUserDetails {
     }
   }
 }
+
+export interface IUserDetailsResponse {
+  data: IUserDetails
+}
+
+export interface IUserDetailsError {
+  status_code: number
+  status_message: string
+}

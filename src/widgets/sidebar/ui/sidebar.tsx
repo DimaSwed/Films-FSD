@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
 import {
   List,
@@ -18,15 +19,14 @@ import {
   FeaturedVideo,
   List as ListIcon
 } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
 import { SidebarItem } from '@/widgets/sidebar/components/sidebar-item'
 import { UserSubscriptionInfo } from '@/entities/user'
 import { useSessionId } from '@/features/auth/hooks/use-session-id'
 
 export const Sidebar: FC = () => {
   const theme = useTheme()
-  const navigate = useNavigate()
   const sessionId = useSessionId()
+  // console.log(sessionId)
 
   return (
     <Stack
@@ -44,12 +44,13 @@ export const Sidebar: FC = () => {
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         {sessionId && <UserSubscriptionInfo />}
       </Box>
-
-      <Divider sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: '#444' }} />
+      {sessionId && (
+        <Divider sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: '#444' }} />
+      )}
 
       <List component="nav">
         <SidebarItem primary="Ваши данные">
-          <ListItemButton onClick={() => navigate('/profile')} sx={{ pl: { xs: 1, md: 4 } }}>
+          <ListItemButton component={Link} to="/profile" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
               <Avatar sx={{ width: 24, height: 24 }} />
             </ListItemIcon>
@@ -58,13 +59,13 @@ export const Sidebar: FC = () => {
         </SidebarItem>
 
         <SidebarItem primary="Просмотр">
-          <ListItemButton onClick={() => navigate('/movies')} sx={{ pl: { xs: 1, md: 4 } }}>
+          <ListItemButton component={Link} to="/movies" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
               <Movie />
             </ListItemIcon>
             <ListItemText primary="Фильмы" sx={{ display: { xs: 'none', md: 'block' } }} />
           </ListItemButton>
-          <ListItemButton onClick={() => navigate('/search')} sx={{ pl: { xs: 1, md: 4 } }}>
+          <ListItemButton component={Link} to="/search" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
               <Search />
             </ListItemIcon>
@@ -73,7 +74,7 @@ export const Sidebar: FC = () => {
         </SidebarItem>
 
         <SidebarItem primary="Ознакомиться">
-          <ListItemButton onClick={() => navigate('/trailers')} sx={{ pl: { xs: 1, md: 4 } }}>
+          <ListItemButton component={Link} to="/trailers" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
               <FeaturedVideo />
             </ListItemIcon>
@@ -91,10 +92,7 @@ export const Sidebar: FC = () => {
         </SidebarItem>
 
         <SidebarItem primary="Списки">
-          <ListItemButton
-            onClick={() => navigate('/add-to-watch-list')}
-            sx={{ pl: { xs: 1, md: 4 } }}
-          >
+          <ListItemButton component={Link} to="/add-to-watch-list" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
               <ListIcon />
             </ListItemIcon>

@@ -3,7 +3,7 @@ import { AppBar, Box, Button, CssBaseline, Stack, Typography } from '@mui/materi
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth/'
-import { useAuthStatus } from '@/features/auth/'
+import { useSessionId } from '@/features/auth/'
 import { ChangeThemeButton } from '@/features/theme'
 import { SettingsButton } from '@/features/settings'
 import { SearchMovieButton } from '@/features/search-movie/'
@@ -16,7 +16,8 @@ import {
 
 export const Header: FC = () => {
   const { createRequestToken, createSessionId, logout } = useAuth()
-  const { data: isAuthenticated } = useAuthStatus()
+  const sessionId = useSessionId()
+
   const [searchParams] = useSearchParams()
   const requestToken = searchParams.get('request_token')
   const approved = searchParams.get('approved')
@@ -64,7 +65,7 @@ export const Header: FC = () => {
 
           <Box component={'div'} sx={buttonContainerStyles}>
             <Stack sx={{ flexDirection: 'row', display: { xs: 'none', sm: 'flex' } }}>
-              {isAuthenticated ? (
+              {sessionId ? (
                 <Button onClick={handleLogout} sx={{ color: 'primary.contrastText' }}>
                   Выйти
                 </Button>

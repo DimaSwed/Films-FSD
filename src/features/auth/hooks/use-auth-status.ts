@@ -1,4 +1,3 @@
-// src/features/auth/hooks/use-auth-status.ts
 import { useQuery } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 
