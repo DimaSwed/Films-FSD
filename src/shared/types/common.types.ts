@@ -16,12 +16,6 @@ export interface IMovie {
   runtime?: number
 }
 
-export interface ICategory {
-  title: string
-  movies: IMovie[]
-  isLoading: boolean
-}
-
 export interface IGenre {
   id: number
   name: string

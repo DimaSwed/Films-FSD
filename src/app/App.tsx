@@ -10,10 +10,13 @@ export function App() {
   return (
     <>
       <Header />
-      <Box sx={{ display: 'flex' }}>
-        <Box width="100%" minHeight="100vh" p={4} sx={{ backgroundColor: 'background.paper' }}>
-          <Outlet />
-        </Box>
+
+      <Box
+        width="100%"
+        minHeight="100vh"
+        sx={{ backgroundColor: 'background.paper', display: 'flex' }}
+      >
+        <Outlet />
         <Sidebar />
       </Box>
     </>
