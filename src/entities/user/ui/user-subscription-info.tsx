@@ -5,7 +5,7 @@ import { useUserDetails } from '@/features/user/hooks'
 import avatar from '@/shared/assets/images/avatar.png'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth'
-import { IApiError } from '@/shared/types/types'
+import { IApiError } from '@/shared/types/common.types'
 
 export const UserSubscriptionInfo: FC = () => {
   const { data: user, isLoading, error, refetch } = useUserDetails()

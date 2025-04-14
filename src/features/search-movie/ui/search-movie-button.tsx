@@ -8,7 +8,7 @@ import { useDebounce } from 'use-debounce'
 
 import { useSearchMovies } from '@/features/search-movie/hooks/use-search-movies'
 import { getSearchHistory, setSearchHistory } from '@/features/search-movie/lib/persist-history'
-import { Movie } from '@/features/search-movie/types/types'
+import { Movie } from '@/features/search-movie/types/search.types'
 import {
   searchButtonStyles,
   searchBoxStyles,

@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { api } from '@/shared/api/tmdb/api-client'
 import { GENRES_MAP } from '@/shared/constants/constants'
-import { IMovie } from '@/shared/types/types'
-import { IMoviesResponseData } from '@/features/search-movie/types/types'
+import { IMovie } from '@/shared/types/common.types'
+import { IMoviesResponseData } from '@/features/search-movie/types/search.types'
 
 export const useSearchMovies = () => {
   return useMutation<IMoviesResponseData, Error, string>({

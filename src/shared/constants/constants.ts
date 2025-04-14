@@ -1,4 +1,4 @@
-import { YearLists, IGenreLists } from '@/shared/types/types'
+import { YearLists, IGenreLists } from '@/shared/types/common.types'
 // Массив годов
 export const YEARS_LIST: YearLists[] = [
   'до 1980',

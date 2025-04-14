@@ -3,7 +3,7 @@ import {
   // ICreateSessionRequest,
   ICreateSessionResponse,
   IRequestTokenResponse
-} from '@/features/auth/types/types'
+} from '@/features/auth/types/auth.types'
 
 export const authApi = {
   createRequestToken: async () => {

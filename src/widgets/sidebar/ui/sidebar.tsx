@@ -51,63 +51,89 @@ export const Sidebar: FC = () => {
       <List component="nav">
         <SidebarItem primary="Ваши данные">
           <ListItemButton component={Link} to="/profile" sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <Avatar sx={{ width: 24, height: 24 }} />
             </ListItemIcon>
-            <ListItemText primary="Профиль" sx={{ display: { xs: 'none', md: 'block' } }} />
+            <ListItemText
+              primary="Профиль"
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
+            />
           </ListItemButton>
         </SidebarItem>
 
         <SidebarItem primary="Просмотр">
           <ListItemButton component={Link} to="/movies" sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <Movie />
             </ListItemIcon>
-            <ListItemText primary="Фильмы" sx={{ display: { xs: 'none', md: 'block' } }} />
+            <ListItemText
+              primary="Фильмы"
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
+            />
           </ListItemButton>
           <ListItemButton component={Link} to="/search" sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <Search />
             </ListItemIcon>
-            <ListItemText primary="Поиск" sx={{ display: { xs: 'none', md: 'block' } }} />
+            <ListItemText
+              primary="Поиск"
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
+            />
           </ListItemButton>
         </SidebarItem>
 
         <SidebarItem primary="Ознакомиться">
           <ListItemButton component={Link} to="/trailers" sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <FeaturedVideo />
             </ListItemIcon>
             <ListItemText
               primary="Последние Трейлеры"
-              sx={{ display: { xs: 'none', md: 'block' } }}
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>
           <ListItemButton sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <NewReleases />
             </ListItemIcon>
-            <ListItemText primary="Новости" sx={{ display: { xs: 'none', md: 'block' } }} />
+            <ListItemText
+              primary="Новости"
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
+            />
           </ListItemButton>
         </SidebarItem>
 
         <SidebarItem primary="Списки">
           <ListItemButton component={Link} to="/add-to-watch-list" sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <ListIcon />
             </ListItemIcon>
             <ListItemText
               primary="Список к просмотру"
-              sx={{ display: { xs: 'none', md: 'block' } }}
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>
           <ListItemButton sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon sx={{ minWidth: { xs: 'auto', md: '56px' } }}>
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
               <PlaylistPlay />
             </ListItemIcon>
             <ListItemText
               primary="Список просмотренного"
-              sx={{ display: { xs: 'none', md: 'block' } }}
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>
         </SidebarItem>

@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/tmdb/api-client'
-import { IUserDetails } from '@/features/user/types/types'
+import { IUserDetails } from '@/features/user/types/user.types'
 
 export const userApi = {
   getUserDetails: async (sessionId: string): Promise<IUserDetails> => {

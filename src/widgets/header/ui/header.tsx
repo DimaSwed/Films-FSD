@@ -74,7 +74,16 @@ export const Header: FC = () => {
                   <Button onClick={handleLogin} sx={{ color: 'primary.contrastText' }}>
                     Войти
                   </Button>
-                  <Button sx={{ color: 'primary.contrastText' }}>Регистрация</Button>
+
+                  <Button
+                    component="a"
+                    href="https://www.themoviedb.org/signup"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ color: 'primary.contrastText' }}
+                  >
+                    Регистрация
+                  </Button>
                 </>
               )}
             </Stack>
