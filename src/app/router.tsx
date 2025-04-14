@@ -2,7 +2,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { NotFoundPage } from '@/pages/not-found/ui/NotFoundPage'
-import { HomePage } from '@/pages/home/ui/HomePage'
+import { HomePage } from '@/pages/home/HomePage'
+import { ProfilePage } from '@/pages/profile/ProfilePage'
 // import { MoviesPage } from '@/pages/movies'
 // import { NotFoundPage } from '@/pages/not-found'
 
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />
       }
       // {
       //   path: 'movies',
