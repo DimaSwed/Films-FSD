@@ -1,7 +1,7 @@
 import { api } from '@/shared/api/tmdb/api-client'
 import { IMovie } from '@/shared/types/common.types'
 
-export const movieApi = {
+export const moviesApi = {
   getUpcoming: async () => {
     const response = await api.get<{ results: IMovie[] }>(
       '/movie/upcoming?language=ru-RU&page=1&region=RU'

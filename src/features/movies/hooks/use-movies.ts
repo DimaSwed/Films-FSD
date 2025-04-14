@@ -1,6 +1,6 @@
 // src/features/movies/hooks/use-movies.ts
 import { useQuery } from '@tanstack/react-query'
-import { movieApi } from '@/features/movies/api/movie-api'
+import { moviesApi } from '@/features/movies/api/movies-api'
 
 // const transformMovies = (data: any): IMovie[] => {
 //   if (!data || !data.results) {
@@ -22,10 +22,10 @@ export const useUpcomingMovies = () => {
   return useQuery({
     queryKey: ['movies', 'upcoming'],
     // queryFn: async () => {
-    //   const response = await movieApi.getUpcoming()
+    //   const response = await moviesApi.getUpcoming()
     //   return transformMovies(response)
     // },
-    queryFn: movieApi.getUpcoming,
+    queryFn: moviesApi.getUpcoming,
     staleTime: 86400 * 1000 // 24 часа
   })
 }
@@ -34,10 +34,10 @@ export const useTopRatedMovies = () => {
   return useQuery({
     queryKey: ['movies', 'top-rated'],
     // queryFn: async () => {
-    //   const response = await movieApi.getTopRated()
+    //   const response = await moviesApi.getTopRated()
     //   return transformMovies(response)
     // },
-    queryFn: movieApi.getTopRated,
+    queryFn: moviesApi.getTopRated,
     staleTime: 86400 * 1000
   })
 }
@@ -46,10 +46,10 @@ export const useTrendingMovies = () => {
   return useQuery({
     queryKey: ['movies', 'trending'],
     // queryFn: async () => {
-    //   const response = await movieApi.getTrending()
+    //   const response = await moviesApi.getTrending()
     //   return transformMovies(response)
     // },
-    queryFn: movieApi.getTrending,
+    queryFn: moviesApi.getTrending,
     staleTime: 86400 * 1000
   })
 }
@@ -58,10 +58,10 @@ export const useNowPlayingMovies = () => {
   return useQuery({
     queryKey: ['movies', 'now-playing'],
     // queryFn: async () => {
-    //   const response = await movieApi.getNowPlaying()
+    //   const response = await moviesApi.getNowPlaying()
     //   return transformMovies(response)
     // },
-    queryFn: movieApi.getNowPlaying,
+    queryFn: moviesApi.getNowPlaying,
     staleTime: 86400 * 1000
   })
 }
@@ -70,10 +70,10 @@ export const usePopularMovies = () => {
   return useQuery({
     queryKey: ['movies', 'popular'],
     // queryFn: async () => {
-    //   const response = await movieApi.getPopular()
+    //   const response = await moviesApi.getPopular()
     //   return transformMovies(response)
     // },
-    queryFn: movieApi.getPopular,
+    queryFn: moviesApi.getPopular,
     staleTime: 86400 * 1000
   })
 }

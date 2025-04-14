@@ -5,7 +5,7 @@ import '@fontsource/ubuntu/700.css'
 import { createTheme, ThemeOptions } from '@mui/material/styles'
 
 const commonSettings: ThemeOptions = {
-  breakpoints: { values: { xs: 320, sm: 600, md: 900, lg: 1200, xl: 1440 } },
+  breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1440 } },
   typography: {
     fontFamily: 'Ubuntu, sans-serif',
 

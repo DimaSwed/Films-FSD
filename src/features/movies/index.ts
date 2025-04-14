@@ -1,4 +1,4 @@
-export * from './api/movie-api'
+export * from './api/movies-api'
 export * from './api/trailer-api'
 export * from './hooks/use-movies'
 export * from './hooks/use-trailers'
