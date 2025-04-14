@@ -106,14 +106,14 @@ export const UserSubscriptionInfo: FC = () => {
         />
       )}
 
-      <Typography variant="body1" mb={1}>
+      <Typography variant="body1" mb={1} color="primary.contrastText">
         {user.username}
       </Typography>
-      <Typography variant="body2" mb={1}>
+      <Typography variant="body2" mb={1} color="primary.contrastText">
         ID: {user.id}
       </Typography>
       {user.email && (
-        <Typography variant="body2" mb={1}>
+        <Typography variant="body2" mb={1} color="primary.contrastText">
           {user.email}
         </Typography>
       )}

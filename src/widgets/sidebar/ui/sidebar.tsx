@@ -45,7 +45,7 @@ export const Sidebar: FC = () => {
         {sessionId && <UserSubscriptionInfo />}
       </Box>
       {sessionId && (
-        <Divider sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: '#444' }} />
+        <Divider sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: 'text.primary' }} />
       )}
 
       <List component="nav">
