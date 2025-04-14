@@ -5,3 +5,16 @@ export interface ICategory {
   movies: IMovie[]
   isLoading: boolean
 }
+
+export interface ITrailer {
+  id: string
+  key: string
+  name: string
+  site: string
+  type: string
+  rating?: number
+}
+
+export interface IMovieWithTrailer extends IMovie {
+  trailerKey?: string
+}

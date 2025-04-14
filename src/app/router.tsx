@@ -5,6 +5,7 @@ import { HomePage } from '@/pages/home/HomePage'
 import { ProfilePage } from '@/pages/profile/ProfilePage'
 import { SettingsPage } from '@/pages/settings/SettingsPage'
 import { LegalInfoPage } from '@/pages/legal-info/LegalInfoPage'
+import { TrailersPage } from '@/pages/trailers/TrailersPage'
 // import { MoviesPage } from '@/pages/movies'
 
 export const router = createBrowserRouter([
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: 'legal-info',
         element: <LegalInfoPage />
+      },
+      {
+        path: 'trailers',
+        element: <TrailersPage />
       }
       // {
       //   path: 'movies',

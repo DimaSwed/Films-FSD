@@ -116,13 +116,14 @@ export const MovieCard: FC<MovieCardProps> = ({ movie }) => {
             WebkitLineClamp: 2,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            textAlign: 'center'
+            textAlign: 'center',
+            height: '45px'
           }}
         >
           {movie.title}
         </Typography>
         <Typography variant="body2" color="secondary.contrastText" component="p">
-          {movie.year}
+          {movie.release_date ? new Date(movie.release_date).getFullYear() : '-'}
         </Typography>
 
         <Link to={`/movie/${movie.id}`}>

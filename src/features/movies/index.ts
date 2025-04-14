@@ -1,3 +1,5 @@
 export * from './api/movie-api'
+export * from './api/trailer-api'
 export * from './hooks/use-movies'
+export * from './hooks/use-trailers'
 export * from './types/movies.types'
