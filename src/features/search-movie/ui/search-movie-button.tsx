@@ -27,7 +27,7 @@ export const SearchMovieButton = () => {
   const [searchResults, setSearchResults] = useState<Movie[]>([])
   const [history, setHistory] = useState<string[]>([])
   const navigate = useNavigate()
-  const { mutateAsync: searchMovies } = useSearchMovies()
+  const { data } = useSearchMovies(debouncedSearchTerm)
 
   useEffect(() => {
     const storedHistory = getSearchHistory()
@@ -39,21 +39,12 @@ export const SearchMovieButton = () => {
   }, [history])
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (debouncedSearchTerm.length >= 3) {
-        try {
-          const data = await searchMovies(debouncedSearchTerm)
-          setSearchResults(data.docs)
-        } catch (error) {
-          console.error('Ошибка при поиске:', error)
-        }
-      } else {
-        setSearchResults([])
-      }
+    if (debouncedSearchTerm.length >= 3 && data?.docs) {
+      setSearchResults(data.docs)
+    } else {
+      setSearchResults([])
     }
-
-    fetchData()
-  }, [debouncedSearchTerm, searchMovies])
+  }, [debouncedSearchTerm, data])
 
   const handleSearchClick = () => {
     setSearchOpen(true)

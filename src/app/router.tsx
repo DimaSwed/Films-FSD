@@ -8,6 +8,7 @@ import { LegalInfoPage } from '@/pages/legal-info/LegalInfoPage'
 import { TrailersPage } from '@/pages/trailers/TrailersPage'
 import { MoviePage } from '@/pages/movie/[id]/MoviePage'
 import { MoviesPage } from '@/pages/movies/MoviesPage'
+import { SearchPage } from '@/pages/search/SearchPage'
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: 'movies',
         element: <MoviesPage />
+      },
+      {
+        path: 'search',
+        element: <SearchPage />
       }
     ]
   }

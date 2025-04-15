@@ -54,6 +54,9 @@ export const movieItemStyles: SxProps = {
   color: 'text.primary',
   padding: 1,
   cursor: 'pointer',
+  textAlign: 'center',
+  fontWeight: '500',
+  textTransform: 'capitalize',
   '&:hover': { backgroundColor: 'grey.200', color: 'black' }
 }
 

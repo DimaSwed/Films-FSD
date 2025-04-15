@@ -17,9 +17,12 @@ export const useAddToWatchlist = () => {
       return movieApi.addToWatchlist(movieId, sessionId, user.id)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['watchlist']
-      })
+      // Инвалидируем все связанные запросы
+      queryClient.invalidateQueries({ queryKey: ['watchlist'] })
+      queryClient.invalidateQueries({ queryKey: ['movies'] })
+    },
+    onError: (error) => {
+      console.error('Ошибка при добавлении в список:', error)
     }
   })
 }

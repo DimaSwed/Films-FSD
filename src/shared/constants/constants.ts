@@ -1,5 +1,5 @@
 import { YearLists, IGenreLists } from '@/shared/types/common.types'
-// Массив годов
+
 export const YEARS_LIST: YearLists[] = [
   'до 1980',
   '1980-1989',
@@ -10,7 +10,8 @@ export const YEARS_LIST: YearLists[] = [
   '2021',
   '2022',
   '2023',
-  '2024'
+  '2024',
+  '2025'
 ]
 
 // Массив жанров
@@ -77,14 +78,13 @@ export const GENRES_MAP: Record<number, string> = {
   37: 'Вестерн'
 }
 
-// Массив стран
-export const COUNTRIES_LIST: string[] = [
-  'США',
-  'Великобритания',
-  'Франция',
-  'Германия',
-  'Япония',
-  'Китай',
-  'Индия',
-  'Россия'
+export const COUNTRIES_LIST: { label: string; code: string }[] = [
+  { label: 'США', code: 'en' },
+  { label: 'Великобритания', code: 'gb' },
+  { label: 'Франция', code: 'fr' },
+  { label: 'Германия', code: 'de' },
+  { label: 'Япония', code: 'jp' },
+  { label: 'Китай', code: 'cn' },
+  { label: 'Индия', code: 'in' },
+  { label: 'Россия', code: 'ru' }
 ]

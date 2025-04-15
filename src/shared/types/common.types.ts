@@ -33,6 +33,7 @@ export type YearLists =
   | '2022'
   | '2023'
   | '2024'
+  | '2025'
 
 // Тип для объектов списка жанров
 export interface IGenreLists {
