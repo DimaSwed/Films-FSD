@@ -1,5 +1,6 @@
 import { api } from '@/shared/api/tmdb/api-client'
 import { IMovie } from '@/shared/types/common.types'
+import { IMoviesFilters } from '@/features/movies/types/movies.types'
 
 export const moviesApi = {
   getUpcoming: async () => {
@@ -46,6 +47,20 @@ export const moviesApi = {
     )
     if (!response.data || !response.data.results) {
       throw new Error('Popular movies not found')
+    }
+    return response.data.results
+  },
+
+  getByFilters: async (params: IMoviesFilters) => {
+    const response = await api.get<{ results: IMovie[] }>('/discover/movie', {
+      params: {
+        ...params,
+        language: params.language || 'ru-RU',
+        region: params.region || 'RU'
+      }
+    })
+    if (!response.data || !response.data.results) {
+      throw new Error('Movies not found')
     }
     return response.data.results
   }

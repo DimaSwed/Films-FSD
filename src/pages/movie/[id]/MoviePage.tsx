@@ -11,7 +11,7 @@ export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
   const { data: movie, isLoading, error } = useMovie(movieId)
-  console.log(movie)
+  // console.log(movie)
   const { mutate: addToWatchlist, isPending: isAdding, isError: isAddError } = useAddToWatchlist()
   const sessionId = useSessionId()
 

@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { MovieCategory } from '@/widgets'
+import { MovieCategory } from '@/features/movies/'
 import {
   useUpcomingMovies,
   useTopRatedMovies,
@@ -11,7 +11,6 @@ import { ICategory } from '@/features/movies/types/movies.types'
 
 export const HomePage = () => {
   const { data: nowPlayingMovies, isLoading: isLoadingNowPlaying } = useNowPlayingMovies()
-  console.log(nowPlayingMovies)
   const { data: popularMovies, isLoading: isLoadingPopular } = usePopularMovies()
   const { data: upcomingMovies, isLoading: isLoadingUpcoming } = useUpcomingMovies()
   const { data: topRatedMovies, isLoading: isLoadingTopRated } = useTopRatedMovies()

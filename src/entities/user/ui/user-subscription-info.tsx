@@ -85,7 +85,9 @@ export const UserSubscriptionInfo: FC = () => {
       sx={{
         padding: '10px',
         textAlign: 'center',
-        color: 'text.primary'
+        color: 'text.primary',
+        maxWidth: 'fit-content',
+        margin: '0 auto'
       }}
     >
       {user.avatar?.tmdb?.avatar_path ? (
@@ -106,14 +108,14 @@ export const UserSubscriptionInfo: FC = () => {
         />
       )}
 
-      <Typography variant="body1" mb={1} color="primary.contrastText">
+      <Typography variant="body1" mb={1}>
         {user.username}
       </Typography>
-      <Typography variant="body2" mb={1} color="primary.contrastText">
+      <Typography variant="body2" mb={1}>
         ID: {user.id}
       </Typography>
       {user.email && (
-        <Typography variant="body2" mb={1} color="primary.contrastText">
+        <Typography variant="body2" mb={1}>
           {user.email}
         </Typography>
       )}

@@ -18,3 +18,28 @@ export interface ITrailer {
 export interface IMovieWithTrailer extends IMovie {
   trailerKey?: string
 }
+
+export interface IGenreProps {
+  id: number
+  title: string
+}
+
+export interface IMoviesFilters {
+  include_adult?: string
+  include_video?: string
+  language?: string
+  sort_by?: string
+  primary_release_year?: string
+  certification_country?: string
+  region?: string
+  page?: number
+  with_genres?: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+export interface IMovieCategoryProps {
+  title: string
+  movies: IMovie[]
+  isLoading: boolean
+}

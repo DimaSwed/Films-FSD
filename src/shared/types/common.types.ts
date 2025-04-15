@@ -2,8 +2,8 @@ export interface IMovie {
   id: number
   title: string
   rating: number
-  image: string
-  year: number
+  image: string | null
+  year: number | null
   genre: string | string[]
   duration: number | string
   description?: string

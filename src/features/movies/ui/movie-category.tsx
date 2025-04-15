@@ -4,16 +4,10 @@ import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { MovieCard } from '@/entities/movie'
 import { SkeletonMovieCard } from '@/shared/ui/skeleton/skeleton-movie-card'
-import { IMovie } from '@/shared/types/common.types'
+import { IMovieCategoryProps } from '@/features/movies/types/movies.types'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import '@/widgets/movie-category/styles/arrow.sass'
-
-interface IMovieCategoryProps {
-  title: string
-  movies: IMovie[]
-  isLoading: boolean
-}
+import '@/features/movies/styles/arrow.sass'
 
 export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading }) => {
   const settings = {
