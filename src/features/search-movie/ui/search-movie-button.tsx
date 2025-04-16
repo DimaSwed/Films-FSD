@@ -17,7 +17,7 @@ import {
   historyStyles,
   movieItemStyles,
   emptyResultStyles
-} from '@/features/search-movie/styles/search-movie-button.styles'
+} from '@/features/search-movie/ui/styles/search-movie-button.styles'
 
 export const SearchMovieButton = () => {
   const [searchOpen, setSearchOpen] = useState(false)
