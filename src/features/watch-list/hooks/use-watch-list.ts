@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { SelectChangeEvent } from '@mui/material'
 
@@ -6,34 +6,60 @@ import { watchListApi } from '@/features/watch-list/'
 import { useSessionId } from '@/features/auth'
 import { useUserDetails } from '@/features/user'
 
-import { IMovie } from '@/shared/types'
+import { IMovie, IPaginatedResponse } from '@/shared/types'
+import { useSearchParams } from 'react-router-dom'
 
 export const useWatchList = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [selectedGenre, setSelectedGenre] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1', 10))
   const sessionId = useSessionId()
   const { data: user } = useUserDetails()
 
   const {
-    data: watchlistMovies,
+    data: watchlistData,
     isLoading,
     isError,
     error
-  } = useQuery<IMovie[]>({
-    queryKey: ['watchlist', sessionId, user?.id],
+  } = useQuery<IPaginatedResponse<IMovie>>({
+    queryKey: ['watchlist', sessionId, user?.id, currentPage],
     queryFn: () => {
       if (!sessionId || !user?.id) {
         return Promise.reject(new Error('Требуется авторизация'))
       }
-      return watchListApi.getWatchlistMovies(sessionId, user.id)
+      return watchListApi.getWatchlistMovies(sessionId, user.id, currentPage)
     },
-    enabled: !!sessionId && !!user?.id
+    enabled: !!sessionId && !!user?.id,
+    placeholderData: (previousData) => previousData
   })
 
-  const filteredMovies = useMemo(() => {
-    if (!watchlistMovies) return []
+  useEffect(() => {
+    if (!searchParams.has('page')) {
+      setSearchParams({ page: '1' }, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
 
-    const validMovies = watchlistMovies.filter((movie) => movie.title && movie.year > 0)
+  useEffect(() => {
+    const newPage = parseInt(searchParams.get('page') || '1', 10)
+    if (newPage !== currentPage) {
+      setCurrentPage(newPage)
+    }
+  }, [searchParams, currentPage])
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setSearchParams({ page: page.toString() }, { replace: false })
+    },
+    [setSearchParams]
+  )
+
+  const filteredMovies = useMemo(() => {
+    if (!watchlistData || !('results' in watchlistData)) return []
+
+    const validMovies = watchlistData.results.filter(
+      (movie: IMovie) => movie.title && movie.year > 0
+    )
     let updatedMovies = [...validMovies]
 
     if (selectedGenre) {
@@ -65,7 +91,7 @@ export const useWatchList = () => {
     })
 
     return updatedMovies
-  }, [watchlistMovies, selectedGenre, selectedYear])
+  }, [watchlistData, selectedGenre, selectedYear])
 
   const handleGenreChange = useCallback((event: SelectChangeEvent<string>) => {
     setSelectedGenre(event.target.value)
@@ -84,9 +110,12 @@ export const useWatchList = () => {
     filteredMovies,
     selectedGenre,
     selectedYear,
+    currentPage,
+    totalPages: watchlistData && 'total_pages' in watchlistData ? watchlistData.total_pages : 1,
     handleGenreChange,
     handleYearChange,
     handleResetFilters,
+    handlePageChange,
     isLoading,
     isError,
     error

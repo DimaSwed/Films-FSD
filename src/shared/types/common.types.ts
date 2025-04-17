@@ -57,3 +57,10 @@ export interface ITMDBError {
   status_message: string
   success?: boolean
 }
+
+export interface IPaginatedResponse<T> {
+  results: T[]
+  page: number
+  total_pages: number
+  total_results: number
+}
