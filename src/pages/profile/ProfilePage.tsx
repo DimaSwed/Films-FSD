@@ -1,8 +1,8 @@
-import { Box, Typography, Avatar, Stack, Divider, CircularProgress, Button } from '@mui/material'
 import { useUserDetails } from '@/features/user/hooks'
 // import { Link } from 'react-router-dom'
 import { useAuth } from '@/features/auth'
-import { IApiError } from '@/shared/types/common.types'
+import { IApiError } from '@/shared/types'
+import { Box, Typography, Avatar, Stack, Divider, CircularProgress, Button } from '@mui/material'
 
 export const ProfilePage = () => {
   const { data: user, isLoading, error } = useUserDetails()

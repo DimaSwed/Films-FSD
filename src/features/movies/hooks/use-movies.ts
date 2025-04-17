@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '@/features/movies/api/movies-api'
+import { moviesApi } from '@/features/movies'
 
 export const useUpcomingMovies = () => {
   return useQuery({

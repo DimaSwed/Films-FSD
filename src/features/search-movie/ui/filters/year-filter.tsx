@@ -1,5 +1,5 @@
 import { MenuItem, Select, FormControl, InputLabel } from '@mui/material'
-import { YEARS_LIST } from '@/shared/constants/constants'
+import { YEARS_LIST } from '@/shared/constants'
 
 interface IYearFilterProps {
   value: string

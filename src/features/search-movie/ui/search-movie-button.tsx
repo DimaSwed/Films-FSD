@@ -6,9 +6,9 @@ import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDebounce } from 'use-debounce'
 
-import { useSearchMovies } from '@/features/search-movie/hooks/use-search-movies'
-import { getSearchHistory, setSearchHistory } from '@/features/search-movie/lib/persist-history'
-import { Movie } from '@/features/search-movie/types/search.types'
+import { useSearchMovies } from '@/features/search-movie'
+import { getSearchHistory, setSearchHistory } from '@/features/search-movie'
+import { Movie } from '@/features/search-movie/'
 import {
   searchButtonStyles,
   searchBoxStyles,

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { userApi } from '@/features/user/api'
-import { useSessionId } from '@/features/auth/hooks'
-import { IApiError } from '@/shared/types/common.types'
-import { IUserDetails } from '@/features/user/types/user.types'
+import { userApi } from '@/features/user'
+import { useSessionId } from '@/features/auth'
+import { IApiError } from '@/shared/types'
+import { IUserDetails } from '@/features/user'
 
 export const useUserDetails = () => {
   const sessionId = useSessionId()

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { Genre } from '@/features/movies/ui/genre'
-import { GENRES_LIST } from '@/shared/constants/constants'
+import { Genre } from '@/features/movies'
+import { GENRES_LIST } from '@/shared/constants'
 
 export const MoviesPage = () => {
   return (

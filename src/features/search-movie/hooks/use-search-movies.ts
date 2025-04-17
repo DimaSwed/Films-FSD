@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { searchApi } from '@/features/search-movie/api/search-api'
-import { IMovie } from '@/shared/types/common.types'
-import { IMovieFilterParams, IMoviesResponseData } from '@/features/search-movie/types/search.types'
+import { searchApi } from '@/features/search-movie'
+import { IMovie } from '@/shared/types'
+import { IMovieFilterParams, IMoviesResponseData } from '@/features/search-movie'
 
 export const useSearchMovies = (query: string) => {
   return useQuery<IMoviesResponseData>({

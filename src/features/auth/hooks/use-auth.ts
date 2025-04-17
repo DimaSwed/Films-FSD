@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { authApi } from '@/features/auth/api/auth-api'
+import { authApi } from '@/features/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 

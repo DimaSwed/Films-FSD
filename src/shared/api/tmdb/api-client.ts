@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { ITMDBError } from '@/shared/types/common.types'
+import { ITMDBError } from '@/shared/types'
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string
 

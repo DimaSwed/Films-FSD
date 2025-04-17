@@ -1,9 +1,9 @@
-import { api } from '@/shared/api/tmdb/api-client'
+import { api } from '@/shared/api/tmdb'
 import {
   // ICreateSessionRequest,
   ICreateSessionResponse,
   IRequestTokenResponse
-} from '@/features/auth/types/auth.types'
+} from '@/features/auth/types'
 
 export const authApi = {
   createRequestToken: async () => {

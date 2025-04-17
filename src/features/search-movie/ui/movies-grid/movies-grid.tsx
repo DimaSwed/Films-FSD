@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { SmallMovieCard } from '@/entities/movie'
-import { IMovie } from '@/shared/types/common.types'
+import { IMovie } from '@/shared/types'
 
 interface IMoviesGridProps {
   movies: IMovie[]

@@ -8,7 +8,7 @@ import {
   useTheme
 } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import { ISidebarItemProps } from '@/widgets/sidebar/types/sidebar.types'
+import { ISidebarItemProps } from '@/widgets/sidebar'
 
 export const SidebarItem: FC<ISidebarItemProps> = ({ primary, children }) => {
   const [open, setOpen] = useState(false)

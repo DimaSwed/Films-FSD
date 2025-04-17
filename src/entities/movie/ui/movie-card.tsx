@@ -11,13 +11,13 @@ import {
   Button
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { IMovie } from '@/shared/types/common.types'
+import { IMovie } from '@/shared/types'
 
-interface MovieCardProps {
+interface IMovieCardProps {
   movie: IMovie
 }
 
-export const MovieCard: FC<MovieCardProps> = ({ movie }) => {
+export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
   return (
     <Box
       sx={{

@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography, Card, CardContent } from '@mui/material'
 import { useUpcomingMovies } from '@/features/movies'
-import { useMovieTrailers } from '@/features/movies/hooks/use-trailers'
+import { useMovieTrailers } from '@/features/movies'
 
 export const TrailersPage = () => {
   const { data: movies, isLoading, error } = useUpcomingMovies()

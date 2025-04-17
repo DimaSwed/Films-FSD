@@ -1,1 +1,1 @@
-export * from './ui/user-subscription-info'
+export * from './ui'

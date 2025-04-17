@@ -36,6 +36,14 @@ export const GENRES_LIST: IGenreLists[] = [
   { id: 37, name: 'Вестерн' }
 ]
 
+export const genreMap: Record<number, string> = GENRES_LIST.reduce(
+  (acc, genre) => {
+    acc[genre.id] = genre.name
+    return acc
+  },
+  {} as Record<number, string>
+)
+
 export const MAIN_FILMS_GENRE_LIST: { id: number; title: string }[] = [
   { id: 28, title: 'Боевики' },
   { id: 12, title: 'Приключения' },

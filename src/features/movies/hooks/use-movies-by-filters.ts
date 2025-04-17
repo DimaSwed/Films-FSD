@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '@/features/movies/api/movies-api'
+import { moviesApi } from '@/features/movies'
 
-import { IMoviesFilters } from '@/features/movies/types/movies.types'
-import { IMovie } from '@/shared/types/common.types'
+import { IMoviesFilters } from '@/features/movies/types'
+import { IMovie } from '@/shared/types'
 
 export const useMoviesByFilters = (params: IMoviesFilters) => {
   return useQuery<IMovie[]>({

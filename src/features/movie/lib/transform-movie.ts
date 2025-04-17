@@ -1,4 +1,4 @@
-import { IMovieDetails, IApiMovieResponse } from '@/features/movie/types/movie.types'
+import { IMovieDetails, IApiMovieResponse } from '@/features/movie'
 
 export const transformMovieDetails = (data: IApiMovieResponse): IMovieDetails => {
   return {

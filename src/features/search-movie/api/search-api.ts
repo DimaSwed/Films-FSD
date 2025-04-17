@@ -1,6 +1,6 @@
-import { api } from '@/shared/api/tmdb/api-client'
-import { IMovie } from '@/shared/types/common.types'
-import { GENRES_MAP } from '@/shared/constants/constants'
+import { api } from '@/shared/api/tmdb'
+import { IMovie } from '@/shared/types'
+import { GENRES_MAP } from '@/shared/constants'
 
 export const searchApi = {
   searchMovies: async (query: string) => {

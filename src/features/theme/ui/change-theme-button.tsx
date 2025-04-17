@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import { useThemeContext } from '@/features/theme/model/theme-context'
+import { useThemeContext } from '@/features/theme'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 

@@ -19,9 +19,9 @@ import {
   FeaturedVideo,
   List as ListIcon
 } from '@mui/icons-material'
-import { SidebarItem } from '@/widgets/sidebar/components/sidebar-item'
+import { SidebarItem } from '@/widgets/sidebar'
 import { UserSubscriptionInfo } from '@/entities/user'
-import { useSessionId } from '@/features/auth/hooks/use-session-id'
+import { useSessionId } from '@/features/auth'
 
 export const Sidebar: FC = () => {
   const theme = useTheme()
@@ -114,7 +114,7 @@ export const Sidebar: FC = () => {
         </SidebarItem>
 
         <SidebarItem primary="Списки">
-          <ListItemButton component={Link} to="/add-to-watch-list" sx={{ pl: { xs: 1, md: 4 } }}>
+          <ListItemButton component={Link} to="/watch-list" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon
               sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
             >

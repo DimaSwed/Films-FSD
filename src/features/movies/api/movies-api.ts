@@ -1,6 +1,6 @@
-import { api } from '@/shared/api/tmdb/api-client'
-import { IMovie } from '@/shared/types/common.types'
-import { IMoviesFilters } from '@/features/movies/types/movies.types'
+import { api } from '@/shared/api/tmdb'
+import { IMovie } from '@/shared/types'
+import { IMoviesFilters } from '@/features/movies'
 
 export const moviesApi = {
   getUpcoming: async () => {

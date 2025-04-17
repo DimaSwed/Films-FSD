@@ -1,5 +1,5 @@
 import { MenuItem, Select, FormControl, InputLabel } from '@mui/material'
-import { COUNTRIES_LIST } from '@/shared/constants/constants'
+import { COUNTRIES_LIST } from '@/shared/constants'
 
 interface ICountryFilterProps {
   value: string

@@ -1,7 +1,7 @@
 // src/features/movies/hooks/use-trailers.ts
 import { useQuery } from '@tanstack/react-query'
-import { trailerApi } from '@/features/movies/api/trailer-api'
-import { ITrailer } from '@/features/movies/types/movies.types'
+import { trailerApi } from '@/features/movies'
+import { ITrailer } from '@/features/movies'
 
 export const useMovieTrailers = (movieIds: number[]) => {
   return useQuery({

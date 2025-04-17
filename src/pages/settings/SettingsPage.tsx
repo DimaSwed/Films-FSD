@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import {
-  Typography,
   Box,
+  Divider,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
   Stack,
-  ListItemButton,
+  Typography,
   Link as MuiLink
 } from '@mui/material'
 import { Settings, Star, Share, Support, Email, PrivacyTip } from '@mui/icons-material'

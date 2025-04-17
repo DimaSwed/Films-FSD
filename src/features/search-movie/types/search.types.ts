@@ -1,4 +1,4 @@
-import { IMovie } from '@/shared/types/common.types'
+import { IMovie } from '@/shared/types'
 
 export type Movie = Pick<IMovie, 'id' | 'title' | 'rating' | 'year'>
 

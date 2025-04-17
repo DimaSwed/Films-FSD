@@ -1,1 +1,1 @@
-export * from '@/features/settings/ui/settings-button'
+export * from './ui'

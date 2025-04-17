@@ -1,11 +1,13 @@
+import { useParams } from 'react-router-dom'
+
 import { Box, Typography, Card, CardMedia, Grid, Button, CircularProgress } from '@mui/material'
-import { useMovie } from '@/features/movie/hooks/use-movie'
-import { useAddToWatchlist } from '@/features/movie/hooks/use-watchlist'
+import { Stack } from '@mui/system'
 import StarIcon from '@mui/icons-material/Star'
 import AddIcon from '@mui/icons-material/Add'
-import { useParams } from 'react-router-dom'
-import { useSessionId } from '@/features/auth/hooks'
-import { Stack } from '@mui/system'
+
+import { useMovie } from '@/features/movie/hooks/use-movie'
+import { useAddToWatchlist } from '@/features/watch-list'
+import { useSessionId } from '@/features/auth'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()

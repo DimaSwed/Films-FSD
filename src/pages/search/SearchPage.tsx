@@ -1,6 +1,6 @@
 // src/pages/search/page.tsx
 import { Box, Typography } from '@mui/material'
-import { SearchFilters } from '@/features/search-movie/ui/search-filters'
+import { SearchFilters } from '@/features/search-movie'
 
 export const SearchPage = () => {
   return (

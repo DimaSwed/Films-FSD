@@ -11,8 +11,9 @@ import {
   CardActionArea
 } from '@mui/material'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
-import { useAddToWatchlist } from '@/features/movie'
-import { IMovie } from '@/shared/types/common.types'
+import { useAddToWatchlist } from '@/features/watch-list'
+import { IMovie } from '@/shared/types'
+import { useSessionId } from '@/features/auth'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -23,6 +24,7 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const { mutate: addToWatchlist, isPending, isError } = useAddToWatchlist()
+  const sessionId = useSessionId()
 
   const handleAddToWatchlist = () => {
     addToWatchlist(movie.id, {
@@ -112,7 +114,7 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
               color="primary"
               sx={{ ml: 1, textAlign: 'center' }}
               onClick={handleAddToWatchlist}
-              disabled={isPending} // Делаем кнопку неактивной во время загрузки
+              disabled={isPending || !sessionId}
             >
               {isPending ? 'Добавление ...' : 'Добавить в список просмотра'}
             </Button>

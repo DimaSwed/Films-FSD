@@ -1,1 +1,2 @@
-export { ChangeThemeButton } from './ui/change-theme-button'
+export * from './model'
+export * from './ui'

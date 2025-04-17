@@ -2,8 +2,8 @@ export interface IMovie {
   id: number
   title: string
   rating: number
-  image: string | null
-  year: number | null
+  image: string
+  year: number
   genre: string | string[]
   duration: number | string
   description?: string
@@ -14,6 +14,7 @@ export interface IMovie {
   genre_ids?: number[]
   poster_path?: string
   runtime?: number
+  overview?: string
 }
 
 export interface IGenre {

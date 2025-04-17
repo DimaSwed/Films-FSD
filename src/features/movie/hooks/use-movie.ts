@@ -1,8 +1,7 @@
-// use-movie.ts
 import { useQuery } from '@tanstack/react-query'
-import { movieApi } from '@/features/movie/api/movie-api'
-import { transformMovieDetails } from '@/features/movie/lib/transform-movie'
-import { IMovieDetails } from '@/features/movie/types/movie.types'
+import { movieApi } from '@/features/movie'
+import { transformMovieDetails } from '@/features/movie/'
+import { IMovieDetails } from '@/features/movie'
 
 export const useMovie = (id: number) => {
   return useQuery<IMovieDetails>({
