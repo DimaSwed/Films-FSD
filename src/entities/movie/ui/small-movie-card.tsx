@@ -27,6 +27,7 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const sessionId = useSessionId()
 
   const handleAddToWatchlist = () => {
+    if (!sessionId) return
     addToWatchlist(movie.id, {
       onSuccess: () => setIsFavorite(true)
     })
