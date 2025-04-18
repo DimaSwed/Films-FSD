@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -10,8 +10,8 @@ import {
   CardContent,
   CardActionArea
 } from '@mui/material'
-import { Favorite, FavoriteBorder } from '@mui/icons-material'
-import { useAddToWatchlist } from '@/features/watch-list'
+import { CheckCircle, Favorite, FavoriteBorder } from '@mui/icons-material'
+import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
 import { IMovie } from '@/shared/types'
 import { useSessionId } from '@/features/auth'
 
@@ -23,14 +23,38 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const navigate = useNavigate()
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [isInWatchlist, setIsInWatchlist] = useState(false)
   const { mutate: addToWatchlist, isPending, isError } = useAddToWatchlist()
+  const { mutate: removeFromWatchlist } = useRemoveFromWatchList()
   const sessionId = useSessionId()
+  const { filteredMovies } = useWatchList()
+
+  useEffect(() => {
+    if (filteredMovies) {
+      // Теперь filteredMovies доступен напрямую
+      const inList = filteredMovies?.some((m: IMovie) => m.id === movie.id) ?? false
+      setIsInWatchlist(inList)
+    }
+  }, [filteredMovies, movie.id])
 
   const handleAddToWatchlist = () => {
     if (!sessionId) return
-    addToWatchlist(movie.id, {
-      onSuccess: () => setIsFavorite(true)
-    })
+
+    if (isInWatchlist) {
+      removeFromWatchlist(movie.id, {
+        onSuccess: () => {
+          setIsInWatchlist(false)
+          setIsFavorite(false)
+        }
+      })
+    } else {
+      addToWatchlist(movie.id, {
+        onSuccess: () => {
+          setIsInWatchlist(true)
+          setIsFavorite(true)
+        }
+      })
+    }
   }
 
   const handleMovieSelect = (id: number) => {
@@ -112,12 +136,24 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
             </IconButton>
             <Button
               variant="contained"
-              color="primary"
-              sx={{ ml: 1, textAlign: 'center' }}
+              color={isInWatchlist ? 'secondary' : 'primary'}
+              startIcon={isInWatchlist ? <CheckCircle /> : null}
+              sx={{
+                ml: 1,
+                textAlign: 'center',
+                height: '60px',
+                width: '100%',
+                '&.MuiButton-containedSecondary': {
+                  backgroundColor: 'success.main',
+                  '&:hover': {
+                    backgroundColor: 'success.dark'
+                  }
+                }
+              }}
               onClick={handleAddToWatchlist}
               disabled={isPending || !sessionId}
             >
-              {isPending ? 'Добавление ...' : 'Добавить в список просмотра'}
+              {isPending ? 'Добавление...' : isInWatchlist ? 'В списке' : 'Добавить в список'}
             </Button>
             {isError && (
               <Typography color="error" variant="body2">

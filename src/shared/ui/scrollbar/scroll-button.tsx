@@ -1,36 +1,35 @@
 import { useEffect, useState } from 'react'
 import { Fab, useTheme } from '@mui/material'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 export const ScrollButton = () => {
-  const [atBottom, setAtBottom] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const theme = useTheme()
 
   const handleScroll = () => {
-    const scrollTop = window.scrollY
-    const windowHeight = window.innerHeight
-    const docHeight = document.documentElement.scrollHeight
-    setAtBottom(scrollTop + windowHeight >= docHeight - 100)
+    // Показываем кнопку, когда пользователь прокрутил больше 300px
+    setIsVisible(window.scrollY > 300)
   }
 
-  const handleClick = () => {
-    if (atBottom) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
-    }
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
 
   useEffect(() => {
-    handleScroll() // запуск при монтировании
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  if (!isVisible) {
+    return null
+  }
+
   return (
     <Fab
-      onClick={handleClick}
+      onClick={scrollToTop}
       sx={{
         position: 'fixed',
         bottom: { xs: 60, md: 100 },
@@ -39,10 +38,14 @@ export const ScrollButton = () => {
         color: theme.palette.primary.contrastText,
         '&:hover': {
           bgcolor: theme.palette.primary.dark
-        }
+        },
+        transition: 'opacity 0.3s ease',
+        opacity: isVisible ? 1 : 0,
+        pointerEvents: isVisible ? 'auto' : 'none'
       }}
+      aria-label="Наверх"
     >
-      {atBottom ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      <KeyboardArrowUpIcon />
     </Fab>
   )
 }
