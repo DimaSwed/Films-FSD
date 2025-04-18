@@ -34,7 +34,8 @@ export const WatchListFilters = ({
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: 'secondary.contrastText',
           color: 'secondary.contrastText'
-        }
+        },
+        height: '40px'
       }}
     >
       <MenuItem value="" sx={{ color: 'secondary.contrastText' }}>
@@ -58,7 +59,8 @@ export const WatchListFilters = ({
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: 'secondary.contrastText',
           color: 'secondary.contrastText'
-        }
+        },
+        height: '40px'
       }}
     >
       <MenuItem value="" sx={{ color: 'secondary.contrastText' }}>
@@ -71,7 +73,7 @@ export const WatchListFilters = ({
       ))}
     </Select>
 
-    <Button variant="contained" color="primary" onClick={onResetFilters}>
+    <Button variant="contained" color="primary" onClick={onResetFilters} sx={{ height: '40px' }}>
       Сбросить фильтры
     </Button>
   </Box>

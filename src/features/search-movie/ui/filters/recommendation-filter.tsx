@@ -18,7 +18,8 @@ const selectStyles = {
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
     borderColor: 'secondary.contrastText',
     color: 'secondary.contrastText'
-  }
+  },
+  height: '40px'
 }
 
 const menuItemStyles = { color: 'secondary.contrastText' }

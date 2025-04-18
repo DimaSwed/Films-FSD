@@ -68,6 +68,7 @@ export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoadin
         alignItems="center"
         sx={{ flexDirection: { xs: 'column', sm: 'row' }, padding: '0 10px' }}
         mb={2}
+        gap={1}
       >
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {title}

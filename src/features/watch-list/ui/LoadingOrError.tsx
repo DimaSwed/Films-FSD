@@ -16,7 +16,7 @@ export const LoadingOrError = ({ isLoading, isError, error }: ILoadingOrErrorPro
         minHeight="100vh"
         sx={{ width: '100%', bgcolor: 'background.paper' }}
       >
-        <CircularProgress sx={{ color: 'secondary.contrastText' }} />
+        <CircularProgress sx={{ color: 'primary.light' }} />
       </Box>
     )
   }

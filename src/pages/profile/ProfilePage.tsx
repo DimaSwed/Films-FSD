@@ -1,13 +1,64 @@
 import { useUserDetails } from '@/features/user/hooks'
-// import { Link } from 'react-router-dom'
-import { useAuth } from '@/features/auth'
+import { useSearchParams } from 'react-router-dom'
+import { useAuth, useSessionId } from '@/features/auth'
 import { IApiError } from '@/shared/types'
 import { Box, Typography, Avatar, Stack, Divider, CircularProgress, Button } from '@mui/material'
+import { useEffect } from 'react'
 
 export const ProfilePage = () => {
   const { data: user, isLoading, error } = useUserDetails()
-  const { logout } = useAuth()
+  const { createRequestToken, createSessionId, logout } = useAuth()
+  const sessionId = useSessionId()
   const apiError = error as IApiError | undefined
+
+  const [searchParams] = useSearchParams()
+  const requestToken = searchParams.get('request_token')
+  const approved = searchParams.get('approved')
+
+  useEffect(() => {
+    if (approved === 'true' && requestToken) {
+      createSessionId.mutate(requestToken)
+    }
+  }, [approved, requestToken, createSessionId])
+
+  const handleLogin = () => {
+    createRequestToken.mutate()
+  }
+
+  if (!sessionId) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          // justifyContent: 'center',
+          gap: 2,
+          margin: '10px auto'
+        }}
+      >
+        <Typography variant="h5" color="text.primary" textAlign={'center'}>
+          Для просмотра профиля необходимо авторизоваться
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Button variant="contained" onClick={handleLogin} sx={{ color: 'primary.contrastText' }}>
+            Войти
+          </Button>
+
+          <Button
+            variant="contained"
+            component="a"
+            href="https://www.themoviedb.org/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ color: 'primary.contrastText' }}
+          >
+            Регистрация
+          </Button>
+        </Box>
+      </Box>
+    )
+  }
 
   if (isLoading) {
     return (
@@ -36,8 +87,10 @@ export const ProfilePage = () => {
 
   if (!user) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h6">Пользователь не найден</Typography>
+      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
+        <Typography variant="h6" color="text.primary">
+          Пользователь не найден
+        </Typography>
       </Box>
     )
   }

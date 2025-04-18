@@ -10,12 +10,12 @@ import {
   CriteriaToggle,
   MoviesGrid
 } from '@/features/search-movie/ui'
+import { Box } from '@mui/system'
 import {
   useMoviesByFilters,
   useSearchMovies
 } from '@/features/search-movie/hooks/use-search-movies'
 import { CRITERIA_MAP, RECOMMENDATION_MAP } from '@/features/search-movie/types/search.types'
-import { Box } from '@mui/system'
 
 export const SearchFilters: FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -52,10 +52,18 @@ export const SearchFilters: FC = () => {
       <SearchInput value={searchQuery} onChange={setSearchQuery} />
 
       <Stack sx={filtersStackStyles}>
-        <RecommendationFilter value={selectedRecommendation} onChange={setSelectedRecommendation} />
-        <GenreFilter value={selectedGenre} onChange={setSelectedGenre} />
-        <CountryFilter value={selectedCountry} onChange={setSelectedCountry} />
-        <YearFilter value={selectedYear} onChange={setSelectedYear} />
+        <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+          <RecommendationFilter
+            value={selectedRecommendation}
+            onChange={setSelectedRecommendation}
+          />
+          <GenreFilter value={selectedGenre} onChange={setSelectedGenre} />
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+          <CountryFilter value={selectedCountry} onChange={setSelectedCountry} />
+          <YearFilter value={selectedYear} onChange={setSelectedYear} />
+        </Box>
         <CriteriaToggle
           value={additionalCriteria[0] || ''}
           onChange={(newValue) => {
@@ -91,5 +99,8 @@ const filtersStackStyles = {
   justifyContent: 'center',
   gap: 1,
   bgcolor: 'background.paper',
-  width: '100%'
+  // width: '100%',
+  // width: '100%',
+  // maxWidth: '900px',
+  mb: { xs: 0, sm: 2 }
 }

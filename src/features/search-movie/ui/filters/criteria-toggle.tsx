@@ -9,6 +9,7 @@ const buttonStyles = {
   color: 'secondary.contrastText',
   backgroundColor: 'background.paper',
   border: '1px solid #444',
+  height: '40px',
   '&.Mui-selected': {
     color: 'text.primary',
     backgroundColor: 'primary.dark'
