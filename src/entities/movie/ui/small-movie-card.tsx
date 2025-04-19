@@ -8,9 +8,11 @@ import {
   CardMedia,
   Card,
   CardContent,
-  CardActionArea
+  CardActionArea,
+  CircularProgress
 } from '@mui/material'
 import { CheckCircle, Favorite, FavoriteBorder } from '@mui/icons-material'
+import AddIcon from '@mui/icons-material/Add'
 import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
 import { IMovie } from '@/shared/types'
 import { useSessionId } from '@/features/auth'
@@ -25,7 +27,11 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInWatchlist, setIsInWatchlist] = useState(false)
   const { mutate: addToWatchlist, isPending, isError } = useAddToWatchlist()
-  const { mutate: removeFromWatchlist } = useRemoveFromWatchList()
+  const {
+    mutate: removeFromWatchlist,
+    isPending: isRemoving,
+    isError: isRemoveError
+  } = useRemoveFromWatchList()
   const sessionId = useSessionId()
   const { filteredMovies } = useWatchList()
 
@@ -137,7 +143,17 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
             <Button
               variant="contained"
               color={isInWatchlist ? 'secondary' : 'primary'}
-              startIcon={isInWatchlist ? <CheckCircle /> : null}
+              startIcon={
+                isInWatchlist ? (
+                  isRemoving ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : (
+                    <CheckCircle />
+                  )
+                ) : (
+                  <AddIcon />
+                )
+              }
               sx={{
                 ml: 1,
                 textAlign: 'center',
@@ -151,24 +167,17 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
                 }
               }}
               onClick={handleAddToWatchlist}
-              disabled={isPending || !sessionId}
+              disabled={isPending || isRemoving || !sessionId}
             >
-              {isError ? (
-                <Typography
-                  variant="body2"
-                  color="error"
-                  component="span"
-                  sx={{ width: '100%', textAlign: 'center' }}
-                >
-                  Ошибка при добавлении
-                </Typography>
-              ) : isPending ? (
-                'Добавление...'
-              ) : isInWatchlist ? (
-                'В списке'
-              ) : (
-                'Добавить в список'
-              )}
+              {isError || isRemoveError
+                ? 'Ошибка'
+                : isPending
+                  ? 'Добавление...'
+                  : isRemoving
+                    ? 'Удаление...'
+                    : isInWatchlist
+                      ? 'В списке'
+                      : 'Добавить в список'}
             </Button>
           </Box>
 

@@ -19,7 +19,9 @@ export const useAddToWatchlist = () => {
       return watchListApi.addToWatchlist(movieId, sessionId, user.id)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['watchlist'] })
+      queryClient.invalidateQueries({
+        queryKey: ['watchlist-all', sessionId, user?.id]
+      })
       queryClient.invalidateQueries({ queryKey: ['movies'] })
       success('Фильм успешно добавлен в список!')
     },

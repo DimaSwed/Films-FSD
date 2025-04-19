@@ -4,22 +4,47 @@ import { Box, Typography, Card, CardMedia, Grid, Button, CircularProgress } from
 import { Stack } from '@mui/system'
 import StarIcon from '@mui/icons-material/Star'
 import AddIcon from '@mui/icons-material/Add'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import { useMovie } from '@/features/movie/hooks/use-movie'
-import { useAddToWatchlist } from '@/features/watch-list'
+import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
 import { useSessionId } from '@/features/auth'
+import { useEffect, useState } from 'react'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
   const { data: movie, isLoading, error } = useMovie(movieId)
-  // console.log(movie)
-  const { mutate: addToWatchlist, isPending: isAdding, isError: isAddError } = useAddToWatchlist()
+
   const sessionId = useSessionId()
 
-  const handleAddToWatchlist = () => {
+  const { filteredMovies } = useWatchList()
+  const [isInWatchlist, setIsInWatchlist] = useState(false)
+
+  const { mutate: addToWatchlist, isPending: isAdding, isError: isAddError } = useAddToWatchlist()
+  const {
+    mutate: removeFromWatchlist,
+    isPending: isRemoving,
+    isError: isRemoveError
+  } = useRemoveFromWatchList()
+
+  useEffect(() => {
+    const inList = filteredMovies?.some((m) => m.id === movieId) ?? false
+    setIsInWatchlist(inList)
+  }, [filteredMovies, movieId])
+
+  const handleToggleWatchlist = () => {
     if (!sessionId) return
-    addToWatchlist(movieId)
+
+    if (isInWatchlist) {
+      removeFromWatchlist(movieId, {
+        onSuccess: () => setIsInWatchlist(false)
+      })
+    } else {
+      addToWatchlist(movieId, {
+        onSuccess: () => setIsInWatchlist(true)
+      })
+    }
   }
 
   if (isLoading) {
@@ -38,18 +63,12 @@ export const MoviePage = () => {
     )
   }
 
-  if (error) {
-    return <Box>Ошибка при загрузке информации о фильме.</Box>
-  }
-
-  if (!movie) {
-    return <Box>Фильм не найден</Box>
-  }
+  if (error) return <Box>Ошибка при загрузке информации о фильме.</Box>
+  if (!movie) return <Box>Фильм не найден</Box>
 
   return (
     <Box
       component="main"
-      minHeight={'100%'}
       sx={{
         color: 'secondary.contrastText',
         bgcolor: 'background.paper',
@@ -86,7 +105,7 @@ export const MoviePage = () => {
             </Typography>
           </Box>
 
-          {/* Additional Details */}
+          {/* Дополнительные данные */}
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid>
               <Typography variant="subtitle1">
@@ -123,25 +142,46 @@ export const MoviePage = () => {
           </Grid>
 
           <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, mt: 2 }}>
-            {/* ДОБАВИТЬ ВОЗМОЖНОСТЬ ОЦЕНКИ */}
             <Button variant="contained" startIcon={<StarIcon />} color="primary">
               Оценить
             </Button>
-            {/* ДОБАВИТЬ ОТОБРАЖЕНИЕ ЕСЛИ УЖЕ В СПИСКЕ ИМЕЕТСЯ */}
+
             <Button
               variant="contained"
-              startIcon={<AddIcon />}
-              color="primary"
-              disabled={isAdding || !sessionId}
-              onClick={handleAddToWatchlist}
+              color={isInWatchlist ? 'secondary' : 'primary'}
+              startIcon={
+                isInWatchlist ? (
+                  isRemoving ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : (
+                    <CheckCircleIcon />
+                  )
+                ) : (
+                  <AddIcon />
+                )
+              }
+              disabled={isAdding || isRemoving || !sessionId}
+              onClick={handleToggleWatchlist}
+              sx={{
+                '&.MuiButton-containedSecondary': {
+                  backgroundColor: 'success.main',
+                  color: 'primary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'success.dark'
+                  }
+                }
+              }}
             >
-              {isAdding ? 'Добавление...' : 'Добавить в список просмотра'}
+              {isAddError || isRemoveError
+                ? 'Ошибка'
+                : isAdding
+                  ? 'Добавление...'
+                  : isRemoving
+                    ? 'Удаление...'
+                    : isInWatchlist
+                      ? 'В списке'
+                      : 'Добавить в список просмотра'}
             </Button>
-            {isAddError && (
-              <Typography color="error" variant="body2">
-                Не удалось добавить в список просмотра. Попробуйте позже.
-              </Typography>
-            )}
           </Stack>
         </Grid>
       </Grid>
