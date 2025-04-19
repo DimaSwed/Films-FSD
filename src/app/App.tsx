@@ -14,10 +14,35 @@ export function App() {
       <Box
         width="100%"
         minHeight="100vh"
-        sx={{ backgroundColor: 'background.paper', display: 'flex' }}
+        sx={{
+          backgroundColor: 'background.paper',
+          display: 'flex',
+          flexDirection: 'row'
+        }}
       >
-        <Outlet />
-        <Sidebar />
+        {/* Контент с прокруткой */}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            overflowY: 'auto',
+            maxHeight: '100vh'
+          }}
+        >
+          <Outlet />
+        </Box>
+
+        {/* Sidebar справа */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            height: '100vh',
+            zIndex: 1000
+          }}
+        >
+          <Sidebar />
+        </Box>
       </Box>
     </>
   )

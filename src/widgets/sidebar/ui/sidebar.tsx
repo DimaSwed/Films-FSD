@@ -32,7 +32,8 @@ export const Sidebar: FC = () => {
     <Stack
       sx={{
         backgroundColor: 'primary.main',
-        position: 'sticky',
+        // position: 'sticky',
+        position: 'relative',
         maxWidth: { xs: '50px', md: '280px' },
         width: '100%',
         color: 'text.primary',

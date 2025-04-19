@@ -21,7 +21,8 @@ export const WatchListPage = () => {
     handleScrollEnd,
     isLoading,
     isError,
-    error
+    error,
+    isFetched
   } = useWatchList()
 
   const { mutate: removeFromWatchList } = useRemoveFromWatchList()
@@ -49,7 +50,7 @@ export const WatchListPage = () => {
     }
   }, [handleScrollEnd])
 
-  const hasMovies = visibleMovies.length > 0
+  const hasMovies = !isLoading && visibleMovies.length > 0
 
   return (
     <Box
@@ -75,8 +76,10 @@ export const WatchListPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {isLoading || isError ? (
-        <LoadingOrError isLoading={isLoading} isError={isError} error={error} />
+      {isLoading ? (
+        <LoadingOrError isLoading={isLoading} isError={false} />
+      ) : isError ? (
+        <LoadingOrError isLoading={false} isError={true} error={error} />
       ) : (
         <>
           {hasMovies ? (
@@ -92,11 +95,15 @@ export const WatchListPage = () => {
               </Box>
             </Fade>
           ) : (
-            <Fade in={true}>
-              <Box sx={{ mt: 5 }}>
-                <NoMovies />
-              </Box>
-            </Fade>
+            !isLoading &&
+            isFetched &&
+            visibleMovies.length === 0 && (
+              <Fade in={true}>
+                <Box sx={{ mt: 5 }}>
+                  <NoMovies />
+                </Box>
+              </Fade>
+            )
           )}
 
           <div ref={bottomRef} style={{ height: 1 }} />

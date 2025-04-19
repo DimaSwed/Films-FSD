@@ -13,7 +13,7 @@ export const LoadingOrError = ({ isLoading, isError, error }: ILoadingOrErrorPro
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        mt={10}
         sx={{ width: '100%', bgcolor: 'background.paper' }}
       >
         <CircularProgress sx={{ color: 'primary.light' }} />
