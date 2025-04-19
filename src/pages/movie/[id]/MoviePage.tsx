@@ -1,51 +1,17 @@
 import { useParams } from 'react-router-dom'
 
 import { Box, Typography, Card, CardMedia, Grid, Button, CircularProgress } from '@mui/material'
+
 import { Stack } from '@mui/system'
 import StarIcon from '@mui/icons-material/Star'
-import AddIcon from '@mui/icons-material/Add'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import { useMovie } from '@/features/movie/hooks/use-movie'
-import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
-import { useSessionId } from '@/features/auth'
-import { useEffect, useState } from 'react'
+import { ToggleWatchlistButton } from '@/features/watch-list'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
   const { data: movie, isLoading, error } = useMovie(movieId)
-
-  const sessionId = useSessionId()
-
-  const { filteredMovies } = useWatchList()
-  const [isInWatchlist, setIsInWatchlist] = useState(false)
-
-  const { mutate: addToWatchlist, isPending: isAdding, isError: isAddError } = useAddToWatchlist()
-  const {
-    mutate: removeFromWatchlist,
-    isPending: isRemoving,
-    isError: isRemoveError
-  } = useRemoveFromWatchList()
-
-  useEffect(() => {
-    const inList = filteredMovies?.some((m) => m.id === movieId) ?? false
-    setIsInWatchlist(inList)
-  }, [filteredMovies, movieId])
-
-  const handleToggleWatchlist = () => {
-    if (!sessionId) return
-
-    if (isInWatchlist) {
-      removeFromWatchlist(movieId, {
-        onSuccess: () => setIsInWatchlist(false)
-      })
-    } else {
-      addToWatchlist(movieId, {
-        onSuccess: () => setIsInWatchlist(true)
-      })
-    }
-  }
 
   if (isLoading) {
     return (
@@ -146,7 +112,9 @@ export const MoviePage = () => {
               Оценить
             </Button>
 
-            <Button
+            <ToggleWatchlistButton movieId={movie.id} />
+
+            {/* <Button
               variant="contained"
               color={isInWatchlist ? 'secondary' : 'primary'}
               startIcon={
@@ -181,7 +149,7 @@ export const MoviePage = () => {
                     : isInWatchlist
                       ? 'В списке'
                       : 'Добавить в список просмотра'}
-            </Button>
+            </Button> */}
           </Stack>
         </Grid>
       </Grid>

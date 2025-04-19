@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -8,14 +8,11 @@ import {
   CardMedia,
   Card,
   CardContent,
-  CardActionArea,
-  CircularProgress
+  CardActionArea
 } from '@mui/material'
-import { CheckCircle, Favorite, FavoriteBorder } from '@mui/icons-material'
-import AddIcon from '@mui/icons-material/Add'
-import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
+import { Favorite, FavoriteBorder } from '@mui/icons-material'
 import { IMovie } from '@/shared/types'
-import { useSessionId } from '@/features/auth'
+import { ToggleWatchlistButton } from '@/features/watch-list'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -25,43 +22,6 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const navigate = useNavigate()
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
-  const [isInWatchlist, setIsInWatchlist] = useState(false)
-  const { mutate: addToWatchlist, isPending, isError } = useAddToWatchlist()
-  const {
-    mutate: removeFromWatchlist,
-    isPending: isRemoving,
-    isError: isRemoveError
-  } = useRemoveFromWatchList()
-  const sessionId = useSessionId()
-  const { filteredMovies } = useWatchList()
-
-  useEffect(() => {
-    if (filteredMovies) {
-      // Теперь filteredMovies доступен напрямую
-      const inList = filteredMovies?.some((m: IMovie) => m.id === movie.id) ?? false
-      setIsInWatchlist(inList)
-    }
-  }, [filteredMovies, movie.id])
-
-  const handleAddToWatchlist = () => {
-    if (!sessionId) return
-
-    if (isInWatchlist) {
-      removeFromWatchlist(movie.id, {
-        onSuccess: () => {
-          setIsInWatchlist(false)
-          setIsFavorite(false)
-        }
-      })
-    } else {
-      addToWatchlist(movie.id, {
-        onSuccess: () => {
-          setIsInWatchlist(true)
-          setIsFavorite(true)
-        }
-      })
-    }
-  }
 
   const handleMovieSelect = (id: number) => {
     navigate(`/movie/${id}`)
@@ -140,45 +100,8 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
                 <FavoriteBorder sx={{ color: 'grey' }} />
               )}
             </IconButton>
-            <Button
-              variant="contained"
-              color={isInWatchlist ? 'secondary' : 'primary'}
-              startIcon={
-                isInWatchlist ? (
-                  isRemoving ? (
-                    <CircularProgress size={20} color="inherit" />
-                  ) : (
-                    <CheckCircle />
-                  )
-                ) : (
-                  <AddIcon />
-                )
-              }
-              sx={{
-                ml: 1,
-                textAlign: 'center',
-                height: '60px',
-                width: '100%',
-                '&.MuiButton-containedSecondary': {
-                  backgroundColor: 'success.main',
-                  '&:hover': {
-                    backgroundColor: 'success.dark'
-                  }
-                }
-              }}
-              onClick={handleAddToWatchlist}
-              disabled={isPending || isRemoving || !sessionId}
-            >
-              {isError || isRemoveError
-                ? 'Ошибка'
-                : isPending
-                  ? 'Добавление...'
-                  : isRemoving
-                    ? 'Удаление...'
-                    : isInWatchlist
-                      ? 'В списке'
-                      : 'Добавить в список'}
-            </Button>
+
+            <ToggleWatchlistButton movieId={movie.id} />
           </Box>
 
           <Button
