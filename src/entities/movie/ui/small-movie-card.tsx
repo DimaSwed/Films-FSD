@@ -153,13 +153,23 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
               onClick={handleAddToWatchlist}
               disabled={isPending || !sessionId}
             >
-              {isPending ? 'Добавление...' : isInWatchlist ? 'В списке' : 'Добавить в список'}
+              {isError ? (
+                <Typography
+                  variant="body2"
+                  color="error"
+                  component="span"
+                  sx={{ width: '100%', textAlign: 'center' }}
+                >
+                  Ошибка при добавлении
+                </Typography>
+              ) : isPending ? (
+                'Добавление...'
+              ) : isInWatchlist ? (
+                'В списке'
+              ) : (
+                'Добавить в список'
+              )}
             </Button>
-            {isError && (
-              <Typography color="error" variant="body2">
-                Ошибка при добавлении
-              </Typography>
-            )}
           </Box>
 
           <Button

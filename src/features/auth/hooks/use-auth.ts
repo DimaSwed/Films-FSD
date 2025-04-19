@@ -2,10 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { authApi } from '@/features/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useSnackbar } from 'notistack'
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
 
   const createRequestToken = useMutation({
     mutationFn: authApi.createRequestToken,
@@ -24,6 +26,7 @@ export const useAuth = () => {
         Cookies.set('session_id', data.session_id, { expires: 7 })
         queryClient.invalidateQueries({ queryKey: ['session-id'] })
         queryClient.invalidateQueries({ queryKey: ['user-details'] })
+        enqueueSnackbar('Авторизация прошла успешно', { variant: 'success' })
         // navigate('/profile')
       }
     }
@@ -34,6 +37,7 @@ export const useAuth = () => {
     queryClient.invalidateQueries({ queryKey: ['session-id'] })
     queryClient.invalidateQueries({ queryKey: ['user-details'] })
     navigate('/')
+    enqueueSnackbar('Вы успешно вышли из аккаунта', { variant: 'success' })
   }
 
   return {
