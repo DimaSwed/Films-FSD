@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import { Box, Card, CardMedia, Typography, Rating, Button, Stack, Collapse } from '@mui/material'
+import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
 import { IMovie } from '@/shared/types'
+import { RemoveButton, ToggleDescriptionButton } from '@/shared/ui'
+import { RatingDisplay } from '@/shared/ui'
 
-interface MovieCardProps {
+interface IMovieCardProps {
   movie: IMovie
   onRemoveFromWatchlist: () => void
 }
 
-export const WatchListCard = ({ movie, onRemoveFromWatchlist }: MovieCardProps) => {
+export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps) => {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
 
   const toggleDescription = () => {
@@ -32,12 +34,16 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: MovieCardProps) 
         image={movie.image}
         alt={movie.title}
       />
-      <Box sx={{ flex: 1, p: 2, display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h6" sx={{ color: 'secondary.contrastText', mb: '3px' }}>
+      <Box sx={{ flex: 1, p: 2, display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Typography
+          variant="h5"
+          sx={{ color: 'secondary.contrastText', mb: { xs: '1px', sm: '3px' } }}
+        >
           <strong>&quot;{movie.title}&quot;</strong>
         </Typography>
 
-        <Stack gap={1}>
+        <Stack gap={{ xs: '2px', sm: 1 }}>
+          <RatingDisplay value={movie.rating} />
           <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
             <strong>Год:</strong> {movie.year}
           </Typography>
@@ -50,28 +56,19 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: MovieCardProps) 
               <strong>Описание:</strong> {movie.description ?? 'Неизвестно'}
             </Typography>
           </Collapse>
-
-          <Rating value={movie.rating} readOnly />
         </Stack>
 
-        <Stack direction="row" spacing={2} mt={2} flexWrap="wrap">
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={toggleDescription}
-            sx={{ minWidth: '140px' }}
-          >
-            {isDescriptionOpen ? 'Скрыть описание' : 'Показать описание'}
-          </Button>
-
-          <Button
-            variant="contained"
-            color="error"
-            onClick={onRemoveFromWatchlist}
-            sx={{ minWidth: '140px' }}
-          >
-            Убрать из списка
-          </Button>
+        <Stack
+          direction="row"
+          mt={2}
+          gap={1}
+          alignItems="center"
+          justifyContent={{ xs: 'center', sm: 'flex-start' }}
+          width={'100%'}
+          flexWrap={'wrap'}
+        >
+          <ToggleDescriptionButton isOpen={isDescriptionOpen} onClick={toggleDescription} />
+          <RemoveButton onClick={onRemoveFromWatchlist} text="Убрать из списка" />
         </Stack>
       </Box>
     </Card>

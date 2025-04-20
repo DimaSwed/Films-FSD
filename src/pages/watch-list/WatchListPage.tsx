@@ -64,7 +64,7 @@ export const WatchListPage = () => {
         overflow: 'hidden'
       }}
     >
-      <Typography variant="h3" gutterBottom textAlign="center" mb={5}>
+      <Typography variant="h3" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
         Список к просмотру
       </Typography>
 

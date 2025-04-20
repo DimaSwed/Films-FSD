@@ -105,9 +105,9 @@ const lightTheme = createTheme({
       contrastText: '#ffffff'
     },
     secondary: {
-      light: '#ff4081', // Pink A200
-      main: '#f50057', // Pink A400
-      dark: '#c51162', // Pink A700
+      light: '#4db6ac', // Teal 300
+      main: '#00897b', // Teal 600
+      dark: '#00695c', // Teal 800
       contrastText: '#000000'
     },
     background: {
@@ -132,9 +132,9 @@ const darkTheme = createTheme({
       contrastText: '#ffffff' // White text for contrast
     },
     secondary: {
-      light: '#484848', // Light grey for secondary light
-      main: '#1c1c1c', // Secondary color same as main color
-      dark: '#000000', // Darker shade for secondary dark
+      light: '#616161', // Grey 700
+      main: '#424242', // Grey 800
+      dark: '#212121', // Grey 900
       contrastText: '#ffffff' // White text for contrast
     },
     background: {
