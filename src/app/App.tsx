@@ -24,9 +24,9 @@ export function App() {
         <Box
           component="main"
           sx={{
-            flexGrow: 1,
-            overflowY: 'auto',
-            maxHeight: '100vh'
+            flexGrow: 1
+            // overflowY: 'auto',
+            // maxHeight: '100vh'
           }}
         >
           <Outlet />

@@ -37,7 +37,7 @@ export const Sidebar: FC = () => {
         maxWidth: { xs: '50px', md: '280px' },
         width: '100%',
         color: 'text.primary',
-        minHeight: '100vh',
+        minHeight: '100%',
         padding: { xs: '5px', md: '10px' },
         boxShadow: theme.shadows[7]
       }}

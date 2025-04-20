@@ -60,8 +60,7 @@ export const WatchListPage = () => {
         padding: { xs: '10px', sm: '15px', md: '30px' },
         color: 'secondary.contrastText',
         bgcolor: 'background.paper',
-        width: '100%',
-        overflow: 'hidden'
+        width: '100%'
       }}
     >
       <Typography variant="h3" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
