@@ -34,7 +34,16 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
         image={movie.image}
         alt={movie.title}
       />
-      <Box sx={{ flex: 1, p: 2, display: 'flex', flexDirection: 'column', width: '100%' }}>
+      <Box
+        sx={{
+          flex: 1,
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          alignItems: { xs: 'center', sm: 'flex-start' }
+        }}
+      >
         <Typography
           variant="h5"
           sx={{ color: 'secondary.contrastText', mb: { xs: '1px', sm: '3px' } }}
@@ -42,7 +51,7 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
           <strong>&quot;{movie.title}&quot;</strong>
         </Typography>
 
-        <Stack gap={{ xs: '2px', sm: 1 }}>
+        <Stack gap={'2px'}>
           <RatingDisplay value={movie.rating} />
           <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
             <strong>Год:</strong> {movie.year}
@@ -50,13 +59,20 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
           <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
             <strong>Жанр:</strong> {movie.genre ?? 'Неизвестно'}
           </Typography>
-
-          <Collapse in={isDescriptionOpen} timeout="auto" unmountOnExit>
-            <Typography variant="body2" sx={{ color: 'secondary.contrastText', mt: 1 }}>
-              <strong>Описание:</strong> {movie.description ?? 'Неизвестно'}
-            </Typography>
-          </Collapse>
         </Stack>
+        <Collapse in={isDescriptionOpen} timeout="auto" unmountOnExit>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'secondary.contrastText',
+              mt: 1,
+              width: '100%',
+              textAlign: 'justify'
+            }}
+          >
+            <strong>Описание:</strong> {movie.description ?? 'Неизвестно'}
+          </Typography>
+        </Collapse>
 
         <Stack
           direction="row"

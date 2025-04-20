@@ -17,14 +17,13 @@ export const RatingDisplay: FC<IRatingDisplayProps> = ({ value, max = 10 }) => {
   }
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
-      <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
+    <Box display="flex" alignItems="center" gap={1} width="100%">
+      <Typography variant="body2" sx={{ color: 'secondary.contrastText', minWidth: 65 }}>
         <strong>Рейтинг:</strong>
       </Typography>
       <Box
         position="relative"
-        width="100%"
-        maxWidth={120}
+        width={120}
         height={16}
         bgcolor="divider"
         borderRadius={4}

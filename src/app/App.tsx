@@ -24,9 +24,9 @@ export function App() {
         <Box
           component="main"
           sx={{
-            flexGrow: 1
-            // overflowY: 'auto',
-            // maxHeight: '100vh'
+            flexGrow: 1,
+            overflowY: 'auto',
+            maxHeight: '100vh'
           }}
         >
           <Outlet />
@@ -38,6 +38,8 @@ export function App() {
             position: 'sticky',
             top: 0,
             height: '100vh',
+            maxWidth: { xs: '50px', md: '280px' },
+            width: '100%',
             zIndex: 1000
           }}
         >

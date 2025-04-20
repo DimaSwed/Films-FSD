@@ -1,23 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Fab, useTheme } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 export const ScrollButton = () => {
   const [visible, setVisible] = useState(false)
+  const mainRef = useRef<HTMLElement | null>(null)
   const theme = useTheme()
 
   useEffect(() => {
+    mainRef.current = document.querySelector('main')
+    if (!mainRef.current) return
+
     const handleScroll = () => {
-      setVisible(window.pageYOffset > 300)
+      setVisible(mainRef.current!.scrollTop > 300)
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    mainRef.current.addEventListener('scroll', handleScroll)
+    return () => {
+      mainRef.current?.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
     <Fab
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={() => mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
       sx={{
         position: 'fixed',
         bottom: { xs: 100, md: 50 },
@@ -38,3 +44,46 @@ export const ScrollButton = () => {
     </Fab>
   )
 }
+
+// import { useEffect, useState, useRef } from 'react'
+// import { Fab } from '@mui/material'
+// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+
+// export const ScrollButton = () => {
+//   const [visible, setVisible] = useState(false)
+//   const mainRef = useRef<HTMLElement | null>(null)
+
+//   useEffect(() => {
+//     mainRef.current = document.querySelector('main')
+//     if (!mainRef.current) return
+
+//     const handleScroll = () => {
+//       setVisible(mainRef.current!.scrollTop > 300)
+//     }
+
+//     mainRef.current.addEventListener('scroll', handleScroll)
+//     return () => {
+//       mainRef.current?.removeEventListener('scroll', handleScroll)
+//     }
+//   }, [])
+
+//   const scrollToTop = () => {
+//     mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+//   }
+
+//   return (
+//     <Fab
+//       onClick={scrollToTop}
+//       sx={{
+//         position: 'fixed',
+//         bottom: 24,
+//         right: 24,
+//         opacity: visible ? 1 : 0,
+//         transition: 'opacity 0.3s',
+//         zIndex: 9999
+//       }}
+//     >
+//       <KeyboardArrowUpIcon />
+//     </Fab>
+//   )
+// }
