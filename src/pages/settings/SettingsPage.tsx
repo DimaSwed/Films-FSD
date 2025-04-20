@@ -11,7 +11,7 @@ import {
   Typography,
   Link as MuiLink
 } from '@mui/material'
-import { Settings, Star, Share, Support, Email, PrivacyTip } from '@mui/icons-material'
+import { Settings, Support, Email, PrivacyTip } from '@mui/icons-material'
 import { UserSubscriptionInfo } from '@/entities/user'
 import { Link } from 'react-router-dom'
 
@@ -100,7 +100,9 @@ export const SettingsPage: FC = () => {
 
       <Divider sx={{ backgroundColor: '#444', my: 4 }} />
 
-      <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
+      {/* ДОБАВИТЬ РЕАЛИЗАЦИЮ ФУНКЦИОНАЛА */}
+
+      {/* <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
         <Typography variant="h5" gutterBottom>
           Ваша благодарность
         </Typography>
@@ -120,19 +122,31 @@ export const SettingsPage: FC = () => {
         </List>
       </Box>
 
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} />
+      <Divider sx={{ backgroundColor: '#444', my: 4 }} /> */}
 
       <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
         <Typography variant="h5" gutterBottom>
           Обратная связь
         </Typography>
         <List sx={{ width: 'fit-content' }}>
-          <ListItem>
-            <ListItemIcon sx={{ minWidth: { xs: '40px' } }}>
-              <Support />
-            </ListItemIcon>
-            <ListItemText primary="Подписаться @FilmTraker" />
-          </ListItem>
+          <MuiLink
+            href="https://t.me/SWED_DIMA"
+            target="_blank"
+            rel="noopener noreferrer"
+            underline="none"
+            color="inherit"
+            sx={{ display: 'flex', alignItems: 'center', width: '100%' }}
+          >
+            <ListItemButton sx={{ width: 'fit-content' }}>
+              <ListItemIcon sx={{ minWidth: { xs: '40px' } }}>
+                <Support />
+              </ListItemIcon>
+              <ListItemText
+                primary="Подписаться в Telegram: @SWED_DIMA"
+                sx={{ color: 'secondary.contrastText', textDecoration: 'none' }}
+              />
+            </ListItemButton>
+          </MuiLink>
 
           <MuiLink
             href="mailto:vip-performance37@mail.ru"

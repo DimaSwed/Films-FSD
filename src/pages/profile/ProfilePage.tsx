@@ -2,7 +2,7 @@ import { useUserDetails } from '@/features/user/hooks'
 import { useSearchParams } from 'react-router-dom'
 import { useAuth, useSessionId } from '@/features/auth'
 import { IApiError } from '@/shared/types'
-import { Box, Typography, Avatar, Stack, Divider, CircularProgress, Button } from '@mui/material'
+import { Box, Typography, Avatar, Stack, CircularProgress, Button } from '@mui/material'
 import { useEffect } from 'react'
 
 export const ProfilePage = () => {
@@ -147,7 +147,9 @@ export const ProfilePage = () => {
         </Button>
       </Box>
 
-      <Divider sx={{ backgroundColor: '#444' }} />
+      {/* ДОБАВИТЬ РЕАЛИЗАЦИЮ ФУНКЦИОНАЛА */}
+
+      {/* <Divider sx={{ backgroundColor: '#444' }} />
 
       <Box sx={{ mt: 4 }}>
         <Typography variant="h5" gutterBottom>
@@ -200,7 +202,7 @@ export const ProfilePage = () => {
         <Typography variant="body1" color="secondary.contrastText">
           Вы еще не смотрели ни одного сериала.
         </Typography>
-      </Box>
+      </Box> */}
     </Stack>
   )
 }
