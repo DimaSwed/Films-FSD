@@ -11,6 +11,7 @@ import { MoviesPage } from '@/pages/movies/MoviesPage'
 import { SearchPage } from '@/pages/search/SearchPage'
 import { WatchListPage } from '@/pages/watch-list/WatchListPage'
 import { CategoryMoviesPage } from '@/pages/category/CategoryMoviesPage'
+import { GenreMoviesPage } from '@/pages/genre/GenreMoviesPage'
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +59,11 @@ export const router = createBrowserRouter([
         path: 'watch-list',
         element: <WatchListPage />
       },
-      { path: 'category/:categorySlug', element: <CategoryMoviesPage /> }
+      { path: 'category/:categorySlug', element: <CategoryMoviesPage /> },
+      {
+        path: 'genre/:genreId',
+        element: <GenreMoviesPage />
+      }
     ]
   }
 ])

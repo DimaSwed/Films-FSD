@@ -13,9 +13,10 @@ export interface IMovieCategoryProps {
   title: string
   movies: IMovie[]
   isLoading: boolean
+  genreId?: number
 }
 
-export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading }) => {
+export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading, genreId }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -79,7 +80,11 @@ export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoadin
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {title}
         </Typography>
-        <Link to={`/category/${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Link
+          to={
+            genreId ? `/genre/${genreId}` : `/category/${title.toLowerCase().replace(/\s+/g, '-')}`
+          }
+        >
           <Button variant="contained">Просмотреть все</Button>
         </Link>
       </Box>
