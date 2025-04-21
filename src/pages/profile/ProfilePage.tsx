@@ -77,8 +77,8 @@ export const ProfilePage = () => {
 
   if (error) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h6" color="error">
+      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
+        <Typography variant="h6" color="error" textAlign={'center'}>
           Ошибка: {apiError?.message || 'Не удалось загрузить данные профиля'}
         </Typography>
       </Box>
@@ -88,7 +88,7 @@ export const ProfilePage = () => {
   if (!user) {
     return (
       <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
-        <Typography variant="h6" color="text.primary">
+        <Typography variant="h6" color="text.primary" textAlign={'center'}>
           Пользователь не найден
         </Typography>
       </Box>

@@ -26,7 +26,7 @@ export const ScrollButton = () => {
       onClick={() => mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
       sx={{
         position: 'fixed',
-        bottom: { xs: 100, md: 50 },
+        bottom: 50,
         right: 50,
         bgcolor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,

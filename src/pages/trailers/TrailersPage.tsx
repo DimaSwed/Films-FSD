@@ -18,14 +18,18 @@ export const TrailersPage = () => {
           height: '100vh'
         }}
       >
-        <CircularProgress sx={{ color: 'secondary.contrastText' }} />
+        <CircularProgress sx={{ color: 'primary.light' }} />
       </Box>
     )
   }
 
   if (error) {
     return (
-      <Typography color="secondary.contrastText">Произошла ошибка при загрузке данных.</Typography>
+      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
+        <Typography variant="h6" color="error" textAlign={'center'}>
+          Произошла ошибка при загрузке данных.
+        </Typography>
+      </Box>
     )
   }
 

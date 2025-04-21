@@ -107,7 +107,7 @@ export const MoviePage = () => {
             </Grid>
           </Grid>
 
-          <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, mt: 2 }}>
+          <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 5 }}>
             <Button variant="contained" startIcon={<StarIcon />} color="primary">
               Оценить
             </Button>

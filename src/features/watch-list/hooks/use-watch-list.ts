@@ -29,10 +29,14 @@ export const useWatchList = () => {
 
       do {
         const response = await watchListApi.getWatchlistMovies(sessionId, user.id, page)
+        if (!response.results) throw new Error('Пустой ответ от сервера')
+
         allMovies = [...allMovies, ...response.results]
         totalPages = response.total_pages
         page++
       } while (page <= totalPages)
+
+      if (allMovies.length === 0) throw new Error('Список фильмов пуст')
 
       allMoviesRef.current = allMovies
       return allMovies

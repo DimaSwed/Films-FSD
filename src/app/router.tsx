@@ -10,6 +10,7 @@ import { MoviePage } from '@/pages/movie/[id]/MoviePage'
 import { MoviesPage } from '@/pages/movies/MoviesPage'
 import { SearchPage } from '@/pages/search/SearchPage'
 import { WatchListPage } from '@/pages/watch-list/WatchListPage'
+import { CategoryMoviesPage } from '@/pages/category/CategoryMoviesPage'
 
 export const router = createBrowserRouter([
   {
@@ -54,9 +55,10 @@ export const router = createBrowserRouter([
         element: <SearchPage />
       },
       {
-        path: '/watch-list',
+        path: 'watch-list',
         element: <WatchListPage />
-      }
+      },
+      { path: 'category/:categorySlug', element: <CategoryMoviesPage /> }
     ]
   }
 ])

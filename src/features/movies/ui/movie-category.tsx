@@ -4,10 +4,16 @@ import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { MovieCard } from '@/entities/movie'
 import { SkeletonMovieCard } from '@/shared/ui/skeleton'
-import { IMovieCategoryProps } from '@/features/movies'
+import { IMovie } from '@/shared/types'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import '@/features/movies/styles/arrow.sass'
+
+export interface IMovieCategoryProps {
+  title: string
+  movies: IMovie[]
+  isLoading: boolean
+}
 
 export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading }) => {
   const settings = {
@@ -73,7 +79,7 @@ export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoadin
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {title}
         </Typography>
-        <Link to={`/${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Link to={`/category/${title.toLowerCase().replace(/\s+/g, '-')}`}>
           <Button variant="contained">Просмотреть все</Button>
         </Link>
       </Box>
