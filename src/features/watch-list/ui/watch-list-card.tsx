@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
+import { useWatchProviders } from '@/features/movie'
+import { WatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/types'
 import { RemoveButton, ToggleDescriptionButton } from '@/shared/ui'
 import { RatingDisplay } from '@/shared/ui'
@@ -11,6 +13,8 @@ interface IMovieCardProps {
 
 export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps) => {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
+
+  const { data: providers = [] } = useWatchProviders(movie.id)
 
   const toggleDescription = () => {
     setIsDescriptionOpen((prev) => !prev)
@@ -46,7 +50,11 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
       >
         <Typography
           variant="h5"
-          sx={{ color: 'secondary.contrastText', mb: { xs: '1px', sm: '3px' } }}
+          sx={{
+            color: 'secondary.contrastText',
+            mb: { xs: '1px', sm: '3px' },
+            textAlign: 'center'
+          }}
         >
           <strong>&quot;{movie.title}&quot;</strong>
         </Typography>
@@ -73,6 +81,8 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
             <strong>Описание:</strong> {movie.description ?? 'Неизвестно'}
           </Typography>
         </Collapse>
+
+        {providers.length > 0 && <WatchProviders providers={providers} />}
 
         <Stack
           direction="row"

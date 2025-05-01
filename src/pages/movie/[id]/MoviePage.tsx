@@ -7,11 +7,14 @@ import StarIcon from '@mui/icons-material/Star'
 
 import { useMovie } from '@/features/movie/hooks/use-movie'
 import { ToggleWatchlistButton } from '@/features/watch-list'
+import { useWatchProviders } from '@/features/movie'
+import { WatchProviders } from '@/entities/movie'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
   const { data: movie, isLoading, error } = useMovie(movieId)
+  const { data: providers = [] } = useWatchProviders(movieId)
 
   if (isLoading) {
     return (
@@ -72,7 +75,7 @@ export const MoviePage = () => {
           </Box>
 
           {/* Дополнительные данные */}
-          <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid container spacing={2} sx={{ mb: 1 }}>
             <Grid>
               <Typography variant="subtitle1">
                 <strong>Дата релиза:</strong>
@@ -107,7 +110,11 @@ export const MoviePage = () => {
             </Grid>
           </Grid>
 
-          <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 5 }}>
+          <Stack alignItems={'flex-start'} flexDirection={'row'} gap={1}>
+            {providers.length > 0 && <WatchProviders providers={providers} />}
+          </Stack>
+
+          <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 3 }}>
             <Button variant="contained" startIcon={<StarIcon />} color="primary">
               Оценить
             </Button>
