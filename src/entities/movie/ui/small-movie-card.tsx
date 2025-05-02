@@ -4,15 +4,14 @@ import {
   Box,
   Typography,
   Button,
-  IconButton,
   CardMedia,
   Card,
   CardContent,
   CardActionArea
 } from '@mui/material'
-import { Favorite, FavoriteBorder } from '@mui/icons-material'
 import { IMovie } from '@/shared/types'
 import { ToggleWatchlistButton } from '@/features/watch-list'
+import { FavoriteToggleIcon } from '@/shared/ui/favorite-toggle-icon'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -21,13 +20,10 @@ interface IMovieCardProps {
 export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
   const navigate = useNavigate()
   const [isHovered, setIsHovered] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(false)
 
   const handleMovieSelect = (id: number) => {
     navigate(`/movie/${id}`)
   }
-
-  const handleFavoriteToggle = () => setIsFavorite(!isFavorite)
 
   const ratingColor = movie.rating < 7 ? 'warning.main' : 'success.main'
 
@@ -92,15 +88,8 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie }) => {
             Жанр: {movie.genre}
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <IconButton onClick={handleFavoriteToggle}>
-              {isFavorite ? (
-                <Favorite sx={{ color: 'red' }} />
-              ) : (
-                <FavoriteBorder sx={{ color: 'grey' }} />
-              )}
-            </IconButton>
-
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, gap: 1 }}>
+            <FavoriteToggleIcon movieId={movie.id} size="small" />
             <ToggleWatchlistButton movieId={movie.id} />
           </Box>
 

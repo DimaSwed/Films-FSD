@@ -1,14 +1,14 @@
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Card, CardMedia, Grid, Button, CircularProgress } from '@mui/material'
+import { Box, Typography, Card, CardMedia, Grid, CircularProgress } from '@mui/material'
 
 import { Stack } from '@mui/system'
-import StarIcon from '@mui/icons-material/Star'
 
 import { useMovie } from '@/features/movie/hooks/use-movie'
 import { ToggleWatchlistButton } from '@/features/watch-list'
 import { useWatchProviders } from '@/features/movie'
 import { WatchProviders } from '@/entities/movie'
+import { ToggleFavoriteButton } from '@/features/favorites'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
@@ -115,48 +115,9 @@ export const MoviePage = () => {
           </Stack>
 
           <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 3 }}>
-            <Button variant="contained" startIcon={<StarIcon />} color="primary">
-              Оценить
-            </Button>
+            <ToggleFavoriteButton movieId={movie.id} />
 
             <ToggleWatchlistButton movieId={movie.id} />
-
-            {/* <Button
-              variant="contained"
-              color={isInWatchlist ? 'secondary' : 'primary'}
-              startIcon={
-                isInWatchlist ? (
-                  isRemoving ? (
-                    <CircularProgress size={20} color="inherit" />
-                  ) : (
-                    <CheckCircleIcon />
-                  )
-                ) : (
-                  <AddIcon />
-                )
-              }
-              disabled={isAdding || isRemoving || !sessionId}
-              onClick={handleToggleWatchlist}
-              sx={{
-                '&.MuiButton-containedSecondary': {
-                  backgroundColor: 'success.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'success.dark'
-                  }
-                }
-              }}
-            >
-              {isAddError || isRemoveError
-                ? 'Ошибка'
-                : isAdding
-                  ? 'Добавление...'
-                  : isRemoving
-                    ? 'Удаление...'
-                    : isInWatchlist
-                      ? 'В списке'
-                      : 'Добавить в список просмотра'}
-            </Button> */}
           </Stack>
         </Grid>
       </Grid>
