@@ -6,3 +6,7 @@ export interface IFavoritesResponse {
   total_pages: number
   total_results: number
 }
+
+export interface IFavoriteMovie {
+  id: number
+}

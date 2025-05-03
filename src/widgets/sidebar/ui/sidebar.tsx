@@ -126,14 +126,15 @@ export const Sidebar: FC = () => {
               sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>
-          <ListItemButton sx={{ pl: { xs: 1, md: 4 } }}>
+
+          <ListItemButton component={Link} to="/favorites-list" sx={{ pl: { xs: 1, md: 4 } }}>
             <ListItemIcon
               sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
             >
               <PlaylistPlay />
             </ListItemIcon>
             <ListItemText
-              primary="Список просмотренного"
+              primary="Список избранного"
               sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>

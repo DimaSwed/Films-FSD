@@ -79,7 +79,7 @@ export const WatchListPage = () => {
         <LoadingOrError isLoading={isLoading} isError={false} />
       ) : isError ? (
         <LoadingOrError isLoading={false} isError={true} error={error} />
-      ) : isFetched && !visibleMovies.length ? ( // Добавлено условие
+      ) : isFetched && !visibleMovies.length ? (
         <Fade in={true}>
           <Box sx={{ mt: 5 }}>
             <NoMovies />
@@ -101,7 +101,7 @@ export const WatchListPage = () => {
             </Fade>
           ) : (
             !isLoading &&
-            isFetched &&
+            // isFetched &&
             visibleMovies.length === 0 && (
               <Fade in={true}>
                 <Box sx={{ mt: 5 }}>

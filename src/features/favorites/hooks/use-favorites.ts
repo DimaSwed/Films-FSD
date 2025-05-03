@@ -1,8 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useQueries } from '@tanstack/react-query'
 import { favoritesApi } from '@/features/favorites'
 import { useSessionId } from '@/features/auth'
 import { useUserDetails } from '@/features/user'
-import { IFavoritesResponse } from '@/features/favorites/types'
+import { IMovieDetails, movieApi, transformMovieDetails } from '@/features/movie'
+import { IFavoriteMovie, IFavoritesResponse } from '@/features/favorites/types'
 import { IMovie } from '@/shared/types'
 
 export const useFavorites = () => {
@@ -82,4 +83,29 @@ export const useRemoveFromFavorites = () => {
       })
     }
   })
+}
+
+export const useFavoriteMovies = (favoriteList: IFavoriteMovie[] | []) => {
+  const movieQueries = useQueries({
+    queries:
+      favoriteList?.map(({ id }) => ({
+        queryKey: ['movie', id],
+        queryFn: async () => {
+          const response = await movieApi.getById(id)
+          return transformMovieDetails(response.data)
+        },
+        staleTime: 86400 * 1000
+      })) || []
+  })
+
+  const isMoviesLoading = movieQueries.some((q) => q.isLoading)
+  const isMoviesError = movieQueries.some((q) => q.isError)
+
+  const movies = movieQueries.map((q) => q.data).filter((movie): movie is IMovieDetails => !!movie)
+
+  return {
+    movies,
+    isMoviesLoading,
+    isMoviesError
+  }
 }

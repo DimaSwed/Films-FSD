@@ -7,11 +7,11 @@ interface IProvider {
   logo_path: string
 }
 
-interface Props {
+interface IProps {
   providers: IProvider[]
 }
 
-export const WatchProviders: FC<Props> = ({ providers }) => {
+export const WatchProviders: FC<IProps> = ({ providers }) => {
   return (
     <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
       {providers.map((p) => (

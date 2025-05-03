@@ -1,4 +1,3 @@
-// src/entities/movie/ui/MovieCard.tsx
 import { FC } from 'react'
 import { ViewDay } from '@mui/icons-material'
 import {
