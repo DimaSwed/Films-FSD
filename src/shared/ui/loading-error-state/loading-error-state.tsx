@@ -61,7 +61,7 @@ export const LoadingErrorState = ({
           <Typography variant="h5" color="error">
             {errorTitle}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1" color="text.primary">
             {errorDescription}
           </Typography>
           {retry && (
