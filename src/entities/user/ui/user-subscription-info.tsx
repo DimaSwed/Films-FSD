@@ -63,7 +63,7 @@ export const UserSubscriptionInfo: FC = () => {
     return (
       <Alert
         severity="error"
-        sx={{ mb: 2 }}
+        sx={{ maxWidth: 'fit-content', margin: '0 auto', mb: 2 }}
         action={
           <Button color="inherit" size="small" onClick={handleRefresh}>
             Повторить

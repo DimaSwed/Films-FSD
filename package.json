@@ -20,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "@babel/runtime": "^7.27.1",
     "@base-ui-components/react": "1.0.0-alpha.7",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
