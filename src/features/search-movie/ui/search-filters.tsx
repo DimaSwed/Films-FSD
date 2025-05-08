@@ -17,6 +17,27 @@ import {
 } from '@/features/search-movie/hooks/use-search-movies'
 import { CRITERIA_MAP, RECOMMENDATION_MAP } from '@/features/search-movie/types/search.types'
 
+const containerStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 2,
+  bgcolor: 'background.paper',
+  p: 2
+}
+
+const filtersStackStyles = {
+  display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 1,
+  bgcolor: 'background.paper',
+  width: { md: '100%', sx: 'auto' },
+  maxWidth: '950px',
+  mb: { xs: 0, sm: 2 }
+}
+
 export const SearchFilters: FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [selectedGenre, setSelectedGenre] = useState<number | ''>('')
@@ -64,6 +85,7 @@ export const SearchFilters: FC = () => {
           <CountryFilter value={selectedCountry} onChange={setSelectedCountry} />
           <YearFilter value={selectedYear} onChange={setSelectedYear} />
         </Box>
+
         <CriteriaToggle
           value={additionalCriteria[0] || ''}
           onChange={(newValue) => {
@@ -81,26 +103,4 @@ export const SearchFilters: FC = () => {
       <MoviesGrid movies={moviesToDisplay} isLoading={isSearching || moviesLoading} />
     </Box>
   )
-}
-
-const containerStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 2,
-  bgcolor: 'background.paper',
-  p: 2
-}
-
-const filtersStackStyles = {
-  display: 'flex',
-  flexDirection: { xs: 'column', sm: 'row' },
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 1,
-  bgcolor: 'background.paper',
-  // width: '100%',
-  // width: '100%',
-  // maxWidth: '900px',
-  mb: { xs: 0, sm: 2 }
 }

@@ -10,6 +10,7 @@ const buttonStyles = {
   backgroundColor: 'background.paper',
   border: '1px solid #444',
   height: '40px',
+  lineHeight: '120%',
   '&.Mui-selected': {
     color: 'text.primary',
     backgroundColor: 'primary.dark'
@@ -30,7 +31,9 @@ export const CriteriaToggle = ({ value, onChange }: ICriteriaToggleProps) => (
     }}
   >
     <ToggleButton value="new">Новое</ToggleButton>
-    <ToggleButton value="highRating">Высокий рейтинг</ToggleButton>
+    <ToggleButton sx={{ width: { md: '162px', sx: 'auto' } }} value="highRating">
+      Высокий рейтинг
+    </ToggleButton>
     <ToggleButton value="best">Лучшее</ToggleButton>
   </ToggleButtonGroup>
 )
