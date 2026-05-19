@@ -26,7 +26,6 @@ import { useSessionId } from '@/features/auth'
 export const Sidebar: FC = () => {
   const theme = useTheme()
   const sessionId = useSessionId()
-  // console.log(sessionId)
 
   return (
     <Stack

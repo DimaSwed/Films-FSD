@@ -27,26 +27,7 @@ export interface IGenre {
   name: string
 }
 
-// Тип для элементов списка годов
-export type YearLists =
-  | 'до 1980'
-  | '1980-1989'
-  | '1990-1999'
-  | '2000-2009'
-  | '2010-2019'
-  | '2020'
-  | '2021'
-  | '2022'
-  | '2023'
-  | '2024'
-  | '2025'
-  | '2026'
-
-// Тип для объектов списка жанров
-export interface IGenreLists {
-  id: number
-  name: string
-}
+export type YearLists = string
 
 export interface IApiError extends Error {
   response?: {

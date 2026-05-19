@@ -3,6 +3,7 @@ import { authApi } from '@/features/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useNotification } from '@/shared/notifications'
+import { SESSION_CHANGE_EVENT } from '@/features/auth/hooks/use-session-id'
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
@@ -27,7 +28,7 @@ export const useAuth = () => {
     onSuccess: (data) => {
       if (data.session_id) {
         Cookies.set('session_id', data.session_id, { expires: 7 })
-        queryClient.invalidateQueries({ queryKey: ['session-id'] })
+        window.dispatchEvent(new Event(SESSION_CHANGE_EVENT))
         queryClient.invalidateQueries({ queryKey: ['user-details'] })
         success('Авторизация прошла успешно')
       }
@@ -39,7 +40,7 @@ export const useAuth = () => {
 
   const logout = () => {
     Cookies.remove('session_id')
-    queryClient.invalidateQueries({ queryKey: ['session-id'] })
+    window.dispatchEvent(new Event(SESSION_CHANGE_EVENT))
     queryClient.invalidateQueries({ queryKey: ['user-details'] })
     navigate('/')
     success('Вы успешно вышли из аккаунта')

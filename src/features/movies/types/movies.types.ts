@@ -34,6 +34,4 @@ export interface IMoviesFilters {
   region?: string
   page?: number
   with_genres?: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
 }

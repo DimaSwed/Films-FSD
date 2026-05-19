@@ -1,12 +1,16 @@
-import { useQuery } from '@tanstack/react-query'
+import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
+export const SESSION_CHANGE_EVENT = 'session-changed'
+
 export const useSessionId = () => {
-  return useQuery({
-    queryKey: ['session-id'],
-    queryFn: () => Cookies.get('session_id') || null,
-    enabled: typeof window !== 'undefined',
-    select: (value) => value
-    // initialData: () => Cookies.get('session_id') || null
-  }).data
+  const [sessionId, setSessionId] = useState<string | null>(() => Cookies.get('session_id') || null)
+
+  useEffect(() => {
+    const handler = () => setSessionId(Cookies.get('session_id') || null)
+    window.addEventListener(SESSION_CHANGE_EVENT, handler)
+    return () => window.removeEventListener(SESSION_CHANGE_EVENT, handler)
+  }, [])
+
+  return sessionId
 }

@@ -14,8 +14,6 @@ export const FavoritesListPage = () => {
     isMoviesError: areMoviesError
   } = useFavoriteMovies(data?.results || [])
 
-  console.log(movies)
-
   return (
     <Box
       component="main"

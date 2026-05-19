@@ -15,8 +15,6 @@ export const Genre: React.FC<IGenreProps> = ({ id, title }) => {
     with_genres: id
   })
 
-  // console.log(' useMoviesByFilters >>>', data)
-
   return (
     <Box key={title} sx={{ mb: 4 }}>
       <MovieCategory title={title} movies={data || []} isLoading={isLoading} genreId={id} />

@@ -3,7 +3,6 @@ import { watchListApi } from '@/features/watch-list'
 import { useSessionId } from '@/features/auth'
 import { useUserDetails } from '@/features/user'
 import { useNotification } from '@/shared/notifications'
-// import { useSnackbar } from 'notistack'
 
 export const useRemoveFromWatchList = () => {
   const queryClient = useQueryClient()

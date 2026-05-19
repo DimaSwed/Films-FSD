@@ -1,4 +1,4 @@
-import { YearLists, IGenreLists } from '@/shared/types/common.types'
+import { YearLists } from '@/shared/types/common.types'
 
 export const YEARS_LIST: YearLists[] = [
   'до 1980',
@@ -16,7 +16,7 @@ export const YEARS_LIST: YearLists[] = [
 ]
 
 // Массив жанров
-export const GENRES_LIST: IGenreLists[] = [
+export const GENRES_LIST: { id: number; name: string }[] = [
   { id: 28, name: 'Боевик' },
   { id: 12, name: 'Приключения' },
   { id: 16, name: 'Анимация' },
@@ -44,48 +44,6 @@ export const genreMap: Record<number, string> = GENRES_LIST.reduce(
   },
   {} as Record<number, string>
 )
-
-export const MAIN_FILMS_GENRE_LIST: { id: number; title: string }[] = [
-  { id: 28, title: 'Боевики' },
-  { id: 12, title: 'Приключения' },
-  { id: 16, title: 'Анимация' },
-  { id: 35, title: 'Комедии' },
-  { id: 80, title: 'Криминал' },
-  { id: 99, title: 'Документальный' },
-  { id: 18, title: 'Драма' },
-  { id: 10751, title: 'Семейные' },
-  { id: 14, title: 'Фэнтези' },
-  { id: 36, title: 'Исторические' },
-  { id: 27, title: 'Ужасы' },
-  { id: 10749, title: 'Мелодрама' },
-  { id: 878, title: 'Научная фантастика' },
-  { id: 10770, title: 'Телевизионный фильм' },
-  { id: 53, title: 'Триллеры' },
-  { id: 10752, title: 'Военные' },
-  { id: 37, title: 'Вестерны' }
-]
-
-export const GENRES_MAP: Record<number, string> = {
-  28: 'Боевик',
-  12: 'Приключения',
-  16: 'Анимация',
-  35: 'Комедия',
-  80: 'Криминал',
-  99: 'Документальный',
-  18: 'Драма',
-  10751: 'Семейный',
-  14: 'Фэнтези',
-  36: 'Исторический',
-  27: 'Ужасы',
-  10402: 'Музыка',
-  9648: 'Мистика',
-  10749: 'Мелодрама',
-  878: 'Научная фантастика',
-  10770: 'Телевизионный фильм',
-  53: 'Триллер',
-  10752: 'Военный',
-  37: 'Вестерн'
-}
 
 export const COUNTRIES_LIST: { label: string; code: string }[] = [
   { label: 'США', code: 'en' },
