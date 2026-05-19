@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { AppBar, Box, Button, CssBaseline, Stack, Typography } from '@mui/material'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth/'
 import { useSessionId } from '@/features/auth/'
@@ -15,18 +15,8 @@ import {
 } from '@/widgets/header/styles/header.styles'
 
 export const Header: FC = () => {
-  const { createRequestToken, createSessionId, logout } = useAuth()
+  const { createRequestToken, logout } = useAuth()
   const sessionId = useSessionId()
-
-  const [searchParams] = useSearchParams()
-  const requestToken = searchParams.get('request_token')
-  const approved = searchParams.get('approved')
-
-  useEffect(() => {
-    if (approved === 'true' && requestToken) {
-      createSessionId.mutate(requestToken)
-    }
-  }, [approved, requestToken, createSessionId])
 
   const handleLogin = () => {
     createRequestToken.mutate()

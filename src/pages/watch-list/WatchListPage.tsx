@@ -40,7 +40,7 @@ export const WatchListPage = () => {
           handleScrollEnd()
         }
       },
-      { threshold: 1.0 }
+      { threshold: 0, rootMargin: '0px 0px 400px 0px' }
     )
 
     observer.observe(currentRef)

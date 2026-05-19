@@ -1,6 +1,6 @@
 import { api } from '@/shared/api/tmdb'
-import { IMovie, IPaginatedResponse } from '@/shared/types'
-import { genreMap } from '@/shared/constants'
+import { IMovie, IMovieRaw, IPaginatedResponse } from '@/shared/types'
+import { transformMovie } from '@/shared/lib'
 
 export const favoritesApi = {
   addToFavorites: (movieId: number, sessionId: string, accountId: number) =>
@@ -35,17 +35,7 @@ export const favoritesApi = {
     })
 
     return {
-      results: response.data.results.map((movie: IMovie) => ({
-        id: movie.id,
-        title: movie.title,
-        rating: movie.vote_average,
-        image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-        year: movie.release_date ? new Date(movie.release_date).getFullYear() : 0,
-        releaseDate: movie.release_date,
-        genre: (movie.genre_ids ?? []).map((id: number) => genreMap[id] || 'Неизвестно').join(', '),
-        duration: movie.runtime ?? 0,
-        description: movie.overview
-      })),
+      results: response.data.results.map((raw: IMovieRaw) => transformMovie(raw)),
       page: response.data.page,
       total_pages: response.data.total_pages,
       total_results: response.data.total_results

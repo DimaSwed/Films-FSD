@@ -19,11 +19,15 @@ export const useRemoveFromWatchList = () => {
 
       return watchListApi.removeMovieFromWatchlist(movieId, sessionId, user.id)
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['watchlist-all', sessionId, user?.id]
-      })
-      queryClient.invalidateQueries({ queryKey: ['movies'] })
+    onSuccess: (_, movieId) => {
+      queryClient.setQueryData(
+        ['movie-watchlist-state', movieId, sessionId],
+        (old: { id: number; watchlist: boolean; favorite: boolean } | undefined) => ({
+          ...old,
+          watchlist: false
+        })
+      )
+      queryClient.invalidateQueries({ queryKey: ['watchlist-all', sessionId, user?.id] })
       success('Фильм успешно удален из списка!')
     },
     onError: (error) => {

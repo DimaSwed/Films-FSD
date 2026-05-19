@@ -1,20 +1,25 @@
+export interface IMovieRaw {
+  id: number
+  title: string
+  vote_average: number
+  poster_path: string | null
+  backdrop_path?: string | null
+  release_date: string
+  genre_ids: number[]
+  runtime?: number | null
+  overview?: string
+}
+
 export interface IMovie {
   id: number
   title: string
   rating: number
   image: string
   year: number
-  genre: string | string[]
-  duration: number | string
+  genre: string
+  duration: number
   description?: string
-  backgroundImage?: string
   releaseDate?: string
-  vote_average?: number
-  release_date?: Date
-  genre_ids?: number[]
-  poster_path?: string
-  runtime?: number
-  overview?: string
 }
 
 export interface IGenre {

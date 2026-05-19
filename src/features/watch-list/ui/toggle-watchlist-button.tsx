@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useSessionId } from '@/features/auth'
-import { useAddToWatchlist, useRemoveFromWatchList, useWatchList } from '@/features/watch-list'
+import { useAddToWatchlist, useRemoveFromWatchList, useIsInWatchlist } from '@/features/watch-list'
 import { Button, CircularProgress } from '@mui/material'
 import { CheckCircle } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'
@@ -15,12 +15,7 @@ export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
   showText = true
 }) => {
   const sessionId = useSessionId()
-  const { filteredMovies } = useWatchList()
-
-  const isInWatchlist = filteredMovies?.some((m) => m.id === movieId) ?? false
-  const [localState, setLocalState] = useState(isInWatchlist)
-
-  useEffect(() => setLocalState(isInWatchlist), [isInWatchlist])
+  const { isInWatchlist, isLoading: isStateLoading } = useIsInWatchlist(movieId)
 
   const { mutate: addToWatchlist, isPending: isAdding, isError: isAddError } = useAddToWatchlist()
   const {
@@ -31,30 +26,28 @@ export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
 
   const handleClick = () => {
     if (!sessionId) return
-    if (localState) {
-      removeFromWatchlist(movieId, { onSuccess: () => setLocalState(false) })
+    if (isInWatchlist) {
+      removeFromWatchlist(movieId)
     } else {
-      addToWatchlist(movieId, { onSuccess: () => setLocalState(true) })
+      addToWatchlist(movieId)
     }
   }
 
   return (
     <Button
       variant="contained"
-      color={localState ? 'secondary' : 'primary'}
+      color={isInWatchlist ? 'secondary' : 'primary'}
       startIcon={
-        localState ? (
-          isRemoving ? (
-            <CircularProgress size={20} color="inherit" />
-          ) : (
-            <CheckCircle />
-          )
+        isStateLoading || isAdding || isRemoving ? (
+          <CircularProgress size={20} color="inherit" />
+        ) : isInWatchlist ? (
+          <CheckCircle />
         ) : (
           <AddIcon />
         )
       }
       onClick={handleClick}
-      disabled={isAdding || isRemoving || !sessionId}
+      disabled={isAdding || isRemoving || !sessionId || isStateLoading}
       sx={{
         '&.MuiButton-containedSecondary': {
           backgroundColor: 'success.main',
@@ -72,7 +65,7 @@ export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
             ? 'Добавление...'
             : isRemoving
               ? 'Удаление...'
-              : localState
+              : isInWatchlist
                 ? 'В списке'
                 : 'Добавить в список')}
     </Button>

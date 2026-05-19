@@ -1,10 +1,12 @@
-// src/features/movies/hooks/use-trailers.ts
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { trailerApi } from '@/features/movies'
 import { ITrailer } from '@/features/movies'
+import { useNotification } from '@/shared/notifications'
 
 export const useMovieTrailers = (movieIds: number[]) => {
-  return useQuery({
+  const { errors } = useNotification()
+  const result = useQuery({
     queryKey: ['trailers', ...movieIds],
     queryFn: async () => {
       const promises = movieIds.map((id) =>
@@ -23,6 +25,11 @@ export const useMovieTrailers = (movieIds: number[]) => {
       )
     },
     enabled: movieIds.length > 0,
-    staleTime: 86400 * 1000 // 24 часа
+    staleTime: 86400 * 1000
   })
+  useEffect(() => {
+    if (result.isError) errors('Ошибка загрузки трейлеров')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isError])
+  return result
 }

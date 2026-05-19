@@ -42,11 +42,11 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
         }}
       >
         <CardActionArea>
-          {movie.poster_path ? (
+          {movie.image ? (
             <Link to={`/movie/${movie.id}`}>
               <CardMedia
                 component="img"
-                image={`${import.meta.env.VITE_IMAGE_BASE_URL}${movie.poster_path}`}
+                image={movie.image}
                 alt={movie.title}
                 sx={{
                   color: 'secondary.contrastText',
@@ -122,7 +122,7 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
           {movie.title}
         </Typography>
         <Typography variant="body2" color="secondary.contrastText" component="p">
-          {movie.release_date ? new Date(movie.release_date).getFullYear() : '-'}
+          {movie.year || '-'}
         </Typography>
 
         <Link to={`/movie/${movie.id}`}>

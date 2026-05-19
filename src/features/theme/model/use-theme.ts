@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { ThemeType } from './theme-context'
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<ThemeType>('light')
+  const [theme, setTheme] = useState<ThemeType>('dark')
 
   useEffect(() => {
     const storedTheme = Cookies.get('theme') as ThemeType | undefined

@@ -5,11 +5,11 @@ import { lightTheme, darkTheme } from '@/app/styles/theme'
 import { ThemeContext } from '@/features/theme/model/theme-context'
 import { useTheme } from '@/features/theme/model/use-theme'
 
-interface Props {
+interface IThemeSnackbarProviderProps {
   children: ReactNode
 }
 
-export const ThemeSnackbarProvider: FC<Props> = ({ children }) => {
+export const ThemeSnackbarProvider: FC<IThemeSnackbarProviderProps> = ({ children }) => {
   const { theme, toggleTheme } = useTheme()
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -17,7 +17,7 @@ export const ThemeSnackbarProvider: FC<Props> = ({ children }) => {
         <SnackbarProvider
           maxSnack={3}
           autoHideDuration={3000}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           preventDuplicate
         >
           <CssBaseline />

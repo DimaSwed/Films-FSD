@@ -1,6 +1,6 @@
 import { api } from '@/shared/api/tmdb'
-import { IMovie } from '@/shared/types'
-import { GENRES_MAP } from '@/shared/constants'
+import { IMovieRaw } from '@/shared/types'
+import { transformMovie } from '@/shared/lib'
 
 export const searchApi = {
   searchMovies: async (query: string) => {
@@ -13,15 +13,7 @@ export const searchApi = {
       }
     })
     return {
-      docs: response.data.results.map((movie: IMovie) => ({
-        id: movie.id,
-        title: movie.title,
-        rating: movie.vote_average,
-        image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-        year: movie.release_date ? new Date(movie.release_date).getFullYear() : 0,
-        genre: (movie.genre_ids ?? []).map((id: number) => GENRES_MAP[id]).join(', '),
-        duration: movie.runtime ?? 0
-      })),
+      docs: response.data.results.map((raw: IMovieRaw) => transformMovie(raw)),
       page: response.data.page,
       limit: response.data.total_pages
     }
@@ -35,14 +27,6 @@ export const searchApi = {
         region: 'RU'
       }
     })
-    return response.data.results.map((movie: IMovie) => ({
-      id: movie.id,
-      title: movie.title,
-      rating: movie.vote_average,
-      image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-      year: movie.release_date ? new Date(movie.release_date).getFullYear() : 0,
-      genre: (movie.genre_ids ?? []).map((id: number) => GENRES_MAP[id]).join(', '),
-      duration: movie.runtime ?? 0
-    }))
+    return response.data.results.map((raw: IMovieRaw) => transformMovie(raw))
   }
 }

@@ -5,6 +5,7 @@ import { useUserDetails } from '@/features/user'
 import { IMovieDetails, movieApi, transformMovieDetails } from '@/features/movie'
 import { IFavoriteMovie, IFavoritesResponse } from '@/features/favorites/types'
 import { IMovie } from '@/shared/types'
+import { useNotification } from '@/shared/notifications'
 
 export const useFavorites = () => {
   const sessionId = useSessionId()
@@ -27,6 +28,7 @@ export const useAddToFavorites = () => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: userDetails } = useUserDetails()
+  const { success, errors } = useNotification()
 
   return useMutation({
     mutationFn: (movieId: number) => {
@@ -50,6 +52,10 @@ export const useAddToFavorites = () => {
           total_results: (old.total_results || 0) + 1
         }
       })
+      success('Фильм добавлен в избранное!')
+    },
+    onError: () => {
+      errors('Ошибка при добавлении в избранное')
     }
   })
 }
@@ -58,6 +64,7 @@ export const useRemoveFromFavorites = () => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: userDetails } = useUserDetails()
+  const { success, errors } = useNotification()
 
   return useMutation({
     mutationFn: (movieId: number) => {
@@ -81,6 +88,10 @@ export const useRemoveFromFavorites = () => {
           total_results: Math.max((old.total_results || 1) - 1, 0)
         }
       })
+      success('Фильм удалён из избранного')
+    },
+    onError: () => {
+      errors('Ошибка при удалении из избранного')
     }
   })
 }

@@ -2,12 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { authApi } from '@/features/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { useSnackbar } from 'notistack'
+import { useNotification } from '@/shared/notifications'
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { enqueueSnackbar } = useSnackbar()
+  const { success, errors } = useNotification()
 
   const createRequestToken = useMutation({
     mutationFn: authApi.createRequestToken,
@@ -16,6 +16,9 @@ export const useAuth = () => {
         const redirectUrl = `${window.location.origin}`
         window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=${redirectUrl}`
       }
+    },
+    onError: () => {
+      errors('Ошибка при создании токена авторизации')
     }
   })
 
@@ -26,9 +29,11 @@ export const useAuth = () => {
         Cookies.set('session_id', data.session_id, { expires: 7 })
         queryClient.invalidateQueries({ queryKey: ['session-id'] })
         queryClient.invalidateQueries({ queryKey: ['user-details'] })
-        enqueueSnackbar('Авторизация прошла успешно', { variant: 'success' })
-        // navigate('/profile')
+        success('Авторизация прошла успешно')
       }
+    },
+    onError: () => {
+      errors('Ошибка при авторизации')
     }
   })
 
@@ -37,7 +42,7 @@ export const useAuth = () => {
     queryClient.invalidateQueries({ queryKey: ['session-id'] })
     queryClient.invalidateQueries({ queryKey: ['user-details'] })
     navigate('/')
-    enqueueSnackbar('Вы успешно вышли из аккаунта', { variant: 'success' })
+    success('Вы успешно вышли из аккаунта')
   }
 
   return {
