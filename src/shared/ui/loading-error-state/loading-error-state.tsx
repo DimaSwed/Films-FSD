@@ -4,7 +4,6 @@ import { ReactNode } from 'react'
 interface ILoadingErrorStateProps {
   isLoading: boolean
   isError: boolean
-  error?: unknown
   loadingText?: string
   errorTitle?: string
   errorDescription?: string
@@ -16,7 +15,6 @@ interface ILoadingErrorStateProps {
 export const LoadingErrorState = ({
   isLoading,
   isError,
-  error,
   loadingText = 'Загрузка...',
   errorTitle = 'Ошибка загрузки данных',
   errorDescription = 'Не удалось загрузить данные. Пожалуйста, попробуйте снова позже.',
@@ -46,7 +44,6 @@ export const LoadingErrorState = ({
   }
 
   if (isError) {
-    console.error('API Error:', error)
     return (
       customError ?? (
         <Box

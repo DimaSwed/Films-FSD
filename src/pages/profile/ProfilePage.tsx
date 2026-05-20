@@ -1,15 +1,14 @@
 import { useUserDetails } from '@/features/user/hooks'
 import { useSearchParams } from 'react-router-dom'
 import { useAuth, useSessionId } from '@/features/auth'
-import { IApiError } from '@/shared/types'
-import { Box, Typography, Avatar, Stack, CircularProgress, Button } from '@mui/material'
+import { Box, Typography, Avatar, Stack, Button } from '@mui/material'
+import { LoadingErrorState } from '@/shared/ui'
 import { useEffect } from 'react'
 
 export const ProfilePage = () => {
-  const { data: user, isLoading, error } = useUserDetails()
+  const { data: user, isLoading, isError } = useUserDetails()
   const { createRequestToken, createSessionId, logout } = useAuth()
   const sessionId = useSessionId()
-  const apiError = error as IApiError | undefined
 
   const [searchParams] = useSearchParams()
   const requestToken = searchParams.get('request_token')
@@ -60,28 +59,15 @@ export const ProfilePage = () => {
     )
   }
 
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh'
-        }}
-      >
-        <CircularProgress size={60} />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
-        <Typography variant="h6" color="error" textAlign={'center'}>
-          Ошибка: {apiError?.message || 'Не удалось загрузить данные профиля'}
-        </Typography>
-      </Box>
+      <LoadingErrorState
+        isLoading={isLoading}
+        isError={isError}
+        loadingText="Загружаем профиль..."
+        errorTitle="Ошибка загрузки профиля"
+        errorDescription="Не удалось загрузить данные профиля. Попробуйте позже."
+      />
     )
   }
 
@@ -146,63 +132,6 @@ export const ProfilePage = () => {
           Выйти
         </Button>
       </Box>
-
-      {/* ДОБАВИТЬ РЕАЛИЗАЦИЮ ФУНКЦИОНАЛА */}
-
-      {/* <Divider sx={{ backgroundColor: '#444' }} />
-
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h5" gutterBottom>
-          История
-        </Typography>
-        <Typography variant="body1" color="secondary.contrastText">
-          Добавьте несколько телешоу и фильмов в историю просмотров, и они появятся здесь.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} />
-
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Избранные
-        </Typography>
-        <Typography variant="body1" color="secondary.contrastText">
-          У вас пока нет избранных.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} />
-
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Рейтинги
-        </Typography>
-        <Typography variant="body1" color="secondary.contrastText">
-          Вы еще ничего не оценили.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} />
-
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Просмотренные фильмы
-        </Typography>
-        <Typography variant="body1" color="secondary.contrastText">
-          Вы еще не смотрели ни одного фильма.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} />
-
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Просмотренные сериалы
-        </Typography>
-        <Typography variant="body1" color="secondary.contrastText">
-          Вы еще не смотрели ни одного сериала.
-        </Typography>
-      </Box> */}
     </Stack>
   )
 }

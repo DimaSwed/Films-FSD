@@ -5,7 +5,7 @@ import { SmallMovieCard } from '@/entities/movie'
 import { Stack } from '@mui/system'
 
 export const FavoritesListPage = () => {
-  const { data, isLoading, isError, error, isFetched } = useFavorites()
+  const { data, isLoading, isError, isFetched } = useFavorites()
   const hasIds = !isLoading && !!data?.results?.length
 
   const {
@@ -32,7 +32,6 @@ export const FavoritesListPage = () => {
       <LoadingErrorState
         isLoading={isLoading || areMoviesLoading}
         isError={isError || areMoviesError}
-        error={error}
       />
 
       {isFetched && !isLoading && !isError && !hasIds && (

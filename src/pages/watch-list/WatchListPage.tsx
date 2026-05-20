@@ -21,7 +21,6 @@ export const WatchListPage = () => {
     handleScrollEnd,
     isLoading,
     isError,
-    error,
     isFetched
   } = useWatchList()
 
@@ -78,7 +77,7 @@ export const WatchListPage = () => {
       {isLoading ? (
         <LoadingOrError isLoading={isLoading} isError={false} />
       ) : isError ? (
-        <LoadingOrError isLoading={false} isError={true} error={error} />
+        <LoadingOrError isLoading={false} isError={true} />
       ) : isFetched && !visibleMovies.length ? (
         <Fade in={true}>
           <Box sx={{ mt: 5 }}>

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Card, CardMedia, Grid, CircularProgress } from '@mui/material'
+import { Box, Typography, Card, CardMedia, Grid } from '@mui/material'
 
 import { Stack } from '@mui/system'
 
@@ -9,30 +9,26 @@ import { ToggleWatchlistButton } from '@/features/watch-list'
 import { useWatchProviders } from '@/features/movie'
 import { WatchProviders } from '@/entities/movie'
 import { ToggleFavoriteButton } from '@/features/favorites'
+import { LoadingErrorState } from '@/shared/ui'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
-  const { data: movie, isLoading, error } = useMovie(movieId)
+  const { data: movie, isLoading, isError } = useMovie(movieId)
   const { data: providers = [] } = useWatchProviders(movieId)
 
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          width: '100%'
-        }}
-      >
-        <CircularProgress />
-      </Box>
+      <LoadingErrorState
+        isLoading={isLoading}
+        isError={isError}
+        loadingText="Загружаем информацию о фильме..."
+        errorTitle="Ошибка загрузки фильма"
+        errorDescription="Не удалось загрузить информацию о фильме. Попробуйте позже."
+      />
     )
   }
 
-  if (error) return <Box>Ошибка при загрузке информации о фильме.</Box>
   if (!movie) return <Box>Фильм не найден</Box>
 
   return (

@@ -1,35 +1,21 @@
-import { Box, CircularProgress, Typography, Card, CardContent } from '@mui/material'
+import { Box, Typography, Card, CardContent } from '@mui/material'
 import { useUpcomingMovies } from '@/features/movies'
 import { useMovieTrailers } from '@/features/movies'
+import { LoadingErrorState } from '@/shared/ui'
 
 export const TrailersPage = () => {
-  const { data: movies, isLoading, error } = useUpcomingMovies()
+  const { data: movies, isLoading, isError } = useUpcomingMovies()
   const { data: trailersData } = useMovieTrailers(movies?.map((m) => m.id) || [])
 
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
-      <Box
-        sx={{
-          color: 'secondary.contrastText',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh'
-        }}
-      >
-        <CircularProgress sx={{ color: 'primary.light' }} />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
-        <Typography variant="h6" color="error" textAlign={'center'}>
-          Произошла ошибка при загрузке данных.
-        </Typography>
-      </Box>
+      <LoadingErrorState
+        isLoading={isLoading}
+        isError={isError}
+        loadingText="Загружаем трейлеры..."
+        errorTitle="Ошибка загрузки трейлеров"
+        errorDescription="Не удалось загрузить список трейлеров. Попробуйте позже."
+      />
     )
   }
 

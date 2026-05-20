@@ -18,7 +18,7 @@ export const useWatchList = () => {
 
   const allMoviesRef = useRef<IMovie[]>([])
 
-  const { data, isLoading, isError, error, isFetched } = useQuery({
+  const { data, isLoading, isError, isFetched } = useQuery({
     queryKey: ['watchlist-all', sessionId, user?.id],
     queryFn: async () => {
       if (!sessionId || !user?.id) throw new Error('Требуется авторизация')
@@ -109,7 +109,6 @@ export const useWatchList = () => {
     handleScrollEnd,
     isLoading,
     isError,
-    error,
     isFetched
   }
 }
