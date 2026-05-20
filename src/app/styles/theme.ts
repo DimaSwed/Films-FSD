@@ -9,87 +9,92 @@ const commonSettings: ThemeOptions = {
   typography: {
     fontFamily: 'Ubuntu, sans-serif',
 
+    // Hero — 404, крупные промо-блоки
     h1: {
-      fontSize: '100px',
-      transition: 'font-size 2s ease',
-      '@media (max-width:1200px)': { fontSize: '80px' },
-      '@media (max-width:900px)': { fontSize: '65px' },
-      '@media (max-width:600px)': { fontWeight: 500, fontSize: '50px' },
+      fontSize: '60px',
+      '@media (max-width:1200px)': { fontSize: '48px' },
+      '@media (max-width:900px)': { fontSize: '40px' },
+      '@media (max-width:600px)': { fontSize: '34px' },
       fontWeight: 400,
-      fontStyle: 'normal',
-      lineHeight: '130%',
+      lineHeight: '115%',
       textTransform: 'none'
     },
+    // Крупный заголовок страницы
     h2: {
-      fontSize: '85px',
-      transition: 'font-size 2s ease',
-      '@media (max-width:1200px)': { fontSize: '70px' },
-      '@media (max-width:900px)': { fontSize: '50px' },
-      '@media (max-width:600px)': { fontSize: '35px' },
-      fontWeight: 400,
-      fontStyle: 'normal',
-      lineHeight: '130%',
-      letterSpacing: 0,
-      textTransform: 'none'
-    },
-    h3: {
-      fontSize: '70px',
-      transition: 'font-size 2s ease',
-      '@media (max-width:1200px)': { fontSize: '60px' },
-      '@media (max-width:900px)': { fontSize: '45px' },
-      '@media (max-width:600px)': { fontSize: '30px' },
-      fontWeight: 400,
-      fontStyle: 'normal',
-      lineHeight: '42px',
-      letterSpacing: 0,
-      textTransform: 'none'
-    },
-    h4: {
-      fontSize: '55px',
-      transition: 'font-size 2s ease',
-      '@media (max-width:1200px)': { fontSize: '40px' },
-      '@media (max-width:900px)': { fontSize: '35px' },
-      '@media (max-width:600px)': { fontSize: '30px' },
-      fontWeight: 500,
-      fontStyle: 'normal',
-      letterSpacing: 0,
-      textTransform: 'none'
-    },
-    h5: {
       fontSize: '40px',
-      transition: 'font-size 2s ease',
-      '@media (max-width:1200px)': { fontSize: '28px' },
-      '@media (max-width:900px)': { fontSize: '25px' },
-      '@media (max-width:600px)': { fontSize: '23px' },
-      fontWeight: 400,
-      fontStyle: 'normal',
-      lineHeight: '130%',
-      textTransform: 'none',
-      letterSpacing: 0,
-      textDecoration: 'none'
+      '@media (max-width:1200px)': { fontSize: '34px' },
+      '@media (max-width:900px)': { fontSize: '28px' },
+      '@media (max-width:600px)': { fontSize: '24px' },
+      fontWeight: 500,
+      lineHeight: '115%',
+      textTransform: 'none'
     },
-    h6: {
-      fontFamily: 'Open Sans, sans-serif',
-      fontSize: '25px',
-      transition: 'font-size 2s ease',
+    // Заголовок большинства страниц (HomePage, MoviesPage, SearchPage и др.)
+    h3: {
+      fontSize: '34px',
+      '@media (max-width:1200px)': { fontSize: '28px' },
+      '@media (max-width:900px)': { fontSize: '24px' },
+      '@media (max-width:600px)': { fontSize: '20px' },
+      fontWeight: 500,
+      lineHeight: '115%',
+      textTransform: 'none'
+    },
+    // Заголовок секции / крупного блока
+    h4: {
+      fontSize: '24px',
+      '@media (max-width:1200px)': { fontSize: '22px' },
+      '@media (max-width:900px)': { fontSize: '20px' },
+      '@media (max-width:600px)': { fontSize: '18px' },
+      fontWeight: 500,
+      lineHeight: '120%',
+      textTransform: 'none'
+    },
+    // Заголовок карточки / виджета / модалки
+    h5: {
+      fontSize: '20px',
       '@media (max-width:1200px)': { fontSize: '18px' },
-      '@media (max-width:900px)': { fontSize: '16px' },
-      '@media (max-width:600px)': { fontSize: '14px' },
+      '@media (max-width:900px)': { fontSize: '17px' },
+      '@media (max-width:600px)': { fontSize: '16px' },
+      fontWeight: 500,
+      lineHeight: '120%',
+      textTransform: 'none'
+    },
+    // Мелкий заголовок / body-уровень
+    h6: {
+      fontSize: '16px',
+      fontWeight: 500,
+      lineHeight: '120%',
+      textTransform: 'none'
+    },
+
+    // Основной текст страницы (body3 в YeaHub)
+    body1: {
+      fontSize: '16px',
       fontWeight: 400,
-      fontStyle: 'normal',
-      lineHeight: '130%',
-      textTransform: 'none',
-      textDecoration: 'none'
-    }
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: 'white',
-          color: 'white'
-        }
-      }
+      lineHeight: '130%'
+    },
+    // Вторичный текст, мета, чипы (body2 в YeaHub)
+    body2: {
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '120%'
+    },
+    // Акцентированный лейбл / подпись поля (body2-accent в YeaHub)
+    subtitle1: {
+      fontSize: '14px',
+      fontWeight: 500,
+      lineHeight: '120%'
+    },
+    subtitle2: {
+      fontSize: '12px',
+      fontWeight: 500,
+      lineHeight: '120%'
+    },
+    // Мелкие подписи, бейджи (body1 в YeaHub)
+    caption: {
+      fontSize: '12px',
+      fontWeight: 400,
+      lineHeight: '120%'
     }
   }
 }
@@ -99,24 +104,100 @@ const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      light: '#64b5f6', // Light Blue 300
-      main: '#1976d2', // Blue 700
-      dark: '#0d47a1', // Blue 900
-      contrastText: '#ffffff'
+      light: '#5b79c4',
+      main: '#274898',
+      dark: '#1a3070',
+      contrastText: '#FFFFFF'
     },
     secondary: {
-      light: '#4db6ac', // Teal 300
-      main: '#00897b', // Teal 600
-      dark: '#00695c', // Teal 800
-      contrastText: '#000000'
+      light: '#e5c69a',
+      main: '#c5995b',
+      dark: '#996a28',
+      contrastText: '#303030'
+    },
+    error: {
+      light: '#c4553d',
+      main: '#993b28',
+      dark: '#7a2d1d',
+      contrastText: '#FFFFFF'
     },
     background: {
-      default: '#ffffff',
-      paper: '#f5f5f5'
+      default: '#faf1e6',
+      paper: '#FFFFFF'
     },
     text: {
-      primary: '#000000',
-      secondary: '#ffffff'
+      primary: '#1a1a1a',
+      secondary: '#9d9d9d'
+    },
+    divider: '#d9d9d9'
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          color: '#1a1a1a',
+          backgroundColor: '#faf1e6'
+        },
+        ':root': {
+          /* Backgrounds */
+          '--background-app': '#faf1e6',
+          '--background-block': '#FFFFFF',
+          '--background-button': '#e6eafa',
+          '--background-light-hover': '#ffffdf',
+          '--background-light-chip': '#e6eafa',
+          '--background-light-block': '#faf1e6',
+          '--background-accent-block': '#1a3070',
+          '--background-primary': '#274898',
+          '--background-progress-bar': '#9ab0e5',
+          '--background-skeleton': '#d9d9d9',
+          '--background-nav-item': '#e6eafa',
+          '--background-nav-item-hover': '#faf1e6',
+          '--background-modal-overlay': 'rgb(26 48 112 / 40%)',
+
+          /* Text */
+          '--text-color-primary': '#1a1a1a',
+          '--text-color-bright': '#000000',
+          '--text-color-light': '#474747',
+          '--text-color-lighter': '#5E5E5E',
+          '--text-color-lightest': '#9d9d9d',
+          '--text-color-the-lightest': '#b0b0b0',
+          '--text-color-more-lightest': '#d9d9d9',
+          '--text-color-white': '#FFFFFF',
+          '--text-color-link-active': '#274898',
+          '--text-color-link-disabled': '#9ab0e5',
+          '--text-color-red': '#993b28',
+
+          /* Borders */
+          '--border-color': '#d9d9d9',
+          '--border-right-color': '#9d9d9d',
+          '--border-image-hover': '#274898',
+          '--border-input': '#d9d9d9',
+          '--border-focus-blue': '#5b79c4',
+
+          /* Shadows */
+          '--main-shadow': '0px 4px 10px rgb(39 72 152 / 12%)',
+          '--focus-shadow': '0 0 0 3px #e6eafa',
+          '--focus-shadow-error': '0 0 0 3px #f5d5cc',
+          '--focus-shadow-valid': '0 0 0 3px #dff0cc',
+
+          /* Font sizes */
+          '--font-size-h-xxl': '60px',
+          '--font-size-h-l': '40px',
+          '--font-size-large-34': '34px',
+          '--font-size-h-m': '36px',
+          '--font-size-large-30': '30px',
+          '--font-size-large-28': '28px',
+          '--font-size-h-s': '24px',
+          '--font-size-h-xs': '20px',
+          '--font-size-p-l': '18px',
+          '--font-size-p-m': '16px',
+          '--font-size-h-xxs': '14px',
+          '--font-size-p-s': '14px',
+          '--font-size-p-xs': '12px',
+          '--font-size-p-xss': '10px',
+          '--font-size-p-xxs': '8px'
+        }
+      }
     }
   }
 })

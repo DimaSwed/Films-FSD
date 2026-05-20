@@ -15,7 +15,8 @@ export function App() {
         width="100%"
         minHeight="100vh"
         sx={{
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
+          color: 'text.primary',
           display: 'flex',
           flexDirection: 'row'
         }}

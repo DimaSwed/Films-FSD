@@ -35,7 +35,7 @@ export const Sidebar: FC = () => {
         position: 'relative',
         maxWidth: { xs: '50px', md: '280px' },
         width: '100%',
-        color: 'text.primary',
+        color: 'primary.contrastText',
         minHeight: '100%',
         padding: { xs: '5px', md: '10px' },
         boxShadow: theme.shadows[7]
@@ -45,7 +45,9 @@ export const Sidebar: FC = () => {
         {sessionId && <UserSubscriptionInfo />}
       </Box>
       {sessionId && (
-        <Divider sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: 'text.primary' }} />
+        <Divider
+          sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: 'rgba(255,255,255,0.25)' }}
+        />
       )}
 
       <List component="nav">

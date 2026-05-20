@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { AppBar, Box, Button, CssBaseline, Stack, Typography } from '@mui/material'
+import { AppBar, Box, Button, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth/'
@@ -28,7 +28,6 @@ export const Header: FC = () => {
 
   return (
     <Stack direction="row">
-      <CssBaseline />
       <AppBar position="sticky" sx={appBarStyles}>
         <Box component={'div'} sx={boxStyles}>
           <Box component={'div'}>
