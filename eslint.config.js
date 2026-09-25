@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import pluginQuery from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-plugin-prettier'
+import featureSliced from '@conarti/eslint-plugin-feature-sliced'
 
 export default [
   // Base config
@@ -50,6 +51,40 @@ export default [
         }
       ],
       ...pluginQuery.configs['flat/recommended'].rules
+    }
+  },
+
+  // Границы FSD. Пока идёт рефакторинг — warn;
+  {
+    ...featureSliced({
+      severity: 'warn',
+      // Импорт порядка отдаёт prettier/ручной стиль — не переписываем все файлы
+      sortImports: false,
+      // 'segments' ловит и импорты вида @/pages/home/HomePage (файл в корне слайса).
+      // Сегменты hooks/types/styles/components — временные.
+      publicApi: { level: 'segments' },
+      segments: ['hooks', 'types', 'styles', 'components']
+    }),
+    files: ['src/**/*.{ts,tsx}']
+  },
+
+  // shared не имеет слайсов, плагин выше его сегменты не проверяет:
+  // сегмент shared импортируется только через свой index.ts (@/shared/ui, а не @/shared/ui/skeleton)
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/shared/**'],
+    rules: {
+      'no-restricted-imports': [
+        'warn',
+        {
+          patterns: [
+            {
+              group: ['@/shared/*/*', '!@/shared/assets/**'],
+              message: 'Импортируйте сегмент shared через его index.ts (например, @/shared/ui).'
+            }
+          ]
+        }
+      ]
     }
   }
 ]
