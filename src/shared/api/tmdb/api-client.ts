@@ -1,10 +1,11 @@
 import axios, { AxiosError } from 'axios'
 import { ITMDBError } from '@/shared/types'
+import { TMDB_API_BASE } from '@/shared/config'
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string
 
 export const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
+  baseURL: TMDB_API_BASE,
   headers: {
     'Content-Type': 'application/json'
   },

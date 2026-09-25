@@ -3,7 +3,12 @@ import { SxProps } from '@mui/material'
 export const appBarStyles: SxProps = {
   backgroundColor: 'primary.main',
   backgroundImage: 'none',
-  padding: { xs: '15px', md: '15px 30px', lg: '15px 30px' },
+  // Верхний отступ учитывает вырез/статус-бар iOS (viewport-fit=cover + black-translucent)
+  padding: {
+    xs: 'calc(15px + env(safe-area-inset-top)) 15px 15px',
+    md: 'calc(15px + env(safe-area-inset-top)) 30px 15px',
+    lg: 'calc(15px + env(safe-area-inset-top)) 30px 15px'
+  },
   display: 'flex',
   gap: 2,
   alignItems: 'center',

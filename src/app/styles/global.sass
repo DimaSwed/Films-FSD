@@ -155,3 +155,7 @@ input,
 textarea
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
+
+/* Уведомления не должны заезжать под статус-бар iOS (safe-area) */
+.notistack-SnackbarContainer.snackbar-safe-top
+  top: calc(14px + env(safe-area-inset-top))

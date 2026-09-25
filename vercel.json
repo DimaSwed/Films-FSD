@@ -1,8 +1,13 @@
 {
   "rewrites": [
+    { "source": "/tmdb/api/:path*", "destination": "https://api.themoviedb.org/3/:path*" },
+    { "source": "/tmdb/img/:path*", "destination": "https://image.tmdb.org/t/p/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/tmdb/img/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, s-maxage=31536000" }]
     }
   ]
 }

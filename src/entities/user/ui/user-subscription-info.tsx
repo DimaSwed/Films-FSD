@@ -4,6 +4,7 @@ import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@m
 
 import { useAuth } from '@/features/auth'
 import { useUserDetails } from '@/features/user'
+import { getTmdbImageUrl } from '@/shared/lib'
 import { IApiError } from '@/shared/types'
 import avatar from '@/shared/assets/images/avatar.png'
 
@@ -92,7 +93,7 @@ export const UserSubscriptionInfo: FC = () => {
     >
       {user.avatar?.tmdb?.avatar_path ? (
         <img
-          src={`https://image.tmdb.org/t/p/w500${user.avatar.tmdb.avatar_path}`}
+          src={getTmdbImageUrl(user.avatar.tmdb.avatar_path)}
           alt="avatar"
           width="90"
           height="95"

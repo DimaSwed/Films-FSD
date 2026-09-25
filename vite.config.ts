@@ -1,113 +1,155 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv, type ProxyOptions } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import path from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig(() => ({
+// TMDB недоступен напрямую из части сетей (блокировка DNS), поэтому фронтенд ходит на /tmdb/*.
+// prod: Vercel rewrites (vercel.json). dev: по умолчанию напрямую в TMDB; если он недоступен,
+// TMDB_PROXY_TARGET в .env (например, https://films-fsd.vercel.app) направляет /tmdb на задеплоенный сайт.
+const createTmdbProxy = (target?: string): Record<string, ProxyOptions> =>
+  target
+    ? { '/tmdb': { target, changeOrigin: true } }
+    : {
+        '/tmdb/api': {
+          target: 'https://api.themoviedb.org',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/tmdb\/api/, '/3')
+        },
+        '/tmdb/img': {
+          target: 'https://image.tmdb.org',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/tmdb\/img/, '/t/p')
+        }
+      }
+
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon.ico', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'favicon-96x96.png', 'apple-touch-icon.png'],
       manifest: {
+        id: '/',
         name: 'Кино Трекер',
         short_name: 'КиноТрекер',
         description: 'Твой личный список фильмов в одном месте!',
-        theme_color: '#ffffff',
-        background_color: '#000000',
+        lang: 'ru',
+        // Статичны (тема переключается в рантайме): значения тёмной темы по умолчанию.
+        // Актуальный theme-color выставляет ThemeSnackbarProvider через <meta>.
+        theme_color: '#1c1c1c',
+        background_color: '#0d0d0d',
         display: 'standalone',
-        orientation: 'portrait',
         start_url: '/',
+        scope: '/',
         icons: [
           {
             src: '/web-app-manifest-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/web-app-manifest-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
             src: '/web-app-manifest-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any'
+          },
+          // Отдельные maskable-иконки: рисунок в safe-zone (≈66%), фон на весь холст
+          {
+            src: '/pwa-maskable-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'maskable'
+          },
+          {
+            src: '/pwa-maskable-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       },
       workbox: {
+        // Статика (js/css/html/иконки) попадает в precache и обновляется вместе со сборкой
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        cleanupOutdatedCaches: true,
+        navigateFallbackDenylist: [/^\/tmdb\//],
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
+          // Каталожные запросы TMDB (через прокси /tmdb/api); account/auth не кешируем
           {
-            urlPattern: /^https:\/\/films-fsd\.vercel\.app\/.*$/,
+            urlPattern: ({ url, sameOrigin }) =>
+              sameOrigin &&
+              url.pathname.startsWith('/tmdb/api/') &&
+              !/^\/tmdb\/api\/(account|authentication)\//.test(url.pathname),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
+              networkTimeoutSeconds: 5,
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24
               },
               cacheableResponse: {
-                statuses: [0, 200]
+                statuses: [200]
               }
             }
           },
-          // Кеширование статических ресурсов
+          // Шрифты: кешируются по факту использования (нужные сабсеты), а не все сразу
           {
-            urlPattern: /\.(?:js|css|woff2?)$/i,
+            urlPattern: /\.woff2?$/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'static-resources',
+              cacheName: 'fonts',
               expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
           },
-          // Кеширование изображений
+          // Постеры и бэкдропы TMDB (через прокси /tmdb/img, same-origin)
           {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
+            urlPattern: ({ url, sameOrigin }) =>
+              sameOrigin && url.pathname.startsWith('/tmdb/img/'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'images',
               expiration: {
-                maxEntries: 60,
+                maxEntries: 150,
                 maxAgeSeconds: 60 * 60 * 24 * 30
+              },
+              cacheableResponse: {
+                statuses: [200]
               }
             }
           }
-        ],
-        // Предварительное кеширование главных ресурсов
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        skipWaiting: true,
-        clientsClaim: true
+        ]
       }
     })
   ].filter(Boolean),
+  server: {
+    host: true,
+    port: 5173,
+    strictPort: true,
+    proxy: createTmdbProxy(loadEnv(mode, process.cwd(), '').TMDB_PROXY_TARGET)
+  },
+  // console/debugger вырезаются только в production-сборке
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
+    legalComments: 'none'
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
   build: {
-    minify: 'terser',
+    // esbuild — встроен в Vite (terser не был объявлен в package.json, а подтягивался как peer)
+    minify: 'esbuild',
     chunkSizeWarningLimit: 1000,
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.info', 'console.debug', 'console.log']
-      },
-      mangle: {
-        safari10: true // Улучшение совместимости
-      },
-      format: {
-        comments: false
-      }
-    },
     // Отчет о производительности сборки
     reportCompressedSize: true,
     // Настройки CSS
