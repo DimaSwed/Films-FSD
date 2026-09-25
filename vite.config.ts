@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, type ProxyOptions } from 'vite'
+import { defineConfig, loadEnv, type Plugin, type ProxyOptions } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import path from 'path'
@@ -7,25 +7,45 @@ import { VitePWA } from 'vite-plugin-pwa'
 // TMDB недоступен напрямую из части сетей (блокировка DNS), поэтому фронтенд ходит на /tmdb/*.
 // prod: Vercel rewrites (vercel.json). dev: по умолчанию напрямую в TMDB; если он недоступен,
 // TMDB_PROXY_TARGET в .env (например, https://films-fsd.vercel.app) направляет /tmdb на задеплоенный сайт.
-const createTmdbProxy = (target?: string): Record<string, ProxyOptions> =>
-  target
-    ? { '/tmdb': { target, changeOrigin: true } }
-    : {
-        '/tmdb/api': {
-          target: 'https://api.themoviedb.org',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/tmdb\/api/, '/3')
-        },
-        '/tmdb/img': {
-          target: 'https://image.tmdb.org',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/tmdb\/img/, '/t/p')
-        }
-      }
+// Без таймаута запрос к недоступному хосту висит минутами; с ним dev быстро получает ошибку
+const PROXY_TIMEOUT_MS = 10_000
+
+const createTmdbProxy = (target?: string): Record<string, ProxyOptions> => {
+  const base = { changeOrigin: true, proxyTimeout: PROXY_TIMEOUT_MS }
+
+  if (target) return { '/tmdb': { ...base, target } }
+
+  const api = 'https://api.themoviedb.org'
+  const img = 'https://image.tmdb.org'
+  return {
+    '/tmdb/api': {
+      ...base,
+      target: api,
+      rewrite: (path) => path.replace(/^\/tmdb\/api/, '/3')
+    },
+    '/tmdb/img': {
+      ...base,
+      target: img,
+      rewrite: (path) => path.replace(/^\/tmdb\/img/, '/t/p')
+    }
+  }
+}
+
+// Показывает при старте dev-сервера, куда реально уходят запросы /tmdb
+const tmdbProxyLogger = (): Plugin => ({
+  name: 'tmdb-proxy-logger',
+  apply: 'serve',
+  configureServer(server) {
+    const proxy = server.config.server.proxy?.['/tmdb']
+    const target = typeof proxy === 'object' ? proxy.target : 'напрямую в TMDB'
+    server.config.logger.info(`  [tmdb-proxy] /tmdb → ${String(target)}`)
+  }
+})
 
 export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
+    tmdbProxyLogger(),
     tsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
@@ -134,6 +154,7 @@ export default defineConfig(({ mode }) => ({
     host: true,
     port: 5173,
     strictPort: true,
+    open: true,
     proxy: createTmdbProxy(loadEnv(mode, process.cwd(), '').TMDB_PROXY_TARGET)
   },
   // console/debugger вырезаются только в production-сборке

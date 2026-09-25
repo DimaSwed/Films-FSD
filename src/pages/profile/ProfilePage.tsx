@@ -39,6 +39,9 @@ export const ProfilePage = () => {
         <Typography variant="h5" color="text.primary" textAlign={'center'}>
           Для просмотра профиля необходимо авторизоваться
         </Typography>
+        <Typography variant="body2" color="text.primary" textAlign={'center'} sx={{ opacity: 0.7 }}>
+          Вход выполняется на сайте TMDB. В некоторых сетях он доступен только через VPN
+        </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button variant="contained" onClick={handleLogin} sx={{ color: 'primary.contrastText' }}>
             Войти
