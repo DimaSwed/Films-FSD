@@ -8,7 +8,7 @@ import {
   useWatchList
 } from '@/features/watch-list'
 import { ScrollButton } from '@/shared/ui'
-import { useEffect, useRef } from 'react'
+import { useInfiniteScroll } from '@/shared/utils'
 
 export const WatchListPage = () => {
   const {
@@ -20,36 +20,14 @@ export const WatchListPage = () => {
     handleResetFilters,
     handleScrollEnd,
     isLoading,
-    isError,
-    isFetched
+    isError
   } = useWatchList()
 
   const { mutate: removeFromWatchList } = useRemoveFromWatchList()
 
-  const bottomRef = useRef<HTMLDivElement | null>(null)
+  const sentinelRef = useInfiniteScroll(handleScrollEnd)
 
-  useEffect(() => {
-    const currentRef = bottomRef.current
-    if (!currentRef) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries
-        if (entry.isIntersecting) {
-          handleScrollEnd()
-        }
-      },
-      { threshold: 0, rootMargin: '0px 0px 400px 0px' }
-    )
-
-    observer.observe(currentRef)
-
-    return () => {
-      observer.unobserve(currentRef)
-    }
-  }, [handleScrollEnd])
-
-  const hasMovies = !isLoading && visibleMovies.length > 0
+  const hasMovies = visibleMovies.length > 0
 
   return (
     <Box
@@ -74,45 +52,31 @@ export const WatchListPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {isLoading ? (
-        <LoadingOrError isLoading={isLoading} isError={false} />
-      ) : isError ? (
-        <LoadingOrError isLoading={false} isError={true} />
-      ) : isFetched && !visibleMovies.length ? (
+      <LoadingOrError isLoading={isLoading} isError={isError} />
+
+      {!isLoading && !isError && !hasMovies && (
         <Fade in={true}>
           <Box sx={{ mt: 5 }}>
             <NoMovies />
           </Box>
         </Fade>
-      ) : (
-        <>
-          {hasMovies ? (
-            <Fade in={true}>
-              <Box display="flex" flexDirection="column" gap={2} mb={4}>
-                {visibleMovies.map((movie) => (
-                  <WatchListCard
-                    key={movie.id}
-                    movie={movie}
-                    onRemoveFromWatchlist={() => removeFromWatchList(movie.id)}
-                  />
-                ))}
-              </Box>
-            </Fade>
-          ) : (
-            !isLoading &&
-            // isFetched &&
-            visibleMovies.length === 0 && (
-              <Fade in={true}>
-                <Box sx={{ mt: 5 }}>
-                  <NoMovies />
-                </Box>
-              </Fade>
-            )
-          )}
-
-          <div ref={bottomRef} style={{ height: 1 }} />
-        </>
       )}
+
+      {hasMovies && (
+        <Fade in={true}>
+          <Box display="flex" flexDirection="column" gap={2} mb={4}>
+            {visibleMovies.map((movie) => (
+              <WatchListCard
+                key={movie.id}
+                movie={movie}
+                onRemoveFromWatchlist={() => removeFromWatchList(movie.id)}
+              />
+            ))}
+          </Box>
+        </Fade>
+      )}
+
+      <div ref={sentinelRef} style={{ height: 1 }} />
 
       <ScrollButton />
     </Box>

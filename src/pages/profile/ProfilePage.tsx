@@ -1,8 +1,8 @@
 import { useUserDetails } from '@/features/user/hooks'
 import { useSearchParams } from 'react-router-dom'
 import { useAuth, useSessionId } from '@/features/auth'
-import { Box, Typography, Avatar, Stack, Button } from '@mui/material'
-import { LoadingErrorState } from '@/shared/ui'
+import { Box, Typography, Avatar, Button } from '@mui/material'
+import { LoadingErrorState, PageShell } from '@/shared/ui'
 import { useEffect } from 'react'
 
 export const ProfilePage = () => {
@@ -26,73 +26,78 @@ export const ProfilePage = () => {
 
   if (!sessionId) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          // justifyContent: 'center',
-          gap: 2,
-          margin: '10px auto'
-        }}
-      >
-        <Typography variant="h5" color="text.primary" textAlign={'center'}>
-          Для просмотра профиля необходимо авторизоваться
-        </Typography>
-        <Typography variant="body2" color="text.primary" textAlign={'center'} sx={{ opacity: 0.7 }}>
-          Вход выполняется на сайте TMDB. В некоторых сетях он доступен только через VPN
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button variant="contained" onClick={handleLogin} sx={{ color: 'primary.contrastText' }}>
-            Войти
-          </Button>
-
-          <Button
-            variant="contained"
-            component="a"
-            href="https://www.themoviedb.org/signup"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{ color: 'primary.contrastText' }}
+      <PageShell centered>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            p: 2
+          }}
+        >
+          <Typography variant="h5" color="text.primary" textAlign={'center'}>
+            Для просмотра профиля необходимо авторизоваться
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.primary"
+            textAlign={'center'}
+            sx={{ opacity: 0.7 }}
           >
-            Регистрация
-          </Button>
+            Вход выполняется на сайте TMDB. В некоторых сетях он доступен только через VPN
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={handleLogin}
+              sx={{ color: 'primary.contrastText' }}
+            >
+              Войти
+            </Button>
+
+            <Button
+              variant="contained"
+              component="a"
+              href="https://www.themoviedb.org/signup"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ color: 'primary.contrastText' }}
+            >
+              Регистрация
+            </Button>
+          </Box>
         </Box>
-      </Box>
+      </PageShell>
     )
   }
 
   if (isLoading || isError) {
     return (
-      <LoadingErrorState
-        isLoading={isLoading}
-        isError={isError}
-        loadingText="Загружаем профиль..."
-        errorTitle="Ошибка загрузки профиля"
-        errorDescription="Не удалось загрузить данные профиля. Попробуйте позже."
-      />
+      <PageShell centered>
+        <LoadingErrorState
+          isLoading={isLoading}
+          isError={isError}
+          loadingText="Загружаем профиль..."
+          errorTitle="Ошибка загрузки профиля"
+          errorDescription="Не удалось загрузить данные профиля. Попробуйте позже."
+        />
+      </PageShell>
     )
   }
 
   if (!user) {
     return (
-      <Box sx={{ p: 3, textAlign: 'center', width: '100%' }}>
+      <PageShell centered>
         <Typography variant="h6" color="text.primary" textAlign={'center'}>
           Пользователь не найден
         </Typography>
-      </Box>
+      </PageShell>
     )
   }
 
   return (
-    <Stack
-      sx={{
-        padding: { xs: '10px', sm: '15px', md: '30px' },
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper',
-        width: '100%'
-      }}
-    >
+    <PageShell sx={{ padding: { xs: '10px', sm: '15px', md: '30px' } }}>
       <Box sx={{ textAlign: 'center', mb: 4, width: '100%' }}>
         {user.avatar?.gravatar?.hash ? (
           <Avatar
@@ -135,6 +140,6 @@ export const ProfilePage = () => {
           Выйти
         </Button>
       </Box>
-    </Stack>
+    </PageShell>
   )
 }

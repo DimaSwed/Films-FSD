@@ -9,7 +9,7 @@ import { ToggleWatchlistButton } from '@/features/watch-list'
 import { useWatchProviders } from '@/features/movie'
 import { WatchProviders } from '@/entities/movie'
 import { ToggleFavoriteButton } from '@/features/favorites'
-import { LoadingErrorState } from '@/shared/ui'
+import { EmptyState, LoadingErrorState, PageShell } from '@/shared/ui'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
@@ -19,30 +19,35 @@ export const MoviePage = () => {
 
   if (isLoading || isError) {
     return (
-      <LoadingErrorState
-        isLoading={isLoading}
-        isError={isError}
-        loadingText="Загружаем информацию о фильме..."
-        errorTitle="Ошибка загрузки фильма"
-        errorDescription="Не удалось загрузить информацию о фильме. Попробуйте позже."
-      />
+      <PageShell centered>
+        <LoadingErrorState
+          isLoading={isLoading}
+          isError={isError}
+          loadingText="Загружаем информацию о фильме..."
+          errorTitle="Ошибка загрузки фильма"
+          errorDescription="Не удалось загрузить информацию о фильме. Попробуйте позже."
+        />
+      </PageShell>
     )
   }
 
-  if (!movie) return <Box>Фильм не найден</Box>
+  if (!movie) {
+    return (
+      <PageShell centered>
+        <EmptyState
+          title="Фильм не найден"
+          description="Возможно, он был удалён или ссылка неверна."
+        />
+      </PageShell>
+    )
+  }
 
   return (
-    <Box
-      component="main"
+    <PageShell
       sx={{
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper',
-        width: '100%',
-        overflow: 'hidden',
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.3)), url(${movie.backgroundImage})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh'
+        backgroundPosition: 'center'
       }}
     >
       <Grid
@@ -117,6 +122,6 @@ export const MoviePage = () => {
           </Stack>
         </Grid>
       </Grid>
-    </Box>
+    </PageShell>
   )
 }

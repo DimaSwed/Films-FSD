@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useSessionId } from '@/features/auth'
-import { useAddToFavorites, useFavorites, useRemoveFromFavorites } from '@/features/favorites'
+import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '@/features/favorites'
 import { Button, CircularProgress } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -15,9 +15,7 @@ export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({
   showText = true
 }) => {
   const sessionId = useSessionId()
-  const { data: favorites, isLoading, isError } = useFavorites()
-
-  const isFavorite = favorites?.results?.some((m) => m.id === movieId) ?? false
+  const { isFavorite, isLoading, isError } = useIsFavorite(movieId)
 
   const { mutate: addToFavorites, isPending: isAdding } = useAddToFavorites()
   const { mutate: removeFromFavorites, isPending: isRemoving } = useRemoveFromFavorites()

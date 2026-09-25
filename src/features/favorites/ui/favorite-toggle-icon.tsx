@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useSessionId } from '@/features/auth'
-import { useAddToFavorites, useFavorites, useRemoveFromFavorites } from '@/features/favorites'
+import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '@/features/favorites'
 import { IconButton, CircularProgress } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -19,9 +19,7 @@ interface IFavoriteToggleIconProps {
 
 export const FavoriteToggleIcon: FC<IFavoriteToggleIconProps> = ({ movieId, size = 'medium' }) => {
   const sessionId = useSessionId()
-  const { data: favorites, isLoading, isError } = useFavorites()
-
-  const isFavorite = favorites?.results?.some((m) => m.id === movieId) ?? false
+  const { isFavorite, isLoading, isError } = useIsFavorite(movieId)
 
   const { mutate: addToFavorites, isPending: isAdding } = useAddToFavorites()
   const { mutate: removeFromFavorites, isPending: isRemoving } = useRemoveFromFavorites()
@@ -56,6 +54,7 @@ export const FavoriteToggleIcon: FC<IFavoriteToggleIconProps> = ({ movieId, size
   return (
     <IconButton
       size={size}
+      aria-label={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
       onClick={handleClick}
       disabled={isAdding || isRemoving || !sessionId}
       sx={{

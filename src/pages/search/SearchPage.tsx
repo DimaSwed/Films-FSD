@@ -1,6 +1,7 @@
 // src/pages/search/page.tsx
 import { Box, Typography } from '@mui/material'
 import { SearchFilters } from '@/features/search-movie'
+import { MovieCardActions } from '@/widgets'
 
 export const SearchPage = () => {
   return (
@@ -18,7 +19,7 @@ export const SearchPage = () => {
       <Typography variant="h3" gutterBottom textAlign={'center'} mb={2}>
         Поиск фильма
       </Typography>
-      <SearchFilters />
+      <SearchFilters renderMovieActions={(movie) => <MovieCardActions movieId={movie.id} />} />
     </Box>
   )
 }

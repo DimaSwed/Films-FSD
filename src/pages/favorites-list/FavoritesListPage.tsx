@@ -1,18 +1,32 @@
-import { Box, Fade, Typography } from '@mui/material'
-import { useFavoriteMovies, useFavorites } from '@/features/favorites'
-import { EmptyState, LoadingErrorState } from '@/shared/ui'
-import { SmallMovieCard } from '@/entities/movie'
-import { Stack } from '@mui/system'
+import { useCallback } from 'react'
+import { Box, Button, CircularProgress, Fade, Typography } from '@mui/material'
+import { useSessionId } from '@/features/auth'
+import { useFavoritesList } from '@/features/favorites'
+import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
+import { useInfiniteScroll } from '@/shared/utils'
+import { MovieGrid, SmallMovieCard } from '@/entities/movie'
+import { MovieCardActions } from '@/widgets'
 
 export const FavoritesListPage = () => {
-  const { data, isLoading, isError, isFetched } = useFavorites()
-  const hasIds = !isLoading && !!data?.results?.length
-
+  const sessionId = useSessionId()
   const {
-    movies,
-    isMoviesLoading: areMoviesLoading,
-    isMoviesError: areMoviesError
-  } = useFavoriteMovies(data?.results || [])
+    data: movies = [],
+    isPending,
+    isError,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    refetch
+  } = useFavoritesList()
+
+  const hasMovies = movies.length > 0
+  const isInitialLoading = !!sessionId && isPending
+
+  const handleLoadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage && !isError) fetchNextPage()
+  }, [hasNextPage, isFetchingNextPage, isError, fetchNextPage])
+
+  const sentinelRef = useInfiniteScroll(handleLoadMore)
 
   return (
     <Box
@@ -30,11 +44,21 @@ export const FavoritesListPage = () => {
       </Typography>
 
       <LoadingErrorState
-        isLoading={isLoading || areMoviesLoading}
-        isError={isError || areMoviesError}
+        isLoading={isInitialLoading}
+        isError={isError && !hasMovies}
+        retry={refetch}
       />
 
-      {isFetched && !isLoading && !isError && !hasIds && (
+      {!sessionId && (
+        <Box sx={{ mt: 5 }}>
+          <EmptyState
+            title="Войдите, чтобы увидеть избранное"
+            description="Список избранных фильмов доступен после авторизации через TMDB."
+          />
+        </Box>
+      )}
+
+      {!!sessionId && !isPending && !isError && !hasMovies && (
         <Fade in={true}>
           <Box sx={{ mt: 5 }}>
             <EmptyState
@@ -45,23 +69,39 @@ export const FavoritesListPage = () => {
         </Fade>
       )}
 
-      {!!movies.length && !areMoviesLoading && !areMoviesError && (
+      {hasMovies && (
         <Fade in={true}>
-          <Box
-            display="grid"
-            gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-            gap={2}
-            justifyContent="center"
-            mb={4}
-          >
-            {movies.map((movie) => (
-              <Stack key={movie?.id} position="relative">
-                <SmallMovieCard movie={movie} />
-              </Stack>
-            ))}
+          <Box mb={4}>
+            <MovieGrid>
+              {movies.map((movie) => (
+                <SmallMovieCard
+                  key={movie.id}
+                  movie={movie}
+                  actions={<MovieCardActions movieId={movie.id} />}
+                />
+              ))}
+            </MovieGrid>
           </Box>
         </Fade>
       )}
+
+      {isFetchingNextPage && (
+        <Box display="flex" justifyContent="center" mb={4}>
+          <CircularProgress sx={{ color: 'primary.light' }} />
+        </Box>
+      )}
+
+      {isError && hasMovies && (
+        <Box display="flex" justifyContent="center" mb={4}>
+          <Button variant="outlined" onClick={() => fetchNextPage()}>
+            Не удалось загрузить ещё. Попробовать снова
+          </Button>
+        </Box>
+      )}
+
+      <div ref={sentinelRef} style={{ height: 1 }} />
+
+      <ScrollButton />
     </Box>
   )
 }

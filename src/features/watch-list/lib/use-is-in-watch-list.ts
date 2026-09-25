@@ -1,19 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
 import { useSessionId } from '@/features/auth'
-import { watchListApi } from '@/features/watch-list/api'
+import { useMovieAccountState } from '@/features/movie'
 
 export const useIsInWatchlist = (movieId: number) => {
   const sessionId = useSessionId()
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['movie-watchlist-state', movieId, sessionId],
-    queryFn: () => watchListApi.getWatchlistStatus(movieId, sessionId!),
-    enabled: !!sessionId && !!movieId,
-    staleTime: 1000 * 60 * 5
-  })
+  const { data, isLoading } = useMovieAccountState(movieId, (state) => state.watchlist)
 
   return {
-    isInWatchlist: data?.watchlist ?? false,
+    isInWatchlist: data ?? false,
     isLoading: !!sessionId && isLoading
   }
 }

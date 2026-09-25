@@ -1,7 +1,7 @@
 import { Box, Typography, Card, CardContent } from '@mui/material'
 import { useUpcomingMovies } from '@/features/movies'
 import { useMovieTrailers } from '@/features/movies'
-import { LoadingErrorState } from '@/shared/ui'
+import { LoadingErrorState, PageShell } from '@/shared/ui'
 
 export const TrailersPage = () => {
   const { data: movies, isLoading, isError } = useUpcomingMovies()
@@ -9,25 +9,20 @@ export const TrailersPage = () => {
 
   if (isLoading || isError) {
     return (
-      <LoadingErrorState
-        isLoading={isLoading}
-        isError={isError}
-        loadingText="Загружаем трейлеры..."
-        errorTitle="Ошибка загрузки трейлеров"
-        errorDescription="Не удалось загрузить список трейлеров. Попробуйте позже."
-      />
+      <PageShell centered>
+        <LoadingErrorState
+          isLoading={isLoading}
+          isError={isError}
+          loadingText="Загружаем трейлеры..."
+          errorTitle="Ошибка загрузки трейлеров"
+          errorDescription="Не удалось загрузить список трейлеров. Попробуйте позже."
+        />
+      </PageShell>
     )
   }
 
   return (
-    <Box
-      sx={{
-        padding: { xs: '10px', sm: '15px', md: '30px' },
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper',
-        width: '100%'
-      }}
-    >
+    <PageShell sx={{ padding: { xs: '10px', sm: '15px', md: '30px' } }}>
       <Box sx={{ textAlign: 'center', mb: 4, width: '100%' }}>
         <Typography variant="h4" gutterBottom>
           Последние трейлеры
@@ -106,6 +101,6 @@ export const TrailersPage = () => {
           })}
         </Box>
       </Box>
-    </Box>
+    </PageShell>
   )
 }

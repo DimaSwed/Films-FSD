@@ -1,13 +1,15 @@
+import { ReactNode } from 'react'
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { SmallMovieCard } from '@/entities/movie'
+import { MovieGrid, SmallMovieCard } from '@/entities/movie'
 import { IMovie } from '@/shared/types'
 
 interface IMoviesGridProps {
   movies: IMovie[]
   isLoading: boolean
+  renderActions?: (movie: IMovie) => ReactNode
 }
 
-export const MoviesGrid = ({ movies, isLoading }: IMoviesGridProps) => {
+export const MoviesGrid = ({ movies, isLoading, renderActions }: IMoviesGridProps) => {
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -25,23 +27,12 @@ export const MoviesGrid = ({ movies, isLoading }: IMoviesGridProps) => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', padding: '0 10px', gap: '16px' }}>
-      {movies.map((movie) => (
-        <Box
-          key={movie.id}
-          sx={{
-            flex: {
-              xs: '1 1 100%',
-              sm: '1 1 calc(50% - 16px)',
-              md: '1 1 calc(33.33% - 16px)',
-              lg: '1 1 calc(25% - 16px)'
-            },
-            boxSizing: 'border-box'
-          }}
-        >
-          <SmallMovieCard movie={movie} />
-        </Box>
-      ))}
+    <Box sx={{ width: '100%' }}>
+      <MovieGrid>
+        {movies.map((movie) => (
+          <SmallMovieCard key={movie.id} movie={movie} actions={renderActions?.(movie)} />
+        ))}
+      </MovieGrid>
     </Box>
   )
 }

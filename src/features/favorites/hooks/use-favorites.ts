@@ -1,33 +1,53 @@
-import { useMutation, useQuery, useQueryClient, useQueries } from '@tanstack/react-query'
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { favoritesApi } from '@/features/favorites'
 import { useSessionId } from '@/features/auth'
 import { useUserDetails } from '@/features/user'
-import { IMovieDetails, movieApi, transformMovieDetails } from '@/features/movie'
-import { IFavoriteMovie, IFavoritesResponse } from '@/features/favorites/types'
+import { useMovieAccountState, useUpdateMovieAccountState } from '@/features/movie'
+import { IFavoritesResponse } from '@/features/favorites/types'
 import { IMovie } from '@/shared/types'
 import { useNotification } from '@/shared/notifications'
 
-export const useFavorites = () => {
+/** Список избранного с серверной пагинацией TMDB (по странице за запрос). */
+export const useFavoritesList = () => {
   const sessionId = useSessionId()
-  const { data: userDetails, isSuccess: isUserLoaded } = useUserDetails()
+  const { data: userDetails } = useUserDetails()
+  const userId = userDetails?.id
 
-  return useQuery<IFavoritesResponse>({
-    queryKey: ['favorites', userDetails?.id],
-    queryFn: () => {
-      if (!sessionId || !userDetails?.id) {
+  return useInfiniteQuery({
+    queryKey: ['favorites', userId],
+    queryFn: ({ pageParam }) => {
+      if (!sessionId || !userId) {
         throw new Error('Authentication required')
       }
-      return favoritesApi.getFavorites(sessionId, userDetails.id)
+      return favoritesApi.getFavorites(sessionId, userId, pageParam)
     },
-    enabled: !!sessionId && isUserLoaded && !!userDetails?.id,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
+    // Страницы TMDB сдвигаются, если список изменился во время скролла — убираем дубли.
+    select: (data): IMovie[] => [
+      ...new Map(
+        data.pages.flatMap((page) => page.results).map((movie) => [movie.id, movie])
+      ).values()
+    ],
+    enabled: !!sessionId && !!userId,
     staleTime: 1000 * 60 * 5,
     retry: 2
   })
 }
+
+/** Находится ли фильм в избранном — точечный запрос, не зависит от загрузки списка. */
+export const useIsFavorite = (movieId: number) => {
+  const { data, isLoading, isError } = useMovieAccountState(movieId, (state) => state.favorite)
+
+  return { isFavorite: data ?? false, isLoading, isError }
+}
+
 export const useAddToFavorites = () => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: userDetails } = useUserDetails()
+  const updateAccountState = useUpdateMovieAccountState()
   const { success, errors } = useNotification()
 
   return useMutation({
@@ -38,20 +58,8 @@ export const useAddToFavorites = () => {
       return favoritesApi.addToFavorites(movieId, sessionId, userDetails.id)
     },
     onSuccess: (_, movieId) => {
-      queryClient.setQueryData<IFavoritesResponse>(['favorites', userDetails?.id], (old) => {
-        if (!old)
-          return {
-            results: [{ id: movieId } as IMovie],
-            page: 1,
-            total_pages: 1,
-            total_results: 1
-          }
-        return {
-          ...old,
-          results: [...old.results, { id: movieId } as IMovie],
-          total_results: (old.total_results || 0) + 1
-        }
-      })
+      updateAccountState(movieId, { favorite: true })
+      queryClient.invalidateQueries({ queryKey: ['favorites', userDetails?.id] })
       success('Фильм добавлен в избранное!')
     },
     onError: () => {
@@ -64,6 +72,7 @@ export const useRemoveFromFavorites = () => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: userDetails } = useUserDetails()
+  const updateAccountState = useUpdateMovieAccountState()
   const { success, errors } = useNotification()
 
   return useMutation({
@@ -74,49 +83,27 @@ export const useRemoveFromFavorites = () => {
       return favoritesApi.removeFromFavorites(movieId, sessionId, userDetails.id)
     },
     onSuccess: (_, movieId) => {
-      queryClient.setQueryData<IFavoritesResponse>(['favorites', userDetails?.id], (old) => {
-        if (!old)
-          return {
-            results: [],
-            page: 1,
-            total_pages: 0,
-            total_results: 0
+      const queryKey = ['favorites', userDetails?.id]
+
+      updateAccountState(movieId, { favorite: false })
+      // Мгновенно убираем фильм из UI, затем invalidate выравнивает границы страниц с сервером.
+      queryClient.setQueryData<InfiniteData<IFavoritesResponse>>(
+        queryKey,
+        (old) =>
+          old && {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              results: page.results.filter((movie) => movie.id !== movieId),
+              total_results: Math.max(page.total_results - 1, 0)
+            }))
           }
-        return {
-          ...old,
-          results: old.results.filter((m) => m.id !== movieId),
-          total_results: Math.max((old.total_results || 1) - 1, 0)
-        }
-      })
+      )
+      queryClient.invalidateQueries({ queryKey })
       success('Фильм удалён из избранного')
     },
     onError: () => {
       errors('Ошибка при удалении из избранного')
     }
   })
-}
-
-export const useFavoriteMovies = (favoriteList: IFavoriteMovie[] | []) => {
-  const movieQueries = useQueries({
-    queries:
-      favoriteList?.map(({ id }) => ({
-        queryKey: ['movie', id],
-        queryFn: async () => {
-          const response = await movieApi.getById(id)
-          return transformMovieDetails(response.data)
-        },
-        staleTime: 86400 * 1000
-      })) || []
-  })
-
-  const isMoviesLoading = movieQueries.some((q) => q.isLoading)
-  const isMoviesError = movieQueries.some((q) => q.isError)
-
-  const movies = movieQueries.map((q) => q.data).filter((movie): movie is IMovieDetails => !!movie)
-
-  return {
-    movies,
-    isMoviesLoading,
-    isMoviesError
-  }
 }

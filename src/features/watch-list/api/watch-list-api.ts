@@ -2,12 +2,6 @@ import { api } from '@/shared/api/tmdb'
 import { IMovie, IMovieRaw, IPaginatedResponse } from '@/shared/types'
 import { transformMovie } from '@/shared/lib'
 
-interface IAccountState {
-  id: number
-  watchlist: boolean
-  favorite: boolean
-}
-
 export const watchListApi = {
   addToWatchlist: (movieId: number, sessionId: string, accountId: number) =>
     api.post(
@@ -68,10 +62,16 @@ export const watchListApi = {
     )
   },
 
-  getWatchlistStatus: async (movieId: number, sessionId: string): Promise<IAccountState> => {
-    const response = await api.get<IAccountState>(`/movie/${movieId}/account_states`, {
-      params: { session_id: sessionId }
-    })
-    return response.data
+  /** Первая страница, затем остальные параллельно (total_pages известен после первой). */
+  getAllWatchlistMovies: async (sessionId: string, accountId: number): Promise<IMovie[]> => {
+    const first = await watchListApi.getWatchlistMovies(sessionId, accountId, 1)
+
+    const rest = await Promise.all(
+      Array.from({ length: Math.max(first.total_pages - 1, 0) }, (_, i) =>
+        watchListApi.getWatchlistMovies(sessionId, accountId, i + 2)
+      )
+    )
+
+    return [first, ...rest].flatMap((page) => page.results)
   }
 }

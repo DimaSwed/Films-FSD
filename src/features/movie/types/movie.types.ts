@@ -12,6 +12,12 @@ export interface IMovieDetails {
   genres: { id: number; name: string }[]
 }
 
+export interface IAccountState {
+  id: number
+  favorite: boolean
+  watchlist: boolean
+}
+
 export interface IApiMovieResponse {
   id: number
   title: string

@@ -1,4 +1,4 @@
-import { FC, useState, useMemo, useEffect } from 'react'
+import { FC, ReactNode, useState, useMemo, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 import { Stack } from '@mui/material'
 import {
@@ -16,6 +16,7 @@ import {
   useSearchMovies
 } from '@/features/search-movie/hooks/use-search-movies'
 import { CRITERIA_MAP, RECOMMENDATION_MAP } from '@/features/search-movie/types/search.types'
+import { IMovie } from '@/shared/types'
 
 const containerStyles = {
   display: 'flex',
@@ -38,7 +39,11 @@ const filtersStackStyles = {
   mb: { xs: 0, sm: 2 }
 }
 
-export const SearchFilters: FC = () => {
+interface ISearchFiltersProps {
+  renderMovieActions?: (movie: IMovie) => ReactNode
+}
+
+export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [selectedGenre, setSelectedGenre] = useState<number | ''>('')
   const [selectedRecommendation, setSelectedRecommendation] = useState<string>('recommendations')
@@ -100,7 +105,11 @@ export const SearchFilters: FC = () => {
         />
       </Stack>
 
-      <MoviesGrid movies={moviesToDisplay} isLoading={isSearching || moviesLoading} />
+      <MoviesGrid
+        movies={moviesToDisplay}
+        isLoading={isSearching || moviesLoading}
+        renderActions={renderMovieActions}
+      />
     </Box>
   )
 }
