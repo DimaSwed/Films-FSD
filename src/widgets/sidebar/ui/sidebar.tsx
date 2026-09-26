@@ -20,8 +20,7 @@ import {
   List as ListIcon
 } from '@mui/icons-material'
 import { SidebarItem } from '@/widgets/sidebar'
-import { UserSubscriptionInfo } from '@/entities/user'
-import { useSessionId } from '@/features/auth'
+import { UserSubscriptionInfo, useSessionId } from '@/features/auth'
 
 export const Sidebar: FC = () => {
   const theme = useTheme()

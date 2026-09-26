@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { Header } from '@/widgets'
 import { Sidebar } from '@/widgets'
-import { useAuthCallbackHandler } from '@/shared/utils'
+import { useAuthCallbackHandler } from '@/features/auth'
 
 export function App() {
   useAuthCallbackHandler()

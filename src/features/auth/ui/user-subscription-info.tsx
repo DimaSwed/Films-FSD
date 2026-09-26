@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@mui/material'
 
-import { useAuth } from '@/features/auth'
+import { useAuth } from '../hooks'
 import { useUserDetails } from '@/features/user'
 import { getTmdbImageUrl } from '@/shared/lib'
 import { IApiError } from '@/shared/types'

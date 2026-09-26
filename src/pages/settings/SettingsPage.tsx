@@ -12,7 +12,7 @@ import {
   Link as MuiLink
 } from '@mui/material'
 import { Settings, Support, Email, PrivacyTip } from '@mui/icons-material'
-import { UserSubscriptionInfo } from '@/entities/user'
+import { UserSubscriptionInfo } from '@/features/auth'
 import { Link } from 'react-router-dom'
 
 export const SettingsPage: FC = () => {
