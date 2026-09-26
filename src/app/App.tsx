@@ -1,8 +1,10 @@
+import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { Header } from '@/widgets/header'
 import { Sidebar } from '@/widgets/sidebar'
 import { useAuthCallbackHandler } from '@/features/auth'
+import { LoadingErrorState, PageShell } from '@/shared/ui'
 
 export function App() {
   useAuthCallbackHandler()
@@ -30,7 +32,15 @@ export function App() {
             maxHeight: '100vh'
           }}
         >
-          <Outlet />
+          <Suspense
+            fallback={
+              <PageShell centered>
+                <LoadingErrorState isLoading isError={false} />
+              </PageShell>
+            }
+          >
+            <Outlet />
+          </Suspense>
         </Box>
 
         {/* Sidebar справа */}

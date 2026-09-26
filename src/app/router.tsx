@@ -1,18 +1,25 @@
+import { ComponentType, lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
+// Страница 404 остаётся в основном бандле: она же errorElement и должна открываться без загрузки
 import { NotFoundPage } from '@/pages/not-found'
-import { HomePage } from '@/pages/home'
-import { ProfilePage } from '@/pages/profile'
-import { SettingsPage } from '@/pages/settings'
-import { LegalInfoPage } from '@/pages/legal-info'
-import { TrailersPage } from '@/pages/trailers'
-import { MoviePage } from '@/pages/movie'
-import { MoviesPage } from '@/pages/movies'
-import { SearchPage } from '@/pages/search'
-import { WatchListPage } from '@/pages/watch-list'
-import { CategoryMoviesPage } from '@/pages/category'
-import { GenreMoviesPage } from '@/pages/genre'
-import { FavoritesListPage } from '@/pages/favorites-list'
+
+/** Страница подгружается отдельным чанком при первом заходе на маршрут. */
+const lazyPage = <K extends string>(load: () => Promise<Record<K, ComponentType>>, name: K) =>
+  lazy(() => load().then((module) => ({ default: module[name] })))
+
+const HomePage = lazyPage(() => import('@/pages/home'), 'HomePage')
+const ProfilePage = lazyPage(() => import('@/pages/profile'), 'ProfilePage')
+const SettingsPage = lazyPage(() => import('@/pages/settings'), 'SettingsPage')
+const LegalInfoPage = lazyPage(() => import('@/pages/legal-info'), 'LegalInfoPage')
+const TrailersPage = lazyPage(() => import('@/pages/trailers'), 'TrailersPage')
+const MoviePage = lazyPage(() => import('@/pages/movie'), 'MoviePage')
+const MoviesPage = lazyPage(() => import('@/pages/movies'), 'MoviesPage')
+const SearchPage = lazyPage(() => import('@/pages/search'), 'SearchPage')
+const WatchListPage = lazyPage(() => import('@/pages/watch-list'), 'WatchListPage')
+const CategoryMoviesPage = lazyPage(() => import('@/pages/category'), 'CategoryMoviesPage')
+const GenreMoviesPage = lazyPage(() => import('@/pages/genre'), 'GenreMoviesPage')
+const FavoritesListPage = lazyPage(() => import('@/pages/favorites-list'), 'FavoritesListPage')
 
 export const router = createBrowserRouter([
   {

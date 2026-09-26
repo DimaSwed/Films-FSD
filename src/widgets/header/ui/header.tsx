@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '@/features/auth/'
 import { useSessionId } from '@/entities/user'
 import { ChangeThemeButton } from '@/features/theme'
-import { SettingsButton } from '@/features/settings'
 import { SearchMovieButton } from '@/features/search-movie/'
 import { appBarStyles, boxStyles, buttonContainerStyles, stackStyles } from '../styles'
+import { SettingsButton } from './settings-button'
 
 export const Header: FC = () => {
   const { createRequestToken, logout } = useAuth()

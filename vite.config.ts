@@ -201,12 +201,8 @@ export default defineConfig(({ mode }) => ({
             return 'vendor_other'
           }
 
-          // Разделение кода приложения на логические модули
-          if (id.includes('/src/features/')) return 'features'
-          if (id.includes('/src/entities/')) return 'entities'
-          if (id.includes('/src/shared/')) return 'shared'
-          if (id.includes('/src/pages/')) return 'pages'
-          if (id.includes('/src/widgets/')) return 'widgets'
+          // Код приложения (src/) не группируем по FSD-слоям: страницы подгружаются лениво
+          // (app/router.tsx), и группировка склеила бы их в один чанк, загружаемый сразу.
         },
         entryFileNames: `assets/[name]-[hash].js`,
         chunkFileNames: `assets/[name]-[hash].js`,
