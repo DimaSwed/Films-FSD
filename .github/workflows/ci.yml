@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # версия pnpm берётся из поля packageManager в package.json
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # ESLint, включая границы FSD (все правила — error)
+      - run: pnpm lint
+      # Структура слайсов (Steiger)
+      - run: pnpm lint:fsd
+      # Циклические зависимости (madge)
+      - run: pnpm lint:cycles
+      # tsc -b && vite build
+      - run: pnpm build
