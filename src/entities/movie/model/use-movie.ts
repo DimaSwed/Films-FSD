@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { movieApi } from '@/features/movie'
-import { transformMovieDetails } from '@/features/movie/'
-import { IMovieDetails } from '@/features/movie'
 import { useNotification } from '@/shared/notifications'
+import { movieApi } from '../api'
+import { transformMovieDetails } from '../lib'
+import { IMovieDetails } from './movie.types'
 
 export const useMovie = (id: number) => {
   const { errors } = useNotification()

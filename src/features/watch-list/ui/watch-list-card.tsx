@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
-import { useWatchProviders } from '@/features/movie'
-import { WatchProviders } from '@/entities/movie'
+import { WatchProviders, useWatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/types'
 import { RemoveButton, ToggleDescriptionButton } from '@/shared/ui'
 import { RatingDisplay } from '@/shared/ui'

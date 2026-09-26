@@ -1,7 +1,7 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { favoritesApi } from '@/features/favorites'
 import { useSessionId, useUserDetails } from '@/entities/user'
-import { useMovieAccountState, useUpdateMovieAccountState } from '@/features/movie'
+import { useMovieAccountState, useUpdateMovieAccountState } from '@/entities/movie'
 import { IFavoritesResponse } from '@/features/favorites/types'
 import { IMovie } from '@/shared/types'
 import { useNotification } from '@/shared/notifications'

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { movieApi } from '../api/movie-api'
+import { movieApi } from '../api'
 
 export const useWatchProviders = (id: number) => {
   return useQuery({

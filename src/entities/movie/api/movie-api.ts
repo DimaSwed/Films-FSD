@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/tmdb'
-import { IAccountState, IApiMovieResponse } from '@/features/movie'
+import { IAccountState, IApiMovieResponse } from '../model/movie.types'
 
 export const movieApi = {
   getById: (id: number) => api.get<IApiMovieResponse>(`/movie/${id}?language=ru-RU`),

@@ -1,4 +1,4 @@
-import { IMovieDetails, IApiMovieResponse } from '@/features/movie'
+import { IMovieDetails, IApiMovieResponse } from '../model/movie.types'
 import { getTmdbImageUrl } from '@/shared/lib'
 
 export const transformMovieDetails = (data: IApiMovieResponse): IMovieDetails => {

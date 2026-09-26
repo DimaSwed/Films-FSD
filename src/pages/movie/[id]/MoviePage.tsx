@@ -4,10 +4,8 @@ import { Box, Typography, Card, CardMedia, Grid } from '@mui/material'
 
 import { Stack } from '@mui/system'
 
-import { useMovie } from '@/features/movie/hooks/use-movie'
 import { ToggleWatchlistButton } from '@/features/watch-list'
-import { useWatchProviders } from '@/features/movie'
-import { WatchProviders } from '@/entities/movie'
+import { WatchProviders, useMovie, useWatchProviders } from '@/entities/movie'
 import { ToggleFavoriteButton } from '@/features/favorites'
 import { EmptyState, LoadingErrorState, PageShell } from '@/shared/ui'
 
