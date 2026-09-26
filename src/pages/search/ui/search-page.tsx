@@ -1,7 +1,7 @@
 // src/pages/search/page.tsx
 import { Box, Typography } from '@mui/material'
 import { SearchFilters } from '@/features/search-movie'
-import { MovieCardActions } from '@/widgets'
+import { MovieCardActions } from '@/widgets/movie-card-actions'
 
 export const SearchPage = () => {
   return (

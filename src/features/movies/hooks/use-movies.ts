@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '@/features/movies'
+import { moviesApi } from '../api'
 import { useNotification } from '@/shared/notifications'
 
 export const useUpcomingMovies = () => {

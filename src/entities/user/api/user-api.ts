@@ -1,5 +1,5 @@
-import { api } from '@/shared/api/tmdb'
-import { IUserDetails } from '../model/user.types'
+import { api } from '@/shared/api'
+import type { IUserDetails } from '../model'
 
 export const userApi = {
   getUserDetails: async (sessionId: string): Promise<IUserDetails> => {

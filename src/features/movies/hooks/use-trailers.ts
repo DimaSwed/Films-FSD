@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { trailerApi } from '@/features/movies'
-import { ITrailer } from '@/features/movies'
+import { trailerApi } from '../api'
+import { ITrailer } from '../types'
 import { useNotification } from '@/shared/notifications'
 
 export const useMovieTrailers = (movieIds: number[]) => {

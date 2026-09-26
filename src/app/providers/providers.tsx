@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
-import { QueryProvider } from '@/app/providers/query-provider'
-import { ThemeSnackbarProvider } from '@/app/providers/theme-provider'
+import { QueryProvider } from './query-provider'
+import { ThemeSnackbarProvider } from './theme-provider'
 
 interface IAppProvidersProps {
   children: ReactNode

@@ -54,10 +54,10 @@ export default [
     }
   },
 
-  // Границы FSD. Пока идёт рефакторинг — warn;
+  // Границы FSD. Нарушений в проекте 0 — любое новое нарушение это error
   {
     ...featureSliced({
-      severity: 'warn',
+      severity: 'error',
       // Импорт порядка отдаёт prettier/ручной стиль — не переписываем все файлы
       sortImports: false,
       // 'segments' ловит и импорты вида @/pages/home/HomePage (файл в корне слайса).
@@ -75,7 +75,7 @@ export default [
     ignores: ['src/shared/**'],
     rules: {
       'no-restricted-imports': [
-        'warn',
+        'error',
         {
           patterns: [
             {

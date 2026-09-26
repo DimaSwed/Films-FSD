@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { searchApi } from '@/features/search-movie'
+import { searchApi } from '../api'
 import { IMovie } from '@/shared/types'
-import { IMovieFilterParams, IMoviesResponseData } from '@/features/search-movie'
+import { IMovieFilterParams, IMoviesResponseData } from '../types'
 import { useNotification } from '@/shared/notifications'
 
 export const useSearchMovies = (query: string) => {

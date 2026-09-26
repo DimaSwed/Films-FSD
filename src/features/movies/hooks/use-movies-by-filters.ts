@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '@/features/movies'
-import { IMoviesFilters } from '@/features/movies/types'
+import { moviesApi } from '../api'
+import { IMoviesFilters } from '../types'
 import { IMovie } from '@/shared/types'
 import { useNotification } from '@/shared/notifications'
 

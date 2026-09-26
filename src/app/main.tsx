@@ -2,9 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 
-import { AppProviders } from '@/app/providers/providers'
-import { router } from '@/app/router'
-import '@/app/styles/global.sass'
+import { AppProviders } from './providers/providers'
+import { router } from './router'
+import './styles/global.sass'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

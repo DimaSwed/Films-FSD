@@ -1,13 +1,13 @@
 import { Box, Typography } from '@mui/material'
-import { MovieCategory } from '@/features/movies/'
 import {
+  MovieCategory,
+  ICategory,
   useUpcomingMovies,
   useTopRatedMovies,
   usePopularMovies,
   useNowPlayingMovies,
   useTrendingMovies
 } from '@/features/movies'
-import { ICategory } from '@/features/movies/types/movies.types'
 
 export const HomePage = () => {
   const { data: nowPlayingMovies, isLoading: isLoadingNowPlaying } = useNowPlayingMovies()

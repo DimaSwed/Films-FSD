@@ -6,10 +6,9 @@ import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDebounce } from 'use-debounce'
 
-import { useSearchMovies } from '@/features/search-movie'
-import { getSearchHistory, setSearchHistory } from '@/features/search-movie'
-import { announceToScreenReader } from '@/features/search-movie'
-import { Movie } from '@/features/search-movie/'
+import { useSearchMovies } from '../hooks'
+import { getSearchHistory, setSearchHistory, announceToScreenReader } from '../lib'
+import { Movie } from '../types'
 import {
   searchButtonStyles,
   searchBoxStyles,
@@ -18,7 +17,7 @@ import {
   historyStyles,
   movieItemStyles,
   emptyResultStyles
-} from '@/features/search-movie/ui/styles/search-movie-button.styles'
+} from './styles/search-movie-button.styles'
 
 export const SearchMovieButton = () => {
   const [searchOpen, setSearchOpen] = useState(false)

@@ -1,4 +1,4 @@
-import { EmptyState } from '@/shared/ui/empty-state/empty-state'
+import { EmptyState } from '@/shared/ui'
 
 export const NoMovies = () => (
   <EmptyState

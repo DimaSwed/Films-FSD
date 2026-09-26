@@ -1,4 +1,4 @@
-import { TMDB_IMAGE_BASE } from '@/shared/config'
+import { TMDB_IMAGE_BASE } from '../config'
 
 export type TTmdbImageSize = 'w45' | 'w500' | 'original'
 

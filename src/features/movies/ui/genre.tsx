@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { useMoviesByFilters } from '@/features/movies/'
-import { MovieCategory } from '@/features/movies/'
-import { IGenreProps } from '@/features/movies/'
+import { useMoviesByFilters } from '../hooks'
+import { IGenreProps } from '../types'
+import { MovieCategory } from './movie-category'
 
 export const Genre: React.FC<IGenreProps> = ({ id, title }) => {
   const { data, isLoading } = useMoviesByFilters({

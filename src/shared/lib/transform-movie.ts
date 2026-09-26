@@ -1,5 +1,5 @@
-import { IMovieRaw, IMovie } from '@/shared/types'
-import { genreMap } from '@/shared/constants'
+import { IMovieRaw, IMovie } from '../types'
+import { genreMap } from '../constants'
 import { getTmdbImageUrl } from './tmdb-image'
 
 export const transformMovie = (raw: IMovieRaw): IMovie => ({

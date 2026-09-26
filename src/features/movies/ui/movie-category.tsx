@@ -3,11 +3,11 @@ import { Box, Typography, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { MovieCard } from '@/entities/movie'
-import { SkeletonMovieCard } from '@/shared/ui/skeleton'
+import { SkeletonMovieCard } from '@/shared/ui'
 import { IMovie } from '@/shared/types'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import '@/features/movies/styles/arrow.sass'
+import './arrow.sass'
 
 export interface IMovieCategoryProps {
   title: string

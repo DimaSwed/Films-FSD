@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useSessionId } from '@/entities/user'
-import { useAddToWatchlist, useRemoveFromWatchList, useIsInWatchlist } from '@/features/watch-list'
+import { useAddToWatchlist, useRemoveFromWatchList } from '../hooks'
+import { useIsInWatchlist } from '../lib'
 import { Button, CircularProgress } from '@mui/material'
 import { CheckCircle } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'

@@ -3,9 +3,8 @@ import { CssBaseline, IconButton, ThemeProvider } from '@mui/material'
 import { SnackbarProvider, closeSnackbar } from 'notistack'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { lightTheme, darkTheme } from '@/app/styles/theme'
-import { ThemeContext } from '@/features/theme/model/theme-context'
-import { useTheme } from '@/features/theme/model/use-theme'
+import { lightTheme, darkTheme } from '../styles/theme'
+import { ThemeContext, useTheme } from '@/features/theme'
 
 interface IThemeSnackbarProviderProps {
   children: ReactNode

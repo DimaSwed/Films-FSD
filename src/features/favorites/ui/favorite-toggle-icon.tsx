@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useSessionId } from '@/entities/user'
-import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '@/features/favorites'
+import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../hooks'
 import { IconButton, CircularProgress } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'

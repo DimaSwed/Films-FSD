@@ -1,4 +1,4 @@
-import { YearLists } from '@/shared/types/common.types'
+import { YearLists } from '../types'
 
 export const YEARS_LIST: YearLists[] = [
   'до 1980',

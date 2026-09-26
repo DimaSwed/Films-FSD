@@ -1,4 +1,4 @@
-import { api } from '@/shared/api/tmdb'
+import { api } from '@/shared/api'
 import { IMovieRaw } from '@/shared/types'
 import { transformMovie } from '@/shared/lib'
 

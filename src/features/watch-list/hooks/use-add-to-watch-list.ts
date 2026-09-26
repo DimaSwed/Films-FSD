@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { watchListApi } from '@/features/watch-list/'
+import { watchListApi } from '../api'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { useUpdateMovieAccountState } from '@/entities/movie'
 import { useNotification } from '@/shared/notifications'

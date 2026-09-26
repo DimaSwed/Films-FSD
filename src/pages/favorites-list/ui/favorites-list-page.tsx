@@ -5,7 +5,7 @@ import { useFavoritesList } from '@/features/favorites'
 import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
 import { useInfiniteScroll } from '@/shared/utils'
 import { MovieGrid, SmallMovieCard } from '@/entities/movie'
-import { MovieCardActions } from '@/widgets'
+import { MovieCardActions } from '@/widgets/movie-card-actions'
 
 export const FavoritesListPage = () => {
   const sessionId = useSessionId()

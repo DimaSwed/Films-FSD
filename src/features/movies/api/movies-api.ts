@@ -1,7 +1,7 @@
-import { api } from '@/shared/api/tmdb'
+import { api } from '@/shared/api'
 import { IMovie, IMovieRaw } from '@/shared/types'
 import { transformMovie } from '@/shared/lib'
-import { IMoviesFilters } from '@/features/movies'
+import { IMoviesFilters } from '../types'
 
 export const moviesApi = {
   getUpcoming: async (): Promise<IMovie[]> => {

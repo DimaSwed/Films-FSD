@@ -1,21 +1,18 @@
 import { FC, ReactNode, useState, useMemo, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 import { Stack } from '@mui/material'
+import { Box } from '@mui/system'
+import { SearchInput } from './search-input'
 import {
-  SearchInput,
   GenreFilter,
   CountryFilter,
   YearFilter,
   RecommendationFilter,
-  CriteriaToggle,
-  MoviesGrid
-} from '@/features/search-movie/ui'
-import { Box } from '@mui/system'
-import {
-  useMoviesByFilters,
-  useSearchMovies
-} from '@/features/search-movie/hooks/use-search-movies'
-import { CRITERIA_MAP, RECOMMENDATION_MAP } from '@/features/search-movie/types/search.types'
+  CriteriaToggle
+} from './filters'
+import { MoviesGrid } from './movies-grid'
+import { useMoviesByFilters, useSearchMovies } from '../hooks'
+import { CRITERIA_MAP, RECOMMENDATION_MAP } from '../types'
 import { IMovie } from '@/shared/types'
 
 const containerStyles = {
