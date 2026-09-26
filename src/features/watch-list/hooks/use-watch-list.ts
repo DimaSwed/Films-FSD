@@ -3,8 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { SelectChangeEvent } from '@mui/material'
 import { watchListApi } from '@/features/watch-list'
 import { filterAndSortMovies } from '@/features/watch-list/lib'
-import { useSessionId } from '@/features/auth'
-import { useUserDetails } from '@/features/user'
+import { useSessionId, useUserDetails } from '@/entities/user'
 
 const BATCH_SIZE = 20
 

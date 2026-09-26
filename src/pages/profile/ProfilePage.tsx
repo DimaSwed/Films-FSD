@@ -1,6 +1,6 @@
-import { useUserDetails } from '@/features/user/hooks'
+import { useSessionId, useUserDetails } from '@/entities/user'
 import { useSearchParams } from 'react-router-dom'
-import { useAuth, useSessionId } from '@/features/auth'
+import { useAuth } from '@/features/auth'
 import { Box, Typography, Avatar, Button } from '@mui/material'
 import { LoadingErrorState, PageShell } from '@/shared/ui'
 import { useEffect } from 'react'

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@mui/material'
 
 import { useAuth } from '../hooks'
-import { useUserDetails } from '@/features/user'
+import { useUserDetails } from '@/entities/user'
 import { getTmdbImageUrl } from '@/shared/lib'
 import { IApiError } from '@/shared/types'
 import avatar from '@/shared/assets/images/avatar.png'

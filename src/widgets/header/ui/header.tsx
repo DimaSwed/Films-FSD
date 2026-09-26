@@ -3,7 +3,7 @@ import { AppBar, Box, Button, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth/'
-import { useSessionId } from '@/features/auth/'
+import { useSessionId } from '@/entities/user'
 import { ChangeThemeButton } from '@/features/theme'
 import { SettingsButton } from '@/features/settings'
 import { SearchMovieButton } from '@/features/search-movie/'

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { Box, Button, CircularProgress, Fade, Typography } from '@mui/material'
-import { useSessionId } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
 import { useFavoritesList } from '@/features/favorites'
 import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
 import { useInfiniteScroll } from '@/shared/utils'

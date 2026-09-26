@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useSessionId } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
 import { IAccountState, movieApi } from '@/features/movie'
 
 export const getMovieAccountStateKey = (movieId: number, sessionId: string | null | undefined) =>

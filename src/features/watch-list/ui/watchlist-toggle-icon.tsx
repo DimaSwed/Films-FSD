@@ -2,7 +2,7 @@ import { FC, MouseEvent } from 'react'
 import { CircularProgress, IconButton } from '@mui/material'
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd'
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
-import { useSessionId } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
 import { useAddToWatchlist, useIsInWatchlist, useRemoveFromWatchList } from '@/features/watch-list'
 
 interface IWatchlistToggleIconProps {

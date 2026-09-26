@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { authApi } from '@/features/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { SESSION_CHANGE_EVENT, SESSION_COOKIE_KEY } from '@/entities/user'
 import { useNotification } from '@/shared/notifications'
-import { SESSION_CHANGE_EVENT } from '@/features/auth/hooks/use-session-id'
+import { authApi } from '../api'
 
 // Время, чтобы успеть прочитать подсказку перед уходом на сайт TMDB
 const TMDB_REDIRECT_DELAY_MS = 1500
@@ -35,7 +35,7 @@ export const useAuth = () => {
     mutationFn: (requestToken: string) => authApi.createSessionId(requestToken),
     onSuccess: (data) => {
       if (data.session_id) {
-        Cookies.set('session_id', data.session_id, { expires: 7 })
+        Cookies.set(SESSION_COOKIE_KEY, data.session_id, { expires: 7 })
         window.dispatchEvent(new Event(SESSION_CHANGE_EVENT))
         queryClient.invalidateQueries({ queryKey: ['user-details'] })
         success('Авторизация прошла успешно')
@@ -47,7 +47,7 @@ export const useAuth = () => {
   })
 
   const logout = () => {
-    Cookies.remove('session_id')
+    Cookies.remove(SESSION_COOKIE_KEY)
     window.dispatchEvent(new Event(SESSION_CHANGE_EVENT))
     queryClient.invalidateQueries({ queryKey: ['user-details'] })
     navigate('/')

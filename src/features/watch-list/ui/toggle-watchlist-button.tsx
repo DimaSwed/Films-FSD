@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useSessionId } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
 import { useAddToWatchlist, useRemoveFromWatchList, useIsInWatchlist } from '@/features/watch-list'
 import { Button, CircularProgress } from '@mui/material'
 import { CheckCircle } from '@mui/icons-material'

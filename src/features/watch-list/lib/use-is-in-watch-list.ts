@@ -1,4 +1,4 @@
-import { useSessionId } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
 import { useMovieAccountState } from '@/features/movie'
 
 export const useIsInWatchlist = (movieId: number) => {
