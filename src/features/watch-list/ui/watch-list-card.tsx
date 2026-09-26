@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
 import { WatchProviders, useWatchProviders } from '@/entities/movie'
-import { IMovie } from '@/shared/types'
-import { RemoveButton, ToggleDescriptionButton } from '@/shared/ui'
-import { RatingDisplay } from '@/shared/ui'
+import { IMovie } from '@/shared/lib'
+import { RemoveButton, ToggleDescriptionButton, RatingDisplay } from '@/shared/ui'
 
 interface IMovieCardProps {
   movie: IMovie

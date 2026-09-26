@@ -19,7 +19,7 @@ import {
   FeaturedVideo,
   List as ListIcon
 } from '@mui/icons-material'
-import { SidebarItem } from '../components'
+import { SidebarItem } from './sidebar-item'
 import { useSessionId } from '@/entities/user'
 import { UserSubscriptionInfo } from '@/features/auth'
 

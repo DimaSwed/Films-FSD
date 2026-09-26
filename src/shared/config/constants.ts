@@ -1,6 +1,4 @@
-import { YearLists } from '../types'
-
-export const YEARS_LIST: YearLists[] = [
+export const YEARS_LIST: string[] = [
   'до 1980',
   '1980-1989',
   '1990-1999',

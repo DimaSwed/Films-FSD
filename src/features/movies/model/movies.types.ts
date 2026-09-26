@@ -1,4 +1,4 @@
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 export interface ICategory {
   title: string

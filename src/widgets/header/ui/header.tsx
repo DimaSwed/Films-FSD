@@ -6,7 +6,7 @@ import { useAuth } from '@/features/auth/'
 import { useSessionId } from '@/entities/user'
 import { ChangeThemeButton } from '@/features/theme'
 import { SearchMovieButton } from '@/features/search-movie/'
-import { appBarStyles, boxStyles, buttonContainerStyles, stackStyles } from '../styles'
+import { appBarStyles, boxStyles, buttonContainerStyles, stackStyles } from './header.styles'
 import { SettingsButton } from './settings-button'
 
 export const Header: FC = () => {

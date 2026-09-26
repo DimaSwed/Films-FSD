@@ -2,10 +2,9 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@mui/material'
 
-import { useAuth } from '../hooks'
+import { useAuth } from '../model'
 import { useUserDetails } from '@/entities/user'
-import { getTmdbImageUrl } from '@/shared/lib'
-import { IApiError } from '@/shared/types'
+import { getTmdbImageUrl, IApiError } from '@/shared/lib'
 import avatar from '@/shared/assets/images/avatar.png'
 
 export const UserSubscriptionInfo: FC = () => {

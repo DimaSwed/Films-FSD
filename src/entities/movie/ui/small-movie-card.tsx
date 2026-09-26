@@ -10,7 +10,7 @@ import {
   Typography
 } from '@mui/material'
 import ViewDayIcon from '@mui/icons-material/ViewDay'
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 interface IMovieCardProps {
   movie: IMovie

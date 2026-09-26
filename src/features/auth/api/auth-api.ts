@@ -1,9 +1,9 @@
 import { api } from '@/shared/api'
-import {
+import type {
   // ICreateSessionRequest,
   ICreateSessionResponse,
   IRequestTokenResponse
-} from '../types'
+} from '../model'
 
 export const authApi = {
   createRequestToken: async () => {

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { MovieGrid, SmallMovieCard } from '@/entities/movie'
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 interface IMoviesGridProps {
   movies: IMovie[]

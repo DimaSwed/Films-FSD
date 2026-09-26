@@ -61,9 +61,8 @@ export default [
       // Импорт порядка отдаёт prettier/ручной стиль — не переписываем все файлы
       sortImports: false,
       // 'segments' ловит и импорты вида @/pages/home/HomePage (файл в корне слайса).
-      // Сегменты hooks/types/styles/components — временные.
-      publicApi: { level: 'segments' },
-      segments: ['hooks', 'types', 'styles', 'components']
+      // Нестандартных сегментов нет: только ui, model, lib, api, config, assets
+      publicApi: { level: 'segments' }
     }),
     files: ['src/**/*.{ts,tsx}']
   },

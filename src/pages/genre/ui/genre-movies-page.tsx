@@ -1,8 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useMoviesByFilters } from '@/features/movies'
-import { MovieCategoryList } from '@/features/movies'
-import { GENRES_LIST } from '@/shared/constants'
+import { useMoviesByFilters, MovieCategoryList } from '@/features/movies'
+import { GENRES_LIST } from '@/shared/config'
 
 export const GenreMoviesPage = () => {
   const { genreId } = useParams<{ genreId: string }>()

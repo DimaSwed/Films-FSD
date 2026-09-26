@@ -6,9 +6,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDebounce } from 'use-debounce'
 
-import { useSearchMovies } from '../hooks'
+import { useSearchMovies, Movie } from '../model'
 import { getSearchHistory, setSearchHistory, announceToScreenReader } from '../lib'
-import { Movie } from '../types'
 import {
   searchButtonStyles,
   searchBoxStyles,

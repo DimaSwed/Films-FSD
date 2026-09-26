@@ -3,7 +3,7 @@ import { CircularProgress, IconButton } from '@mui/material'
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd'
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
 import { useSessionId } from '@/entities/user'
-import { useAddToWatchlist, useRemoveFromWatchList } from '../hooks'
+import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
 import { useIsInWatchlist } from '../lib'
 
 interface IWatchlistToggleIconProps {

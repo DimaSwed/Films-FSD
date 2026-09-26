@@ -10,7 +10,7 @@ import {
   Button
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 interface IMovieCardProps {
   movie: IMovie

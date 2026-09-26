@@ -1,6 +1,5 @@
 import { api } from '@/shared/api'
-import { IMovieRaw } from '@/shared/types'
-import { transformMovie } from '@/shared/lib'
+import { IMovieRaw, transformMovie } from '@/shared/lib'
 
 export const searchApi = {
   searchMovies: async (query: string) => {

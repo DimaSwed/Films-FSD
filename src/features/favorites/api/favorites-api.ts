@@ -1,6 +1,5 @@
 import { api } from '@/shared/api'
-import { IMovie, IMovieRaw, IPaginatedResponse } from '@/shared/types'
-import { transformMovie } from '@/shared/lib'
+import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie } from '@/shared/lib'
 
 export const favoritesApi = {
   addToFavorites: (movieId: number, sessionId: string, accountId: number) =>

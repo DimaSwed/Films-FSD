@@ -2,8 +2,8 @@ import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@ta
 import { favoritesApi } from '../api'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { useMovieAccountState, useUpdateMovieAccountState } from '@/entities/movie'
-import { IFavoritesResponse } from '../types'
-import { IMovie } from '@/shared/types'
+import { IFavoritesResponse } from './favorites.types'
+import { IMovie } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 /** Список избранного с серверной пагинацией TMDB (по странице за запрос). */

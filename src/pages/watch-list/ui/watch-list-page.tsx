@@ -8,7 +8,7 @@ import {
   useWatchList
 } from '@/features/watch-list'
 import { ScrollButton } from '@/shared/ui'
-import { useInfiniteScroll } from '@/shared/utils'
+import { useInfiniteScroll } from '@/shared/lib'
 
 export const WatchListPage = () => {
   const {

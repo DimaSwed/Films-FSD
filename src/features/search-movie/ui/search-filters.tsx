@@ -11,9 +11,8 @@ import {
   CriteriaToggle
 } from './filters'
 import { MoviesGrid } from './movies-grid'
-import { useMoviesByFilters, useSearchMovies } from '../hooks'
-import { CRITERIA_MAP, RECOMMENDATION_MAP } from '../types'
-import { IMovie } from '@/shared/types'
+import { useMoviesByFilters, useSearchMovies, CRITERIA_MAP, RECOMMENDATION_MAP } from '../model'
+import { IMovie } from '@/shared/lib'
 
 const containerStyles = {
   display: 'flex',

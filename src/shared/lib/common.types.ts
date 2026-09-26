@@ -27,8 +27,6 @@ export interface IGenre {
   name: string
 }
 
-export type YearLists = string
-
 export interface IApiError extends Error {
   response?: {
     data?: {

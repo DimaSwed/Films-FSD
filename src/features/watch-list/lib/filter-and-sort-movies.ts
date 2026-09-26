@@ -1,4 +1,4 @@
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 interface IWatchListFilters {
   genre: string

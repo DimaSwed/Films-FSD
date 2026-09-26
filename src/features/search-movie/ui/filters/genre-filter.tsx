@@ -1,5 +1,5 @@
 import { MenuItem, Select, FormControl, InputLabel } from '@mui/material'
-import { GENRES_LIST } from '@/shared/constants'
+import { GENRES_LIST } from '@/shared/config'
 
 interface IGenreFilterProps {
   value: number | ''

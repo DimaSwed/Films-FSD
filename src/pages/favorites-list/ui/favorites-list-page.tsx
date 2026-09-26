@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Fade, Typography } from '@mui/material'
 import { useSessionId } from '@/entities/user'
 import { useFavoritesList } from '@/features/favorites'
 import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
-import { useInfiniteScroll } from '@/shared/utils'
+import { useInfiniteScroll } from '@/shared/lib'
 import { MovieGrid, SmallMovieCard } from '@/entities/movie'
 import { MovieCardActions } from '@/widgets/movie-card-actions'
 

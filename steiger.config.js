@@ -15,5 +15,15 @@ export default defineConfig([
       'fsd/public-api': 'off',
       'fsd/no-layer-public-api': 'off'
     }
+  },
+  {
+    // app/providers — общепринятое имя сегмента слоя app (FSD-документация), не свалка
+    files: ['./src/app/**'],
+    rules: { 'fsd/segments-by-purpose': 'off' }
+  },
+  {
+    // shared/assets — статические файлы (картинки); это и есть назначение, переименовывать нечего
+    files: ['./src/shared/assets/**'],
+    rules: { 'fsd/segments-by-purpose': 'off' }
   }
 ])

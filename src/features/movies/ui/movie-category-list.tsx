@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 import { MovieCard } from '@/entities/movie'
 import { SkeletonMovieCard } from '@/shared/ui'
 import { Box } from '@mui/material'

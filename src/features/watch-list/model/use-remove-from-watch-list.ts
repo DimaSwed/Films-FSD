@@ -3,7 +3,7 @@ import { watchListApi } from '../api'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { useUpdateMovieAccountState } from '@/entities/movie'
 import { useNotification } from '@/shared/notifications'
-import { IMovie } from '@/shared/types'
+import { IMovie } from '@/shared/lib'
 
 export const useRemoveFromWatchList = () => {
   const queryClient = useQueryClient()
