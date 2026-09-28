@@ -1,9 +1,10 @@
-import { useSessionId, useUserDetails } from '@/entities/user'
-import { useSearchParams } from 'react-router-dom'
-import { useAuth } from '@/features/auth'
 import { Box, Typography, Avatar, Button } from '@mui/material'
-import { LoadingErrorState, PageShell } from '@/shared/ui'
 import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
+import { useAuth } from '@/features/auth'
+import { useSessionId, useUserDetails } from '@/entities/user'
+import { LoadingErrorState, PageShell } from '@/shared/ui'
 
 export const ProfilePage = () => {
   const { data: user, isLoading, isError } = useUserDetails()

@@ -1,4 +1,5 @@
 import { FC } from 'react'
+
 import { FavoriteToggleIcon } from '@/features/favorites'
 import { WatchlistToggleIcon } from '@/features/watch-list'
 

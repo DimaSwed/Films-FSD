@@ -1,6 +1,8 @@
-import React from 'react'
 import { Box } from '@mui/material'
+import React from 'react'
+
 import { useMoviesByFilters, IGenreProps } from '../model'
+
 import { MovieCategory } from './movie-category'
 
 export const Genre: React.FC<IGenreProps> = ({ id, title }) => {

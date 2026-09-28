@@ -1,9 +1,11 @@
-import { useState, useMemo, useCallback } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { SelectChangeEvent } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
+import { useState, useMemo, useCallback } from 'react'
+
+import { useSessionId, useUserDetails } from '@/entities/user'
+
 import { watchListApi } from '../api'
 import { filterAndSortMovies } from '../lib'
-import { useSessionId, useUserDetails } from '@/entities/user'
 
 const BATCH_SIZE = 20
 

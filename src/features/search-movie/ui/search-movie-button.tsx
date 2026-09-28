@@ -1,13 +1,13 @@
+import CloseIcon from '@mui/icons-material/Close'
+import SearchIcon from '@mui/icons-material/Search'
+import { Box, IconButton, InputAdornment, TextField, Fade } from '@mui/material'
 import { useState, KeyboardEvent, ChangeEvent, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import { Box, IconButton, InputAdornment, TextField, Fade } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import CloseIcon from '@mui/icons-material/Close'
 import { useDebounce } from 'use-debounce'
 
-import { useSearchMovies, Movie } from '../model'
 import { getSearchHistory, setSearchHistory, announceToScreenReader } from '../lib'
+import { useSearchMovies, Movie } from '../model'
+
 import {
   searchButtonStyles,
   searchBoxStyles,

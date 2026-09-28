@@ -1,5 +1,6 @@
-import { useState } from 'react'
 import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
+import { useState } from 'react'
+
 import { WatchProviders, useWatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
 import { RemoveButton, ToggleDescriptionButton, RatingDisplay } from '@/shared/ui'

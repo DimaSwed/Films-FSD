@@ -1,10 +1,12 @@
-import { FC } from 'react'
-import { useSessionId } from '@/entities/user'
-import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
-import { useIsInWatchlist } from '../lib'
-import { Button, CircularProgress } from '@mui/material'
 import { CheckCircle } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'
+import { Button, CircularProgress } from '@mui/material'
+import { FC } from 'react'
+
+import { useSessionId } from '@/entities/user'
+
+import { useIsInWatchlist } from '../lib'
+import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
 
 interface IToggleWatchlistButtonProps {
   movieId: number

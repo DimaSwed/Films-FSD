@@ -1,4 +1,5 @@
 import { MenuItem, Select, FormControl, InputLabel } from '@mui/material'
+
 import { COUNTRIES_LIST } from '@/shared/config'
 
 interface ICountryFilterProps {

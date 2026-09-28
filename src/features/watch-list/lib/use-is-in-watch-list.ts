@@ -1,5 +1,5 @@
-import { useSessionId } from '@/entities/user'
 import { useMovieAccountState } from '@/entities/movie'
+import { useSessionId } from '@/entities/user'
 
 export const useIsInWatchlist = (movieId: number) => {
   const sessionId = useSessionId()

@@ -1,6 +1,6 @@
-import { FC } from 'react'
 import { Rating, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { FC } from 'react'
 
 interface IRatingStarsProps {
   value: number

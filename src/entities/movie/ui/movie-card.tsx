@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { ViewDay } from '@mui/icons-material'
 import {
   Typography,
@@ -9,7 +8,9 @@ import {
   CardActionArea,
   Button
 } from '@mui/material'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
+
 import { IMovie } from '@/shared/lib'
 
 interface IMovieCardProps {

@@ -1,11 +1,12 @@
+import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@mui/material'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Alert, AlertTitle, Box, Button, CircularProgress, Typography } from '@mui/material'
+
+import { useUserDetails } from '@/entities/user'
+import avatar from '@/shared/assets/images/avatar.png'
+import { getTmdbImageUrl, IApiError } from '@/shared/lib'
 
 import { useAuth } from '../model'
-import { useUserDetails } from '@/entities/user'
-import { getTmdbImageUrl, IApiError } from '@/shared/lib'
-import avatar from '@/shared/assets/images/avatar.png'
 
 export const UserSubscriptionInfo: FC = () => {
   const { data: user, isLoading, error, refetch } = useUserDetails()

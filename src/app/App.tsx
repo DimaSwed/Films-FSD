@@ -1,6 +1,7 @@
+import { Box } from '@mui/material'
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Box } from '@mui/material'
+
 import { Header } from '@/widgets/header'
 import { Sidebar } from '@/widgets/sidebar'
 import { useAuthCallbackHandler } from '@/features/auth'

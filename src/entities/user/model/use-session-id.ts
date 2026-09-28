@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { useState, useEffect } from 'react'
 
 export const SESSION_COOKIE_KEY = 'session_id'
 export const SESSION_CHANGE_EVENT = 'session-changed'

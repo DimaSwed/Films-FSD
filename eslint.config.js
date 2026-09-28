@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import pluginQuery from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-plugin-prettier'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 import featureSliced from '@conarti/eslint-plugin-feature-sliced'
 
 export default [
@@ -32,7 +33,8 @@ export default [
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       query: pluginQuery,
-      prettier: prettier
+      prettier: prettier,
+      'jsx-a11y': jsxA11y
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -50,7 +52,8 @@ export default [
           semi: false
         }
       ],
-      ...pluginQuery.configs['flat/recommended'].rules
+      ...pluginQuery.configs['flat/recommended'].rules,
+      ...jsxA11y.flatConfigs.recommended.rules
     }
   },
 
@@ -58,8 +61,8 @@ export default [
   {
     ...featureSliced({
       severity: 'error',
-      // Импорт порядка отдаёт prettier/ручной стиль — не переписываем все файлы
-      sortImports: false,
+      // Сортировка: пустая строка между группами, без отдельной группы для type-импортов
+      sortImports: 'with-newlines',
       // 'segments' ловит и импорты вида @/pages/home/HomePage (файл в корне слайса).
       // Нестандартных сегментов нет: только ui, model, lib, api, config, assets
       publicApi: { level: 'segments' }

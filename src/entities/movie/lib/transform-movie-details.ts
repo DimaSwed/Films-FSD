@@ -1,5 +1,6 @@
-import type { IMovieDetails, IApiMovieResponse } from '../model'
 import { getTmdbImageUrl } from '@/shared/lib'
+
+import type { IMovieDetails, IApiMovieResponse } from '../model'
 
 export const transformMovieDetails = (data: IApiMovieResponse): IMovieDetails => {
   return {

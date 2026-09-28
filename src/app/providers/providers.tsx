@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+
 import { QueryProvider } from './query-provider'
 import { ThemeSnackbarProvider } from './theme-provider'
 

@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
+
 import { useMoviesByFilters, MovieCategoryList } from '@/features/movies'
 import { GENRES_LIST } from '@/shared/config'
 

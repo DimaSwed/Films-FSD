@@ -1,6 +1,6 @@
-import { FC } from 'react'
-import { IconButton } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
+import { IconButton } from '@mui/material'
+import { FC } from 'react'
 
 export const SettingsButton: FC = () => {
   return (

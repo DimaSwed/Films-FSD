@@ -1,5 +1,5 @@
-import { FC } from 'react'
 import { Stack, Container, Typography, Divider, Link } from '@mui/material'
+import { FC } from 'react'
 
 export const LegalInfoPage: FC = () => {
   return (

@@ -1,4 +1,5 @@
 import { Box, Fade, Typography } from '@mui/material'
+
 import {
   LoadingOrError,
   NoMovies,
@@ -7,8 +8,8 @@ import {
   useRemoveFromWatchList,
   useWatchList
 } from '@/features/watch-list'
-import { ScrollButton } from '@/shared/ui'
 import { useInfiniteScroll } from '@/shared/lib'
+import { ScrollButton } from '@/shared/ui'
 
 export const WatchListPage = () => {
   const {

@@ -1,8 +1,12 @@
-import { FC, ReactNode, useState, useMemo, useEffect } from 'react'
-import { useDebounce } from 'use-debounce'
 import { Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import { SearchInput } from './search-input'
+import { FC, ReactNode, useState, useMemo, useEffect } from 'react'
+import { useDebounce } from 'use-debounce'
+
+import { IMovie } from '@/shared/lib'
+
+import { useMoviesByFilters, useSearchMovies, CRITERIA_MAP, RECOMMENDATION_MAP } from '../model'
+
 import {
   GenreFilter,
   CountryFilter,
@@ -11,8 +15,7 @@ import {
   CriteriaToggle
 } from './filters'
 import { MoviesGrid } from './movies-grid'
-import { useMoviesByFilters, useSearchMovies, CRITERIA_MAP, RECOMMENDATION_MAP } from '../model'
-import { IMovie } from '@/shared/lib'
+import { SearchInput } from './search-input'
 
 const containerStyles = {
   display: 'flex',

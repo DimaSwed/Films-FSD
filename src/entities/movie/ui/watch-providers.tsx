@@ -1,5 +1,5 @@
-import { FC } from 'react'
 import { Box, Tooltip } from '@mui/material'
+import { FC } from 'react'
 
 import { getTmdbImageUrl } from '@/shared/lib'
 

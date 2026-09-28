@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
+
 import {
   useTrendingMovies,
   useNowPlayingMovies,

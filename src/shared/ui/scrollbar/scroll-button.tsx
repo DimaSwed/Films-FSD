@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
-import { Fab, useTheme } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { Fab, useTheme } from '@mui/material'
+import { useEffect, useState, useRef } from 'react'
 
 export const ScrollButton = () => {
   const [visible, setVisible] = useState(false)

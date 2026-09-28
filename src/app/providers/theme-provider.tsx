@@ -1,10 +1,11 @@
-import { FC, ReactNode, useEffect } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
 import { CssBaseline, IconButton, ThemeProvider } from '@mui/material'
 import { SnackbarProvider, closeSnackbar } from 'notistack'
-import CloseIcon from '@mui/icons-material/Close'
+import { FC, ReactNode, useEffect } from 'react'
+
+import { ThemeContext, useTheme } from '@/features/theme'
 
 import { lightTheme, darkTheme } from '../styles/theme'
-import { ThemeContext, useTheme } from '@/features/theme'
 
 interface IThemeSnackbarProviderProps {
   children: ReactNode

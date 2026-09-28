@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Settings, Support, Email, PrivacyTip } from '@mui/icons-material'
 import {
   Box,
   Divider,
@@ -11,9 +11,10 @@ import {
   Typography,
   Link as MuiLink
 } from '@mui/material'
-import { Settings, Support, Email, PrivacyTip } from '@mui/icons-material'
-import { UserSubscriptionInfo } from '@/features/auth'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
+
+import { UserSubscriptionInfo } from '@/features/auth'
 
 export const SettingsPage: FC = () => {
   return (

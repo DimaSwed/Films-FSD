@@ -1,5 +1,5 @@
-import { FC, ReactNode } from 'react'
 import { Box, SxProps, Theme } from '@mui/material'
+import { FC, ReactNode } from 'react'
 
 interface IPageShellProps {
   children: ReactNode

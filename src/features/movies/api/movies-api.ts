@@ -1,5 +1,6 @@
 import { api } from '@/shared/api'
 import { IMovie, IMovieRaw, transformMovie } from '@/shared/lib'
+
 import type { IMoviesFilters } from '../model'
 
 export const moviesApi = {

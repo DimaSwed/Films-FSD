@@ -1,4 +1,5 @@
 import { Box, Typography, Card, CardContent } from '@mui/material'
+
 import { useUpcomingMovies } from '@/features/movies'
 import { useMovieTrailers } from '@/features/movies'
 import { LoadingErrorState, PageShell } from '@/shared/ui'

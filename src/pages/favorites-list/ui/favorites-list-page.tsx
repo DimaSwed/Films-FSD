@@ -1,11 +1,12 @@
-import { useCallback } from 'react'
 import { Box, Button, CircularProgress, Fade, Typography } from '@mui/material'
-import { useSessionId } from '@/entities/user'
-import { useFavoritesList } from '@/features/favorites'
-import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
-import { useInfiniteScroll } from '@/shared/lib'
-import { MovieGrid, SmallMovieCard } from '@/entities/movie'
+import { useCallback } from 'react'
+
 import { MovieCardActions } from '@/widgets/movie-card-actions'
+import { useFavoritesList } from '@/features/favorites'
+import { MovieGrid, SmallMovieCard } from '@/entities/movie'
+import { useSessionId } from '@/entities/user'
+import { useInfiniteScroll } from '@/shared/lib'
+import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
 
 export const FavoritesListPage = () => {
   const sessionId = useSessionId()

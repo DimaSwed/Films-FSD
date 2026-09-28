@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
+
 import { SESSION_CHANGE_EVENT, SESSION_COOKIE_KEY } from '@/entities/user'
 import { useNotification } from '@/shared/notifications'
+
 import { authApi } from '../api'
 
 // Время, чтобы успеть прочитать подсказку перед уходом на сайт TMDB

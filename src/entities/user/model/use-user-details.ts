@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+
 import { IApiError } from '@/shared/lib'
+
 import { userApi } from '../api'
+
 import { useSessionId } from './use-session-id'
 import { IUserDetails } from './user.types'
 

@@ -1,4 +1,5 @@
 import { Box, Select, MenuItem, Button, SelectChangeEvent } from '@mui/material'
+
 import { GENRES_LIST, YEARS_LIST } from '@/shared/config'
 
 interface IFiltersProps {

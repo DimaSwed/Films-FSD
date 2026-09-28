@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
+
 import { ThemeType } from './theme-context'
 
 export const useTheme = () => {

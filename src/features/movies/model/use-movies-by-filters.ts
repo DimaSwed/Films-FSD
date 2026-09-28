@@ -1,9 +1,12 @@
-import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '../api'
-import { IMoviesFilters } from './movies.types'
+import { useEffect } from 'react'
+
 import { IMovie } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
+
+import { moviesApi } from '../api'
+
+import { IMoviesFilters } from './movies.types'
 
 export const useMoviesByFilters = (params: IMoviesFilters) => {
   const { errors } = useNotification()

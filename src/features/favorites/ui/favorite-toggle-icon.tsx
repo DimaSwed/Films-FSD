@@ -1,10 +1,12 @@
-import { FC } from 'react'
-import { useSessionId } from '@/entities/user'
-import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../model'
-import { IconButton, CircularProgress } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import { IconButton, CircularProgress } from '@mui/material'
 import { keyframes } from '@mui/system'
+import { FC } from 'react'
+
+import { useSessionId } from '@/entities/user'
+
+import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../model'
 
 const pulse = keyframes`
   0% { transform: scale(1); }

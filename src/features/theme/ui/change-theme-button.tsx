@@ -1,8 +1,9 @@
-import { FC } from 'react'
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import { useThemeContext } from '../model'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { FC } from 'react'
+
+import { useThemeContext } from '../model'
 
 export const ChangeThemeButton: FC = () => {
   const { theme, toggleTheme } = useThemeContext()

@@ -1,5 +1,6 @@
-import { ReactNode } from 'react'
 import { Box, CircularProgress, Typography } from '@mui/material'
+import { ReactNode } from 'react'
+
 import { MovieGrid, SmallMovieCard } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
 

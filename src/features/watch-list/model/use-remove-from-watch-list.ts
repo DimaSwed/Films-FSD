@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { watchListApi } from '../api'
-import { useSessionId, useUserDetails } from '@/entities/user'
+
 import { useUpdateMovieAccountState } from '@/entities/movie'
-import { useNotification } from '@/shared/notifications'
+import { useSessionId, useUserDetails } from '@/entities/user'
 import { IMovie } from '@/shared/lib'
+import { useNotification } from '@/shared/notifications'
+
+import { watchListApi } from '../api'
 
 export const useRemoveFromWatchList = () => {
   const queryClient = useQueryClient()

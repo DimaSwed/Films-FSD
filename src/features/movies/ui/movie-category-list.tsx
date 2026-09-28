@@ -1,9 +1,10 @@
-import { FC } from 'react'
-import { IMovie } from '@/shared/lib'
-import { MovieCard } from '@/entities/movie'
-import { SkeletonMovieCard } from '@/shared/ui'
 import { Box } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import { FC } from 'react'
+
+import { MovieCard } from '@/entities/movie'
+import { IMovie } from '@/shared/lib'
+import { SkeletonMovieCard } from '@/shared/ui'
 
 interface IMovieCategoryListProps {
   movies: IMovie[]

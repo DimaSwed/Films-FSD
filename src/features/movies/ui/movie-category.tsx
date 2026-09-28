@@ -1,10 +1,11 @@
-import { FC } from 'react'
 import { Box, Typography, Button } from '@mui/material'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
+
 import { MovieCard } from '@/entities/movie'
-import { SkeletonMovieCard } from '@/shared/ui'
 import { IMovie } from '@/shared/lib'
+import { SkeletonMovieCard } from '@/shared/ui'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './arrow.sass'

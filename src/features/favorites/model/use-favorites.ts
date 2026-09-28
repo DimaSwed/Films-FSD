@@ -1,10 +1,13 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { favoritesApi } from '../api'
-import { useSessionId, useUserDetails } from '@/entities/user'
+
 import { useMovieAccountState, useUpdateMovieAccountState } from '@/entities/movie'
-import { IFavoritesResponse } from './favorites.types'
+import { useSessionId, useUserDetails } from '@/entities/user'
 import { IMovie } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
+
+import { favoritesApi } from '../api'
+
+import { IFavoritesResponse } from './favorites.types'
 
 /** Список избранного с серверной пагинацией TMDB (по странице за запрос). */
 export const useFavoritesList = () => {

@@ -1,10 +1,12 @@
-import { FC, MouseEvent } from 'react'
-import { CircularProgress, IconButton } from '@mui/material'
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd'
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
+import { CircularProgress, IconButton } from '@mui/material'
+import { FC, MouseEvent } from 'react'
+
 import { useSessionId } from '@/entities/user'
-import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
+
 import { useIsInWatchlist } from '../lib'
+import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
 
 interface IWatchlistToggleIconProps {
   movieId: number

@@ -1,6 +1,11 @@
-import { FC } from 'react'
-import { Link } from 'react-router-dom'
-import { useTheme } from '@mui/material/styles'
+import {
+  Movie,
+  Search,
+  NewReleases,
+  PlaylistPlay,
+  FeaturedVideo,
+  List as ListIcon
+} from '@mui/icons-material'
 import {
   List,
   ListItemButton,
@@ -11,17 +16,14 @@ import {
   Box,
   Stack
 } from '@mui/material'
-import {
-  Movie,
-  Search,
-  NewReleases,
-  PlaylistPlay,
-  FeaturedVideo,
-  List as ListIcon
-} from '@mui/icons-material'
-import { SidebarItem } from './sidebar-item'
-import { useSessionId } from '@/entities/user'
+import { useTheme } from '@mui/material/styles'
+import { FC } from 'react'
+import { Link } from 'react-router-dom'
+
 import { UserSubscriptionInfo } from '@/features/auth'
+import { useSessionId } from '@/entities/user'
+
+import { SidebarItem } from './sidebar-item'
 
 export const Sidebar: FC = () => {
   const theme = useTheme()

@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material'
+
 import { Genre } from '@/features/movies'
 import { GENRES_LIST } from '@/shared/config'
 

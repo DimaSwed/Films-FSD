@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+
 import type { IUserDetails } from '../model'
 
 export const userApi = {

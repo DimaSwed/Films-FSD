@@ -1,5 +1,4 @@
-import { FC, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import ViewDayIcon from '@mui/icons-material/ViewDay'
 import {
   Box,
   Card,
@@ -9,7 +8,9 @@ import {
   CardMedia,
   Typography
 } from '@mui/material'
-import ViewDayIcon from '@mui/icons-material/ViewDay'
+import { FC, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
+
 import { IMovie } from '@/shared/lib'
 
 interface IMovieCardProps {

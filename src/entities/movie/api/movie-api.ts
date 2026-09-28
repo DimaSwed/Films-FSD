@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+
 import type { IAccountState, IApiMovieResponse } from '../model'
 
 export const movieApi = {

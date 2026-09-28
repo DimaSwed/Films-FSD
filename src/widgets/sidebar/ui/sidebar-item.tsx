@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import {
   ListItemButton,
   ListItemText,
@@ -7,7 +7,8 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material'
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { FC, useState } from 'react'
+
 import { ISidebarItemProps } from '../model'
 
 export const SidebarItem: FC<ISidebarItemProps> = ({ primary, children }) => {

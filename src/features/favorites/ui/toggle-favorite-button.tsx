@@ -1,9 +1,11 @@
-import { FC } from 'react'
-import { useSessionId } from '@/entities/user'
-import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../model'
-import { Button, CircularProgress } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import { Button, CircularProgress } from '@mui/material'
+import { FC } from 'react'
+
+import { useSessionId } from '@/entities/user'
+
+import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../model'
 
 interface IToggleFavoriteButtonProps {
   movieId: number

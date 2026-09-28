@@ -1,12 +1,10 @@
+import { Box, Typography, Card, CardMedia, Grid } from '@mui/material'
+import { Stack } from '@mui/system'
 import { useParams } from 'react-router-dom'
 
-import { Box, Typography, Card, CardMedia, Grid } from '@mui/material'
-
-import { Stack } from '@mui/system'
-
+import { ToggleFavoriteButton } from '@/features/favorites'
 import { ToggleWatchlistButton } from '@/features/watch-list'
 import { WatchProviders, useMovie, useWatchProviders } from '@/entities/movie'
-import { ToggleFavoriteButton } from '@/features/favorites'
 import { EmptyState, LoadingErrorState, PageShell } from '@/shared/ui'
 
 export const MoviePage = () => {

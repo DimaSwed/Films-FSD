@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { trailerApi } from '../api'
-import { ITrailer } from './movies.types'
+import { useEffect } from 'react'
+
 import { useNotification } from '@/shared/notifications'
+
+import { trailerApi } from '../api'
+
+import { ITrailer } from './movies.types'
 
 export const useMovieTrailers = (movieIds: number[]) => {
   const { errors } = useNotification()
