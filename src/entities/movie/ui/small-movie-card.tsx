@@ -49,7 +49,7 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie, actions }) => {
       <CardActionArea
         component={Link}
         to={`/movie/${movie.id}`}
-        sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
       >
         <Box sx={{ position: 'relative', aspectRatio: '2 / 3', bgcolor: 'action.hover' }}>
           {movie.image ? (

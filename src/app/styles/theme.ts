@@ -224,7 +224,7 @@ const darkTheme = createTheme({
     },
     text: {
       primary: '#ffffff', // Primary text color
-      secondary: '#000000' // Secondary text color
+      secondary: '#9d9d9d' // Приглушённый серый — тот же тон, что в light-теме;
     }
   }
 })
