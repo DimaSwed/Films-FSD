@@ -1,7 +1,6 @@
 import { Box, Fade, Typography } from '@mui/material'
 
 import {
-  LoadingOrError,
   NoMovies,
   WatchListCard,
   WatchListFilters,
@@ -9,7 +8,7 @@ import {
   useWatchList
 } from '@/features/watch-list'
 import { useInfiniteScroll } from '@/shared/lib'
-import { ScrollButton } from '@/shared/ui'
+import { LoadingErrorState, ScrollButton } from '@/shared/ui'
 
 export const WatchListPage = () => {
   const {
@@ -53,7 +52,13 @@ export const WatchListPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      <LoadingOrError isLoading={isLoading} isError={isError} />
+      <LoadingErrorState
+        isLoading={isLoading}
+        isError={isError}
+        loadingText="Загружаем ваш список просмотра..."
+        errorTitle="Ошибка загрузки списка"
+        errorDescription="Не удалось загрузить ваш список фильмов к просмотру"
+      />
 
       {!isLoading && !isError && !hasMovies && (
         <Fade in={true}>

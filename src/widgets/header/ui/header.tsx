@@ -75,9 +75,7 @@ export const Header: FC = () => {
           </Box>
           <Stack sx={stackStyles}>
             <SearchMovieButton />
-            <Link to="/settings">
-              <SettingsButton />
-            </Link>
+            <SettingsButton />
           </Stack>
         </Box>
       </AppBar>
