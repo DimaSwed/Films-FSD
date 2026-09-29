@@ -20,7 +20,7 @@ export const PageShell: FC<IPageShellProps> = ({ children, centered = false, sx 
         color: 'secondary.contrastText',
         bgcolor: 'background.paper',
         width: '100%',
-        minHeight: '100vh',
+        minHeight: '100%',
         overflow: 'hidden'
       },
       centered && { display: 'flex', alignItems: 'center', justifyContent: 'center' },

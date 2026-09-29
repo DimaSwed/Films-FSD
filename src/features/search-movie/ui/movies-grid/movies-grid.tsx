@@ -13,7 +13,7 @@ interface IMoviesGridProps {
 export const MoviesGrid = ({ movies, isLoading, renderActions }: IMoviesGridProps) => {
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="300px">
         <CircularProgress />
       </Box>
     )

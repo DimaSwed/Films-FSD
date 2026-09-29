@@ -98,7 +98,7 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
       <CardContent
         sx={{
           padding: '0px',
-          maxWidth: { xs: 'auto', sm: '150px' },
+          width: '150px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'
@@ -113,11 +113,12 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
           sx={{
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 3,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             textAlign: 'center',
-            height: '45px'
+            lineHeight: '120%',
+            height: '3.6em'
           }}
         >
           {movie.title}

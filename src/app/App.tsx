@@ -11,13 +11,21 @@ export function App() {
   useAuthCallbackHandler()
 
   return (
-    <>
+    <Box
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}
+    >
       <Header />
 
       <Box
         width="100%"
-        minHeight="100vh"
         sx={{
+          flex: 1,
+          minHeight: 0,
           backgroundColor: 'background.default',
           color: 'text.primary',
           display: 'flex',
@@ -29,8 +37,8 @@ export function App() {
           component="main"
           sx={{
             flexGrow: 1,
-            overflowY: 'auto',
-            maxHeight: '100vh'
+            height: '100%',
+            overflowY: 'auto'
           }}
         >
           <Suspense
@@ -47,9 +55,7 @@ export function App() {
         {/* Sidebar справа */}
         <Box
           sx={{
-            position: 'sticky',
-            top: 0,
-            height: '100vh',
+            height: '100%',
             maxWidth: { xs: '50px', md: '280px' },
             width: '100%',
             zIndex: 1000
@@ -58,6 +64,6 @@ export function App() {
           <Sidebar />
         </Box>
       </Box>
-    </>
+    </Box>
   )
 }
