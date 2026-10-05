@@ -7,6 +7,8 @@ import pluginQuery from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-plugin-prettier'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import featureSliced from '@conarti/eslint-plugin-feature-sliced'
+import importPlugin from 'eslint-plugin-import'
+import react from 'eslint-plugin-react'
 
 export default [
   // Base config
@@ -34,9 +36,25 @@ export default [
       'react-refresh': reactRefresh,
       query: pluginQuery,
       prettier: prettier,
-      'jsx-a11y': jsxA11y
+      'jsx-a11y': jsxA11y,
+      import: importPlugin,
+      react
+    },
+    settings: {
+      react: { version: 'detect' },
+      'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
+      'import/resolver': {
+        typescript: { project: './tsconfig.eslint.json' },
+        node: true
+      }
     },
     rules: {
+      ...react.configs.recommended.rules,
+      ...react.configs['jsx-runtime'].rules,
+      // типизация через TypeScript
+      'react/prop-types': 'off',
+      'import/no-duplicates': 'error',
+      'import/no-cycle': ['error', { maxDepth: 10, ignoreExternal: true }],
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react-hooks/rules-of-hooks': 'error',

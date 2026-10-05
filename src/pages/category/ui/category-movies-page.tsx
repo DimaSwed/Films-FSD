@@ -6,9 +6,9 @@ import {
   useNowPlayingMovies,
   usePopularMovies,
   useUpcomingMovies,
-  useTopRatedMovies
+  useTopRatedMovies,
+  MovieCategoryList
 } from '@/features/movies'
-import { MovieCategoryList } from '@/features/movies'
 
 const CATEGORY_CONFIG = {
   'сейчас-в-тренде': {
