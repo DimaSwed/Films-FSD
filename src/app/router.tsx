@@ -1,10 +1,11 @@
 import { ComponentType, lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
+// Страница 404 остаётся в основном бандле: должна открываться без загрузки чанков
 import { NotFoundPage } from '@/pages/not-found'
 
 import { App } from './App'
-// Страница 404 остаётся в основном бандле: она же errorElement и должна открываться без загрузки
+import { RouteErrorPage } from './providers/route-error-page'
 
 /** Страница подгружается отдельным чанком при первом заходе на маршрут. */
 const lazyPage = <K extends string>(load: () => Promise<Record<K, ComponentType>>, name: K) =>
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <NotFoundPage />,
+    errorElement: <RouteErrorPage />,
     children: [
       {
         index: true,
