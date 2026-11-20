@@ -57,8 +57,8 @@ export const SearchMovieButton = () => {
   }, [history])
 
   useEffect(() => {
-    if (debouncedSearchTerm.length >= 3 && data?.docs) {
-      setSearchResults(data.docs)
+    if (debouncedSearchTerm.length >= 3 && data) {
+      setSearchResults(data)
       setShowHistory(false)
     } else if (debouncedSearchTerm.length === 0 && history.length > 0) {
       setSearchResults([])

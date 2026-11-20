@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import { IMovie } from '@/shared/lib'
+import { getNextTmdbPage, IMovie, selectUniqueMovies } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { moviesApi } from '../api'
@@ -21,9 +21,31 @@ export const useMoviesByFilters = (
   const result = useQuery<IMovie[]>({
     queryKey: ['movies-by-filters', params],
     queryFn: async () => {
-      const data = await moviesApi.getByFilters(params)
-      return data
+      const { results } = await moviesApi.getByFilters(params)
+      return results
     },
+    enabled,
+    staleTime: 86400 * 1000
+  })
+  useEffect(() => {
+    if (result.isError) errors('Ошибка загрузки фильмов')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isError])
+  return result
+}
+
+/** Та же выборка, но с бесконечной прокруткой: серверная пагинация TMDB, по странице за запрос. */
+export const useInfiniteMoviesByFilters = (
+  params: IMoviesFilters,
+  { enabled = true }: IUseMoviesByFiltersOptions = {}
+) => {
+  const { errors } = useNotification()
+  const result = useInfiniteQuery({
+    queryKey: ['movies-by-filters-infinite', params],
+    queryFn: ({ pageParam }) => moviesApi.getByFilters(params, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: getNextTmdbPage,
+    select: selectUniqueMovies,
     enabled,
     staleTime: 86400 * 1000
   })

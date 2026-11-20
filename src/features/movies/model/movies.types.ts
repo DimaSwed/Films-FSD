@@ -30,6 +30,8 @@ export interface IMoviesFilters {
   language?: string
   sort_by?: string
   region?: string
-  page?: number
   with_genres?: number
 }
+
+/** Подборки главной: ключ → эндпоинт TMDB (см. `moviesApi.getCategoryPage`). */
+export type TMovieCategory = 'trending' | 'now-playing' | 'popular' | 'upcoming' | 'top-rated'

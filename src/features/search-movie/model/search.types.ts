@@ -2,17 +2,6 @@ import { IMovie } from '@/shared/lib'
 
 export type Movie = Pick<IMovie, 'id' | 'title' | 'rating' | 'year'>
 
-type RequiredMovieFields = Pick<
-  IMovie,
-  'id' | 'title' | 'rating' | 'image' | 'year' | 'genre' | 'duration'
->
-
-export interface IMoviesResponseData {
-  docs: RequiredMovieFields[]
-  page: number
-  limit: number
-}
-
 export interface IMovieFilterParams {
   with_genres?: number | ''
   sort_by: string

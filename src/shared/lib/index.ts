@@ -1,4 +1,5 @@
 export * from './common.types'
+export * from './infinite-movies'
 export * from './tmdb-image'
 export * from './transform-movie'
 export * from './upsert-head-tags'

@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 
 import { MovieCardActions } from '@/widgets/movie-card-actions'
 import { SearchFilters } from '@/features/search-movie'
-import { PageMeta } from '@/shared/ui'
+import { PageMeta, ScrollButton } from '@/shared/ui'
 
 export const SearchPage = () => {
   return (
@@ -27,6 +27,7 @@ export const SearchPage = () => {
           Поиск фильма
         </Typography>
         <SearchFilters renderMovieActions={(movie) => <MovieCardActions movieId={movie.id} />} />
+        <ScrollButton />
       </Box>
     </>
   )

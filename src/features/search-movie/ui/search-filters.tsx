@@ -1,12 +1,18 @@
 import { Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import { FC, ReactNode, useState, useMemo, useEffect } from 'react'
+import { FC, ReactNode, useState, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 
 import { IMovie } from '@/shared/lib'
+import { InfiniteScrollFooter } from '@/shared/ui'
 
 import { getReleaseDateRange } from '../lib'
-import { useMoviesByFilters, useSearchMovies, CRITERIA_MAP, RECOMMENDATION_MAP } from '../model'
+import {
+  useMoviesByFilters,
+  useInfiniteSearchMovies,
+  CRITERIA_MAP,
+  RECOMMENDATION_MAP
+} from '../model'
 
 import {
   GenreFilter,
@@ -54,17 +60,28 @@ export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) =
 
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500)
 
-  const { data: searchResults, isLoading: isSearching } = useSearchMovies(debouncedSearchQuery)
-  const { data: filteredMovies, isLoading: moviesLoading } = useMoviesByFilters({
-    with_genres: selectedGenre,
-    sort_by: sortBy,
-    with_origin_country: selectedCountry,
-    ...getReleaseDateRange(selectedYear)
-  })
+  const isTextSearch = !!debouncedSearchQuery
 
-  const moviesToDisplay = useMemo(() => {
-    return debouncedSearchQuery ? searchResults?.docs || [] : filteredMovies || []
-  }, [debouncedSearchQuery, searchResults, filteredMovies])
+  const searchResultsQuery = useInfiniteSearchMovies(debouncedSearchQuery)
+  const filtersQuery = useMoviesByFilters(
+    {
+      with_genres: selectedGenre,
+      sort_by: sortBy,
+      with_origin_country: selectedCountry,
+      ...getReleaseDateRange(selectedYear)
+    },
+    // Фильтры не применяются к поиску по названию — лишний запрос не нужен.
+    { enabled: !isTextSearch }
+  )
+
+  const {
+    data: moviesToDisplay = [],
+    isLoading,
+    isError,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  } = isTextSearch ? searchResultsQuery : filtersQuery
 
   useEffect(() => {
     if (selectedRecommendation) {
@@ -106,9 +123,19 @@ export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) =
 
       <MoviesGrid
         movies={moviesToDisplay}
-        isLoading={isSearching || moviesLoading}
+        isLoading={isLoading}
         renderActions={renderMovieActions}
       />
+
+      {moviesToDisplay.length > 0 && (
+        <InfiniteScrollFooter
+          loadedCount={moviesToDisplay.length}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          isError={isError}
+          onLoadMore={fetchNextPage}
+        />
+      )}
     </Box>
   )
 }

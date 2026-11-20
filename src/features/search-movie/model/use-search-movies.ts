@@ -1,18 +1,19 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import { IMovie } from '@/shared/lib'
+import { getNextTmdbPage, IMovie, selectUniqueMovies } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { searchApi } from '../api'
 
-import { IMovieFilterParams, IMoviesResponseData } from './search.types'
+import { IMovieFilterParams } from './search.types'
 
+/** Быстрый поиск в шапке: только первая страница выдачи. */
 export const useSearchMovies = (query: string) => {
   const { errors } = useNotification()
-  const result = useQuery<IMoviesResponseData>({
+  const result = useQuery<IMovie[]>({
     queryKey: ['search-movies', query],
-    queryFn: () => searchApi.searchMovies(query),
+    queryFn: async () => (await searchApi.searchMovies(query)).results,
     enabled: !!query,
     staleTime: 86400 * 1000
   })
@@ -23,11 +24,35 @@ export const useSearchMovies = (query: string) => {
   return result
 }
 
-export const useMoviesByFilters = (params: IMovieFilterParams) => {
+/** Поиск по названию на странице «Поиск»: бесконечная прокрутка. */
+export const useInfiniteSearchMovies = (query: string) => {
   const { errors } = useNotification()
-  const result = useQuery<IMovie[]>({
+  const result = useInfiniteQuery({
+    queryKey: ['search-movies-infinite', query],
+    queryFn: ({ pageParam }) => searchApi.searchMovies(query, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: getNextTmdbPage,
+    select: selectUniqueMovies,
+    enabled: !!query,
+    staleTime: 86400 * 1000
+  })
+  useEffect(() => {
+    if (result.isError) errors('Ошибка при поиске фильмов')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isError])
+  return result
+}
+
+/** Подбор по фильтрам на странице «Поиск»: бесконечная прокрутка. `enabled: false` — когда идёт поиск по названию. */
+export const useMoviesByFilters = (params: IMovieFilterParams, { enabled = true } = {}) => {
+  const { errors } = useNotification()
+  const result = useInfiniteQuery({
     queryKey: ['search-movies-by-filters', params],
-    queryFn: () => searchApi.fetchByFilters(params),
+    queryFn: ({ pageParam }) => searchApi.fetchByFilters(params, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: getNextTmdbPage,
+    select: selectUniqueMovies,
+    enabled,
     staleTime: 86400 * 1000
   })
   useEffect(() => {

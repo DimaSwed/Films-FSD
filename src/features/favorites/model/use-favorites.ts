@@ -2,7 +2,7 @@ import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@ta
 
 import { useMovieAccountState, useUpdateMovieAccountState } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
-import { IMovie } from '@/shared/lib'
+import { getNextTmdbPage, selectUniqueMovies } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { favoritesApi } from '../api'
@@ -24,14 +24,8 @@ export const useFavoritesList = () => {
       return favoritesApi.getFavorites(sessionId, userId, pageParam)
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage) =>
-      lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
-    // Страницы TMDB сдвигаются, если список изменился во время скролла — убираем дубли.
-    select: (data): IMovie[] => [
-      ...new Map(
-        data.pages.flatMap((page) => page.results).map((movie) => [movie.id, movie])
-      ).values()
-    ],
+    getNextPageParam: getNextTmdbPage,
+    select: selectUniqueMovies,
     enabled: !!sessionId && !!userId,
     staleTime: 1000 * 60 * 5,
     retry: 2

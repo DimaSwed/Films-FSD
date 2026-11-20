@@ -1,68 +1,55 @@
 import { api } from '@/shared/api'
-import { IMovie, IMovieRaw, transformMovie } from '@/shared/lib'
+import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie } from '@/shared/lib'
 
-import type { IMoviesFilters } from '../model'
+import type { IMoviesFilters, TMovieCategory } from '../model'
+
+const CATEGORY_ENDPOINTS: Record<TMovieCategory, { path: string; withRegion: boolean }> = {
+  trending: { path: '/trending/movie/week', withRegion: false },
+  'now-playing': { path: '/movie/now_playing', withRegion: true },
+  popular: { path: '/movie/popular', withRegion: true },
+  upcoming: { path: '/movie/upcoming', withRegion: true },
+  'top-rated': { path: '/movie/top_rated', withRegion: true }
+}
+
+const toMoviesPage = (
+  data: IPaginatedResponse<IMovieRaw> | undefined
+): IPaginatedResponse<IMovie> => {
+  if (!data || !data.results) {
+    throw new Error('Фильмы не найдены')
+  }
+  return { ...data, results: data.results.map(transformMovie) }
+}
+
+const getCategoryPage = async (category: TMovieCategory, page: number) => {
+  const { path, withRegion } = CATEGORY_ENDPOINTS[category]
+  const response = await api.get<IPaginatedResponse<IMovieRaw>>(path, {
+    params: { language: 'ru-RU', page, ...(withRegion && { region: 'RU' }) }
+  })
+  return toMoviesPage(response.data)
+}
+
+const getFirstPageResults = async (category: TMovieCategory): Promise<IMovie[]> =>
+  (await getCategoryPage(category, 1)).results
 
 export const moviesApi = {
-  getUpcoming: async (): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>(
-      '/movie/upcoming?language=ru-RU&page=1&region=RU'
-    )
-    if (!response.data || !response.data.results) {
-      throw new Error('Upcoming movies not found')
-    }
-    return response.data.results.map(transformMovie)
-  },
+  /** Страница подборки (для карусели берётся первая, для «Просмотреть все» — по странице за запрос). */
+  getCategoryPage,
 
-  getTopRated: async (): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>(
-      '/movie/top_rated?language=ru-RU&page=1&region=RU'
-    )
-    if (!response.data || !response.data.results) {
-      throw new Error('Top rated movies not found')
-    }
-    return response.data.results.map(transformMovie)
-  },
+  getUpcoming: () => getFirstPageResults('upcoming'),
+  getTopRated: () => getFirstPageResults('top-rated'),
+  getTrending: () => getFirstPageResults('trending'),
+  getNowPlaying: () => getFirstPageResults('now-playing'),
+  getPopular: () => getFirstPageResults('popular'),
 
-  getTrending: async (): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>('/trending/movie/week?language=ru-RU')
-    if (!response.data || !response.data.results) {
-      throw new Error('Trending movies not found')
-    }
-    return response.data.results.map(transformMovie)
-  },
-
-  getNowPlaying: async (): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>(
-      '/movie/now_playing?language=ru-RU&page=1&region=RU'
-    )
-    if (!response.data || !response.data.results) {
-      throw new Error('Now playing movies not found')
-    }
-    return response.data.results.map(transformMovie)
-  },
-
-  getPopular: async (): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>(
-      '/movie/popular?language=ru-RU&page=1&region=RU'
-    )
-    if (!response.data || !response.data.results) {
-      throw new Error('Popular movies not found')
-    }
-    return response.data.results.map(transformMovie)
-  },
-
-  getByFilters: async (params: IMoviesFilters): Promise<IMovie[]> => {
-    const response = await api.get<{ results: IMovieRaw[] }>('/discover/movie', {
+  getByFilters: async (params: IMoviesFilters, page = 1) => {
+    const response = await api.get<IPaginatedResponse<IMovieRaw>>('/discover/movie', {
       params: {
         ...params,
+        page,
         language: params.language || 'ru-RU',
         region: params.region || 'RU'
       }
     })
-    if (!response.data || !response.data.results) {
-      throw new Error('Movies not found')
-    }
-    return response.data.results.map(transformMovie)
+    return toMoviesPage(response.data)
   }
 }
