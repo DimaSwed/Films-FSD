@@ -26,12 +26,8 @@ export const useSearchMovies = (query: string) => {
 export const useMoviesByFilters = (params: IMovieFilterParams) => {
   const { errors } = useNotification()
   const result = useQuery<IMovie[]>({
-    queryKey: ['movies-by-filters', params],
-    queryFn: () =>
-      searchApi.fetchByFilters({
-        ...params,
-        'primary_release_date.lte': new Date().toISOString().split('T')[0]
-      }),
+    queryKey: ['search-movies-by-filters', params],
+    queryFn: () => searchApi.fetchByFilters(params),
     staleTime: 86400 * 1000
   })
   useEffect(() => {

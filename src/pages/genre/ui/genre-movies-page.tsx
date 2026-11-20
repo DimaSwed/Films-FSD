@@ -1,20 +1,17 @@
 import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
-import { useMoviesByFilters, MovieCategoryList } from '@/features/movies'
+import { useMoviesByFilters, getGenreMoviesParams, MovieCategoryList } from '@/features/movies'
 import { GENRES_LIST } from '@/shared/config'
 
 export const GenreMoviesPage = () => {
   const { genreId } = useParams<{ genreId: string }>()
   const genre = GENRES_LIST.find((g) => g.id === Number(genreId))
 
-  const { data: movies = [], isLoading } = useMoviesByFilters({
-    include_adult: 'true',
-    include_video: 'true',
-    sort_by: 'popularity.desc',
-    page: 1,
-    with_genres: Number(genreId)
-  })
+  const { data: movies = [], isLoading } = useMoviesByFilters(
+    getGenreMoviesParams(Number(genreId)),
+    { enabled: !!genre }
+  )
 
   if (!genre) {
     return (

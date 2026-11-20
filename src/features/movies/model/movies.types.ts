@@ -29,8 +29,6 @@ export interface IMoviesFilters {
   include_video?: string
   language?: string
   sort_by?: string
-  primary_release_year?: string
-  certification_country?: string
   region?: string
   page?: number
   with_genres?: number

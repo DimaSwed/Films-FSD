@@ -8,7 +8,15 @@ import { moviesApi } from '../api'
 
 import { IMoviesFilters } from './movies.types'
 
-export const useMoviesByFilters = (params: IMoviesFilters) => {
+interface IUseMoviesByFiltersOptions {
+  /** `false` — не делать запрос (например, пока параметры невалидны). */
+  enabled?: boolean
+}
+
+export const useMoviesByFilters = (
+  params: IMoviesFilters,
+  { enabled = true }: IUseMoviesByFiltersOptions = {}
+) => {
   const { errors } = useNotification()
   const result = useQuery<IMovie[]>({
     queryKey: ['movies-by-filters', params],
@@ -16,6 +24,7 @@ export const useMoviesByFilters = (params: IMoviesFilters) => {
       const data = await moviesApi.getByFilters(params)
       return data
     },
+    enabled,
     staleTime: 86400 * 1000
   })
   useEffect(() => {

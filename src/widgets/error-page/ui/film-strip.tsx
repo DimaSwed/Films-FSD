@@ -21,8 +21,9 @@ export const FilmStrip: FC<IFilmStripProps> = ({ reverse, safeTop }) => (
       paddingTop: safeTop ? 'env(safe-area-inset-top)' : 0,
       bgcolor: alpha(theme.palette.text.primary, 0.08),
       backgroundImage: `repeating-linear-gradient(90deg, ${theme.palette.background.default} 0 18px, transparent 18px ${STRIP_STEP}px)`,
-      backgroundSize: '100% 16px',
-      backgroundRepeat: 'no-repeat',
+      // Тайл ровно в один шаг перфорации: при сдвиге на STRIP_STEP лента бесшовно зацикливается
+      backgroundSize: `${STRIP_STEP}px 16px`,
+      backgroundRepeat: 'repeat-x',
       backgroundPosition: 'center',
       animation: `${slide} 2.4s linear infinite ${reverse ? 'reverse' : ''}`,
       [reducedMotion]: { animation: 'none' }

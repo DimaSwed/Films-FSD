@@ -51,7 +51,6 @@ export const ErrorPage: FC<IErrorPageProps> = ({ onReload = reloadPage }) => (
 
       <Typography
         component="h1"
-        role="alert"
         sx={{
           fontWeight: 700,
           lineHeight: 1.05,
@@ -73,7 +72,7 @@ export const ErrorPage: FC<IErrorPageProps> = ({ onReload = reloadPage }) => (
         </Box>
       </Typography>
 
-      <Typography variant="body1" sx={{ maxWidth: 520, color: 'text.secondary' }}>
+      <Typography variant="body1" role="alert" sx={{ maxWidth: 520, color: 'text.secondary' }}>
         Что-то пошло не так, и кадр не загрузился. Склеим плёнку заново — перезагрузите страницу, и
         сеанс продолжится.
       </Typography>

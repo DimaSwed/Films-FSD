@@ -16,8 +16,8 @@ export interface IMoviesResponseData {
 export interface IMovieFilterParams {
   with_genres?: number | ''
   sort_by: string
-  with_original_language?: string
-  primary_release_year?: string
+  with_origin_country?: string
+  'primary_release_date.gte'?: string
   'primary_release_date.lte': string
 }
 

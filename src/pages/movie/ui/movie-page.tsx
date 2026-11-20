@@ -78,11 +78,13 @@ export const MoviePage = () => {
                 <strong>Дата релиза:</strong>
               </Typography>
               <Typography variant="body2">
-                {new Date(movie.releaseDate).toLocaleString('ru-RU', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric'
-                })}
+                {movie.releaseDate
+                  ? new Date(movie.releaseDate).toLocaleString('ru-RU', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric'
+                    })
+                  : 'Неизвестно'}
               </Typography>
             </Grid>
             <Grid>
@@ -102,7 +104,9 @@ export const MoviePage = () => {
                 <strong>Длительность фильма:</strong>
               </Typography>
               <Typography variant="body2">
-                {`${Math.floor(movie.duration / 60)} ч. ${movie.duration % 60} мин.`}
+                {movie.duration > 0
+                  ? `${Math.floor(movie.duration / 60)} ч. ${movie.duration % 60} мин.`
+                  : 'Неизвестно'}
               </Typography>
             </Grid>
           </Grid>

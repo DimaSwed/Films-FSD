@@ -1,6 +1,8 @@
 import { api } from '@/shared/api'
 import { IMovieRaw, transformMovie } from '@/shared/lib'
 
+import type { IMovieFilterParams } from '../model'
+
 export const searchApi = {
   searchMovies: async (query: string) => {
     const response = await api.get('/search/movie', {
@@ -18,7 +20,7 @@ export const searchApi = {
     }
   },
 
-  fetchByFilters: async (params: Record<string, string | number | boolean>) => {
+  fetchByFilters: async (params: IMovieFilterParams) => {
     const response = await api.get('/discover/movie', {
       params: {
         ...params,

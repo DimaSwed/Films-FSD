@@ -44,12 +44,12 @@ export const genreMap: Record<number, string> = GENRES_LIST.reduce(
 )
 
 export const COUNTRIES_LIST: { label: string; code: string }[] = [
-  { label: 'США', code: 'en' },
-  { label: 'Великобритания', code: 'gb' },
-  { label: 'Франция', code: 'fr' },
-  { label: 'Германия', code: 'de' },
-  { label: 'Япония', code: 'jp' },
-  { label: 'Китай', code: 'cn' },
-  { label: 'Индия', code: 'in' },
-  { label: 'Россия', code: 'ru' }
+  { label: 'США', code: 'US' },
+  { label: 'Великобритания', code: 'GB' },
+  { label: 'Франция', code: 'FR' },
+  { label: 'Германия', code: 'DE' },
+  { label: 'Япония', code: 'JP' },
+  { label: 'Китай', code: 'CN' },
+  { label: 'Индия', code: 'IN' },
+  { label: 'Россия', code: 'RU' }
 ]

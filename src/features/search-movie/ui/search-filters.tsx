@@ -5,6 +5,7 @@ import { useDebounce } from 'use-debounce'
 
 import { IMovie } from '@/shared/lib'
 
+import { getReleaseDateRange } from '../lib'
 import { useMoviesByFilters, useSearchMovies, CRITERIA_MAP, RECOMMENDATION_MAP } from '../model'
 
 import {
@@ -57,9 +58,8 @@ export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) =
   const { data: filteredMovies, isLoading: moviesLoading } = useMoviesByFilters({
     with_genres: selectedGenre,
     sort_by: sortBy,
-    with_original_language: selectedCountry,
-    primary_release_year: selectedYear,
-    'primary_release_date.lte': new Date().toISOString().split('T')[0]
+    with_origin_country: selectedCountry,
+    ...getReleaseDateRange(selectedYear)
   })
 
   const moviesToDisplay = useMemo(() => {
