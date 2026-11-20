@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth'
 import { useSessionId, useUserDetails } from '@/entities/user'
-import { LoadingErrorState, PageShell } from '@/shared/ui'
+import { LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
 
 export const ProfilePage = () => {
   const { data: user, isLoading, isError } = useUserDetails()
@@ -28,6 +28,7 @@ export const ProfilePage = () => {
   if (!sessionId) {
     return (
       <PageShell centered>
+        <PageMeta title="Профиль" noIndex />
         <Box
           sx={{
             display: 'flex',
@@ -76,6 +77,7 @@ export const ProfilePage = () => {
   if (isLoading || isError) {
     return (
       <PageShell centered>
+        <PageMeta title="Профиль" noIndex />
         <LoadingErrorState
           isLoading={isLoading}
           isError={isError}
@@ -90,6 +92,7 @@ export const ProfilePage = () => {
   if (!user) {
     return (
       <PageShell centered>
+        <PageMeta title="Профиль" noIndex />
         <Typography variant="h6" color="text.primary" textAlign={'center'}>
           Пользователь не найден
         </Typography>
@@ -99,6 +102,7 @@ export const ProfilePage = () => {
 
   return (
     <PageShell sx={{ padding: { xs: '10px', sm: '15px', md: '30px' } }}>
+      <PageMeta title="Профиль" noIndex />
       <Box sx={{ textAlign: 'center', mb: 4, width: '100%' }}>
         {user.avatar?.gravatar?.hash ? (
           <Avatar

@@ -8,7 +8,7 @@ import {
   useWatchList
 } from '@/features/watch-list'
 import { useInfiniteScroll } from '@/shared/lib'
-import { LoadingErrorState, ScrollButton } from '@/shared/ui'
+import { LoadingErrorState, PageMeta, ScrollButton } from '@/shared/ui'
 
 export const WatchListPage = () => {
   const {
@@ -40,6 +40,7 @@ export const WatchListPage = () => {
         width: '100%'
       }}
     >
+      <PageMeta title="Список к просмотру" noIndex />
       <Typography variant="h3" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
         Список к просмотру
       </Typography>

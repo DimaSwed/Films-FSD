@@ -9,6 +9,7 @@ import {
   useNowPlayingMovies,
   useTrendingMovies
 } from '@/features/movies'
+import { PageMeta } from '@/shared/ui'
 
 export const HomePage = () => {
   const { data: nowPlayingMovies, isLoading: isLoadingNowPlaying } = useNowPlayingMovies()
@@ -34,24 +35,27 @@ export const HomePage = () => {
   ]
 
   return (
-    <Box
-      component="main"
-      minHeight={'100%'}
-      sx={{
-        padding: { xs: '10px', sm: '15px', md: '30px' },
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper',
-        width: '100%',
-        overflow: 'hidden'
-      }}
-    >
-      <Typography variant="h3" gutterBottom textAlign={'center'} mb={5}>
-        Фильмы
-      </Typography>
+    <>
+      <PageMeta />
+      <Box
+        component="main"
+        minHeight={'100%'}
+        sx={{
+          padding: { xs: '10px', sm: '15px', md: '30px' },
+          color: 'secondary.contrastText',
+          bgcolor: 'background.paper',
+          width: '100%',
+          overflow: 'hidden'
+        }}
+      >
+        <Typography variant="h3" gutterBottom textAlign={'center'} mb={5}>
+          Фильмы
+        </Typography>
 
-      {categories.map(({ title, movies, isLoading }) => (
-        <MovieCategory key={title} title={title} movies={movies} isLoading={isLoading} />
-      ))}
-    </Box>
+        {categories.map(({ title, movies, isLoading }) => (
+          <MovieCategory key={title} title={title} movies={movies} isLoading={isLoading} />
+        ))}
+      </Box>
+    </>
   )
 }

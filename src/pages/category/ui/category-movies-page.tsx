@@ -9,6 +9,7 @@ import {
   useTopRatedMovies,
   MovieCategoryList
 } from '@/features/movies'
+import { PageMeta } from '@/shared/ui'
 
 const CATEGORY_CONFIG = {
   'сейчас-в-тренде': {
@@ -39,9 +40,12 @@ export const CategoryMoviesPage = () => {
 
   if (!config) {
     return (
-      <Typography variant="h5" textAlign={'center'}>
-        Категория не найдена
-      </Typography>
+      <>
+        <PageMeta title="Категория не найдена" noIndex />
+        <Typography variant="h5" textAlign={'center'}>
+          Категория не найдена
+        </Typography>
+      </>
     )
   }
 
@@ -57,6 +61,10 @@ export const CategoryMoviesPage = () => {
         bgcolor: 'background.paper'
       }}
     >
+      <PageMeta
+        title={title}
+        description={`${title} — подборка фильмов на КиноТрекере: рейтинг, год выхода, жанры.`}
+      />
       <Typography variant="h4" mb={{ xs: 0, sm: 3 }} textAlign="center">
         {title}
       </Typography>

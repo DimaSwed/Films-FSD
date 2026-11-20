@@ -6,7 +6,7 @@ import { useFavoritesList } from '@/features/favorites'
 import { MovieGrid, SmallMovieCard } from '@/entities/movie'
 import { useSessionId } from '@/entities/user'
 import { useInfiniteScroll } from '@/shared/lib'
-import { EmptyState, LoadingErrorState, ScrollButton } from '@/shared/ui'
+import { EmptyState, LoadingErrorState, PageMeta, ScrollButton } from '@/shared/ui'
 
 export const FavoritesListPage = () => {
   const sessionId = useSessionId()
@@ -40,6 +40,7 @@ export const FavoritesListPage = () => {
         width: '100%'
       }}
     >
+      <PageMeta title="Избранное" noIndex />
       <Typography variant="h3" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
         Список избранного
       </Typography>

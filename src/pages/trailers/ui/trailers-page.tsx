@@ -1,7 +1,7 @@
 import { Box, Typography, Card, CardContent } from '@mui/material'
 
 import { useUpcomingMovies, useMovieTrailers } from '@/features/movies'
-import { LoadingErrorState, PageShell } from '@/shared/ui'
+import { LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
 
 export const TrailersPage = () => {
   const { data: movies, isLoading, isError } = useUpcomingMovies()
@@ -10,6 +10,7 @@ export const TrailersPage = () => {
   if (isLoading || isError) {
     return (
       <PageShell centered>
+        {isError && <PageMeta title="Ошибка загрузки трейлеров" noIndex />}
         <LoadingErrorState
           isLoading={isLoading}
           isError={isError}
@@ -23,6 +24,10 @@ export const TrailersPage = () => {
 
   return (
     <PageShell sx={{ padding: { xs: '10px', sm: '15px', md: '30px' } }}>
+      <PageMeta
+        title="Трейлеры"
+        description="Трейлеры ближайших кинопремьер: смотрите, что выходит в прокат."
+      />
       <Box sx={{ textAlign: 'center', mb: 4, width: '100%' }}>
         <Typography variant="h4" gutterBottom>
           Последние трейлеры

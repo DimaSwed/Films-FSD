@@ -5,7 +5,13 @@ import { useParams } from 'react-router-dom'
 import { ToggleFavoriteButton } from '@/features/favorites'
 import { ToggleWatchlistButton } from '@/features/watch-list'
 import { WatchProviders, useMovie, useWatchProviders } from '@/entities/movie'
-import { EmptyState, LoadingErrorState, PageShell } from '@/shared/ui'
+import {
+  EmptyState,
+  JustWatchAttribution,
+  LoadingErrorState,
+  PageMeta,
+  PageShell
+} from '@/shared/ui'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
@@ -16,6 +22,7 @@ export const MoviePage = () => {
   if (isLoading || isError) {
     return (
       <PageShell centered>
+        {isError && <PageMeta title="Ошибка загрузки фильма" noIndex />}
         <LoadingErrorState
           isLoading={isLoading}
           isError={isError}
@@ -30,6 +37,7 @@ export const MoviePage = () => {
   if (!movie) {
     return (
       <PageShell centered>
+        <PageMeta title="Фильм не найден" noIndex />
         <EmptyState
           title="Фильм не найден"
           description="Возможно, он был удалён или ссылка неверна."
@@ -46,6 +54,12 @@ export const MoviePage = () => {
         backgroundPosition: 'center'
       }}
     >
+      <PageMeta
+        title={movie.year ? `${movie.title} (${movie.year})` : movie.title}
+        description={movie.description || undefined}
+        image={movie.image || undefined}
+        type="video.movie"
+      />
       <Grid
         container
         spacing={4}
@@ -112,7 +126,12 @@ export const MoviePage = () => {
           </Grid>
 
           <Stack alignItems={'flex-start'} flexDirection={'row'} gap={1}>
-            {providers.length > 0 && <WatchProviders providers={providers} />}
+            {providers.length > 0 && (
+              <Box>
+                <WatchProviders providers={providers} />
+                <JustWatchAttribution sx={{ mt: 0.5, textAlign: 'center' }} />
+              </Box>
+            )}
           </Stack>
 
           <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 3 }}>

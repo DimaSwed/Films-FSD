@@ -12,7 +12,49 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="theme-color" content="#1c1c1c" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>КиноТрекер</title>
+
+    <!--
+      Метаданные по умолчанию. Один и тот же index.html отдаётся на любой маршрут, поэтому краулеры
+      без JS (мессенджеры, превью ссылок) видят их для всех страниц, а не только для главной.
+      canonical и og:url здесь намеренно нет: их создаёт <PageMeta> (src/shared/ui/page-meta) для
+      каждого маршрута. Остальное <PageMeta> подменяет на странице и возвращает при уходе.
+      Домен дублируется в src/shared/config/site.ts — менять в обоих местах.
+    -->
+    <title>КиноТрекер — фильмы, трейлеры и списки к просмотру</title>
+    <meta
+      name="description"
+      content="Подборки фильмов, поиск по жанрам, годам и странам, трейлеры, где смотреть онлайн и личные списки «К просмотру» и «Избранное» с входом через TMDB."
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="КиноТрекер" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="КиноТрекер — фильмы, трейлеры и списки к просмотру" />
+    <meta
+      property="og:description"
+      content="Подборки фильмов, поиск по жанрам, годам и странам, трейлеры, где смотреть онлайн и личные списки «К просмотру» и «Избранное» с входом через TMDB."
+    />
+    <meta property="og:image" content="https://films-fsd.vercel.app/images/logo.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="КиноТрекер — фильмы, трейлеры и списки к просмотру" />
+    <meta
+      name="twitter:description"
+      content="Подборки фильмов, поиск по жанрам, годам и странам, трейлеры, где смотреть онлайн и личные списки «К просмотру» и «Избранное» с входом через TMDB."
+    />
+    <meta name="twitter:image" content="https://films-fsd.vercel.app/images/logo.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "КиноТрекер",
+        "url": "https://films-fsd.vercel.app/",
+        "inLanguage": "ru-RU"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

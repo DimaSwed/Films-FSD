@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { useMoviesByFilters, getGenreMoviesParams, MovieCategoryList } from '@/features/movies'
 import { GENRES_LIST } from '@/shared/config'
+import { PageMeta } from '@/shared/ui'
 
 export const GenreMoviesPage = () => {
   const { genreId } = useParams<{ genreId: string }>()
@@ -15,9 +16,12 @@ export const GenreMoviesPage = () => {
 
   if (!genre) {
     return (
-      <Typography variant="h5" textAlign={'center'}>
-        Жанр не найден
-      </Typography>
+      <>
+        <PageMeta title="Жанр не найден" noIndex />
+        <Typography variant="h5" textAlign={'center'}>
+          Жанр не найден
+        </Typography>
+      </>
     )
   }
 
@@ -30,6 +34,10 @@ export const GenreMoviesPage = () => {
         bgcolor: 'background.paper'
       }}
     >
+      <PageMeta
+        title={`Фильмы жанра «${genre.name}»`}
+        description={`Популярные фильмы жанра «${genre.name}»: рейтинг, год выхода, где посмотреть.`}
+      />
       <Typography variant="h4" mb={{ xs: 0, sm: 3 }} textAlign="center">
         {genre.name}
       </Typography>
