@@ -3,17 +3,14 @@ import { FC } from 'react'
 
 import { getTmdbImageUrl } from '@/shared/lib'
 
-interface IProvider {
-  provider_id: number
-  provider_name: string
-  logo_path: string
+import type { IWatchProvider } from '../model'
+
+interface IWatchProvidersProps {
+  providers: IWatchProvider[]
 }
 
-interface IProps {
-  providers: IProvider[]
-}
-
-export const WatchProviders: FC<IProps> = ({ providers }) => {
+/** Компактный ряд иконок провайдеров (с подсказкой-названием). */
+export const WatchProviders: FC<IWatchProvidersProps> = ({ providers }) => {
   return (
     <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
       {providers.map((p) => (

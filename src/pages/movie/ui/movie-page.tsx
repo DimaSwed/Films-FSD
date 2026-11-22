@@ -4,20 +4,18 @@ import { useParams } from 'react-router-dom'
 
 import { ToggleFavoriteButton } from '@/features/favorites'
 import { ToggleWatchlistButton } from '@/features/watch-list'
-import { WatchProviders, useMovie, useWatchProviders } from '@/entities/movie'
-import {
-  EmptyState,
-  JustWatchAttribution,
-  LoadingErrorState,
-  PageMeta,
-  PageShell
-} from '@/shared/ui'
+import { WatchProvidersSection, useMovie, useWatchProviders } from '@/entities/movie'
+import { EmptyState, LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
   const movieId = Number(id)
   const { data: movie, isLoading, isError } = useMovie(movieId)
-  const { data: providers = [] } = useWatchProviders(movieId)
+  const {
+    data: providers,
+    isLoading: isProvidersLoading,
+    isError: isProvidersError
+  } = useWatchProviders(movieId)
 
   if (isLoading || isError) {
     return (
@@ -125,14 +123,11 @@ export const MoviePage = () => {
             </Grid>
           </Grid>
 
-          <Stack alignItems={'flex-start'} flexDirection={'row'} gap={1}>
-            {providers.length > 0 && (
-              <Box>
-                <WatchProviders providers={providers} />
-                <JustWatchAttribution sx={{ mt: 0.5, textAlign: 'center' }} />
-              </Box>
-            )}
-          </Stack>
+          <WatchProvidersSection
+            providers={providers}
+            isLoading={isProvidersLoading}
+            isError={isProvidersError}
+          />
 
           <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 3 }}>
             <ToggleFavoriteButton movieId={movie.id} />

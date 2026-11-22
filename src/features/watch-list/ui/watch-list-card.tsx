@@ -3,7 +3,12 @@ import { useState } from 'react'
 
 import { WatchProviders, useWatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
-import { RemoveButton, ToggleDescriptionButton, RatingDisplay } from '@/shared/ui'
+import {
+  JustWatchAttribution,
+  RemoveButton,
+  ToggleDescriptionButton,
+  RatingDisplay
+} from '@/shared/ui'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -13,7 +18,8 @@ interface IMovieCardProps {
 export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps) => {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
 
-  const { data: providers = [] } = useWatchProviders(movie.id)
+  const { data: providers } = useWatchProviders(movie.id)
+  const flatrate = providers?.flatrate ?? []
 
   const toggleDescription = () => {
     setIsDescriptionOpen((prev) => !prev)
@@ -81,7 +87,12 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
           </Typography>
         </Collapse>
 
-        {providers.length > 0 && <WatchProviders providers={providers} />}
+        {flatrate.length > 0 && (
+          <>
+            <WatchProviders providers={flatrate} />
+            <JustWatchAttribution sx={{ mt: 0.5, color: 'secondary.contrastText' }} />
+          </>
+        )}
 
         <Stack
           direction="row"
