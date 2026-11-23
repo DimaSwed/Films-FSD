@@ -1,111 +1,85 @@
-import { Box, Typography, Card, CardContent } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { Fragment } from 'react'
 
-import { useUpcomingMovies, useMovieTrailers } from '@/features/movies'
-import { LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
+import { TrailerList, useCategoryTrailers } from '@/features/movies'
+import {
+  EmptyState,
+  InfiniteScrollFooter,
+  LoadingErrorState,
+  PageMeta,
+  PageShell,
+  ScrollButton
+} from '@/shared/ui'
+
+import { getTrailersTabId, TRAILERS_PANEL_ID } from '../config'
+import { useTrailersTab } from '../model'
+
+import { TrailersTabs } from './trailers-tabs'
 
 export const TrailersPage = () => {
-  const { data: movies, isLoading, isError } = useUpcomingMovies()
-  const { data: trailersData } = useMovieTrailers(movies?.map((m) => m.id) || [])
+  const { category, setCategory } = useTrailersTab()
+  const {
+    items,
+    loadedCount,
+    isLoading,
+    isSuccess,
+    isError,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    refetch,
+    retryFailed
+  } = useCategoryTrailers(category)
 
-  if (isLoading || isError) {
-    return (
-      <PageShell centered>
-        {isError && <PageMeta title="Ошибка загрузки трейлеров" noIndex />}
-        <LoadingErrorState
-          isLoading={isLoading}
-          isError={isError}
-          loadingText="Загружаем трейлеры..."
-          errorTitle="Ошибка загрузки трейлеров"
-          errorDescription="Не удалось загрузить список трейлеров. Попробуйте позже."
-        />
-      </PageShell>
-    )
-  }
+  const hasLoaded = loadedCount > 0
+  const isFailed = isError && !hasLoaded
 
   return (
     <PageShell sx={{ padding: { xs: '10px', sm: '15px', md: '30px' } }}>
       <PageMeta
-        title="Трейлеры"
-        description="Трейлеры ближайших кинопремьер: смотрите, что выходит в прокат."
+        title={isFailed ? 'Ошибка загрузки трейлеров' : 'Трейлеры'}
+        description="Трейлеры ближайших премьер, фильмов в прокате и популярных картин."
+        noIndex={isFailed}
       />
-      <Box sx={{ textAlign: 'center', mb: 4, width: '100%' }}>
-        <Typography variant="h4" gutterBottom>
-          Последние трейлеры
-        </Typography>
+      <Typography variant="h3" component="h1" textAlign="center" gutterBottom>
+        Последние трейлеры
+      </Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 3,
-            justifyContent: { xs: 'center', sm: 'flex-start' }
-          }}
-        >
-          {movies?.map((movie) => {
-            const trailerKey = trailersData?.[movie.id]?.[0]?.key
-            return (
-              <Box
-                key={movie.id}
-                sx={{
-                  flex: '1 1 calc(100% - 24px)', // для xs
-                  maxWidth: {
-                    xs: '100%',
-                    sm: 'calc(50% - 24px)',
-                    md: 'calc(33.33% - 24px)'
-                  },
-                  display: 'flex'
-                }}
-              >
-                <Card
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '100%',
-                    bgcolor: 'background.default',
-                    color: 'secondary.contrastText',
-                    borderRadius: 1,
-                    boxShadow: 3
-                  }}
-                >
-                  {trailerKey ? (
-                    <Box sx={{ position: 'relative', height: 200 }}>
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        src={`https://www.youtube.com/embed/${trailerKey}`}
-                        title={movie.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        style={{ border: 'none', borderRadius: '4px 4px 0 0' }}
-                      />
-                    </Box>
-                  ) : (
-                    <Box
-                      sx={{
-                        height: 200,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        bgcolor: 'grey.800'
-                      }}
-                    >
-                      <Typography variant="body2" color="primary.contrastText">
-                        Трейлер недоступен
-                      </Typography>
-                    </Box>
-                  )}
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6" component="div">
-                      {movie.title}
-                    </Typography>
-                    <Typography variant="body2">{movie.year}</Typography>
-                  </CardContent>
-                </Card>
-              </Box>
-            )
-          })}
-        </Box>
+      <TrailersTabs category={category} onChange={setCategory} />
+
+      <Box role="tabpanel" id={TRAILERS_PANEL_ID} aria-labelledby={getTrailersTabId(category)}>
+        <LoadingErrorState
+          isLoading={isLoading}
+          isError={isFailed}
+          loadingText="Загружаем трейлеры..."
+          errorTitle="Ошибка загрузки трейлеров"
+          errorDescription="Не удалось загрузить список трейлеров. Попробуйте позже."
+          retry={refetch}
+        />
+
+        {isSuccess && items.length === 0 && !hasNextPage && (
+          <EmptyState
+            title="Трейлеров пока нет"
+            description="Для фильмов этой подборки ролики ещё не опубликованы."
+          />
+        )}
+
+        {/* key: смена вкладки (в том числе по ссылке из сайдбара) останавливает плеер */}
+        {hasLoaded && (
+          <Fragment key={category}>
+            <TrailerList items={items} onRetry={retryFailed} />
+            <InfiniteScrollFooter
+              loadedCount={loadedCount}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+              isError={isError}
+              onLoadMore={fetchNextPage}
+            />
+          </Fragment>
+        )}
       </Box>
+
+      <ScrollButton />
     </PageShell>
   )
 }

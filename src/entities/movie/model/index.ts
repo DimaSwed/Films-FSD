@@ -1,3 +1,5 @@
+export * from './movie-trailer.query'
+export * from './movie-trailer.types'
 export * from './movie.types'
 export * from './use-movie'
 export * from './use-movie-account-state'

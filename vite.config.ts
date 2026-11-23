@@ -99,12 +99,14 @@ export default defineConfig(({ mode }) => ({
         skipWaiting: true,
         clientsClaim: true,
         runtimeCaching: [
-          // Каталожные запросы TMDB (через прокси /tmdb/api); account/auth не кешируем
+          // Каталожные запросы TMDB (через прокси /tmdb/api); account/auth не кешируем. Ролики —
+          // тоже: на страницу трейлеров их десятки, они вытеснили бы каталог, а оффлайн бесполезны
           {
             urlPattern: ({ url, sameOrigin }) =>
               sameOrigin &&
               url.pathname.startsWith('/tmdb/api/') &&
-              !/^\/tmdb\/api\/(account|authentication)\//.test(url.pathname),
+              !/^\/tmdb\/api\/(account|authentication)\//.test(url.pathname) &&
+              !/^\/tmdb\/api\/movie\/\d+\/videos$/.test(url.pathname),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',

@@ -15,6 +15,8 @@ export interface IMovie {
   title: string
   rating: number
   image: string
+  /** Небольшой горизонтальный кадр (16:9, 300 px); пустая строка, если у фильма его нет. */
+  backdrop: string
   year: number
   genre: string
   duration: number

@@ -8,11 +8,22 @@ import { moviesApi } from '../api'
 
 import type { TMovieCategory } from './movies.types'
 
-/** Подборка целиком с бесконечной прокруткой (страница «Просмотреть все»). `undefined` — запрос не делается. */
-export const useCategoryMovies = (category: TMovieCategory | undefined) => {
+interface IUseCategoryMoviesOptions {
+  /**
+   * Список страниц под своим ключом. Трейлерам общий с «Просмотреть все» кэш не подходит: пролистанные
+   * там 15 страниц сразу дали бы 300 запросов роликов.
+   */
+  cacheKey?: 'movies-infinite' | 'trailers-infinite'
+}
+
+/** Подборка целиком с бесконечной прокруткой. `undefined` — запрос не делается. */
+export const useCategoryMovies = (
+  category: TMovieCategory | undefined,
+  { cacheKey = 'movies-infinite' }: IUseCategoryMoviesOptions = {}
+) => {
   const { errors } = useNotification()
   const result = useInfiniteQuery({
-    queryKey: ['movies-infinite', category],
+    queryKey: [cacheKey, category],
     queryFn: ({ pageParam }) => moviesApi.getCategoryPage(category!, pageParam),
     initialPageParam: 1,
     getNextPageParam: getNextTmdbPage,
