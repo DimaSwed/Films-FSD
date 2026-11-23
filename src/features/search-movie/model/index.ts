@@ -1,2 +1,3 @@
 export * from './use-search-movies'
 export * from './search.types'
+export * from './use-quick-search'
