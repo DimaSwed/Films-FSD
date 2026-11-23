@@ -1,8 +1,12 @@
-import { IMovie } from '@/shared/lib'
+import { applyMovieListView, IMovie, isAddedOrder, TMovieSort } from '@/shared/lib'
+
+import { WATCHLIST_SOURCE_ORDER } from '../api'
 
 interface IWatchListFilters {
   genre: string
   year: string
+  query: string
+  sort: TMovieSort
 }
 
 const matchesYear = (movie: IMovie, year: string) => {
@@ -16,13 +20,22 @@ const matchesYear = (movie: IMovie, year: string) => {
   return movie.year === Number(year)
 }
 
-/** Возвращает новый массив: исходный (кэш React Query) не мутируется. Новые релизы — первыми. */
-export const filterAndSortMovies = (movies: IMovie[], { genre, year }: IWatchListFilters) =>
-  movies
+/**
+ * Фильтрует и сортирует список «К просмотру», исходный массив не меняет.
+ * Для сортировок по дате добавления порядок берётся из самого списка: если TMDB отдаёт его
+ * не в том направлении, какое выбрал пользователь, список переворачивается.
+ */
+export const filterAndSortMovies = (
+  movies: IMovie[],
+  { genre, year, query, sort }: IWatchListFilters
+) => {
+  const sourceIsAscending = WATCHLIST_SOURCE_ORDER === 'created_at.asc'
+  const wantsAscending = sort === 'added-asc'
+  const needsReverse = isAddedOrder(sort) && sourceIsAscending !== wantsAscending
+  const ordered = needsReverse ? [...movies].reverse() : movies
+  const filtered = ordered
     .filter((movie) => !genre || movie.genre?.includes(genre))
     .filter((movie) => !year || matchesYear(movie, year))
-    .sort((a, b) => {
-      if (!a.releaseDate) return 1
-      if (!b.releaseDate) return -1
-      return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-    })
+
+  return applyMovieListView(filtered, { query, sort })
+}

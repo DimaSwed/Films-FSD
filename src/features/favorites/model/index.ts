@@ -1,2 +1,5 @@
-export * from './use-favorites'
+export * from './use-favorites-list'
+export * from './use-is-favorite'
+export * from './use-add-to-favorites'
+export * from './use-remove-from-favorites'
 export * from './favorites.types'

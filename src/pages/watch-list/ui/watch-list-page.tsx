@@ -8,15 +8,26 @@ import {
   useWatchList
 } from '@/features/watch-list'
 import { useInfiniteScroll } from '@/shared/lib'
-import { LoadingErrorState, PageMeta, ScrollButton } from '@/shared/ui'
+import {
+  EmptyState,
+  LoadingErrorState,
+  MovieListToolbar,
+  PageMeta,
+  ScrollButton
+} from '@/shared/ui'
 
 export const WatchListPage = () => {
   const {
     visibleMovies,
     selectedGenre,
     selectedYear,
+    query,
+    sort,
+    totalCount,
     handleGenreChange,
     handleYearChange,
+    handleQueryChange,
+    handleSortChange,
     handleResetFilters,
     handleScrollEnd,
     isLoading,
@@ -28,6 +39,9 @@ export const WatchListPage = () => {
   const sentinelRef = useInfiniteScroll(handleScrollEnd)
 
   const hasMovies = visibleMovies.length > 0
+  const hasList = totalCount > 0
+  // Панель показываем уже во время загрузки, чтобы она не появлялась позже и не сдвигала список.
+  const showControls = hasList || isLoading
 
   return (
     <Box
@@ -45,13 +59,25 @@ export const WatchListPage = () => {
         Список к просмотру
       </Typography>
 
-      <WatchListFilters
-        selectedGenre={selectedGenre}
-        selectedYear={selectedYear}
-        onGenreChange={handleGenreChange}
-        onYearChange={handleYearChange}
-        onResetFilters={handleResetFilters}
-      />
+      {/* Без входа или при пустом списке панель не нужна. */}
+      {showControls && (
+        <>
+          <MovieListToolbar
+            query={query}
+            sort={sort}
+            onQueryChange={handleQueryChange}
+            onSortChange={handleSortChange}
+          />
+
+          <WatchListFilters
+            selectedGenre={selectedGenre}
+            selectedYear={selectedYear}
+            onGenreChange={handleGenreChange}
+            onYearChange={handleYearChange}
+            onResetFilters={handleResetFilters}
+          />
+        </>
+      )}
 
       <LoadingErrorState
         isLoading={isLoading}
@@ -64,7 +90,14 @@ export const WatchListPage = () => {
       {!isLoading && !isError && !hasMovies && (
         <Fade in={true}>
           <Box sx={{ mt: 5 }}>
-            <NoMovies />
+            {hasList ? (
+              <EmptyState
+                title="Ничего не найдено"
+                description="В вашем списке нет фильмов по выбранным условиям. Измените поиск или фильтры."
+              />
+            ) : (
+              <NoMovies />
+            )}
           </Box>
         </Fade>
       )}
