@@ -1,14 +1,13 @@
-import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { useUpdateMovieAccountState } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
-import { IMovie } from '@/shared/lib'
+import { updateAccountMovieList } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { favoritesApi } from '../api'
 
-import { getFavoritesKey, isFavoritesAllQuery } from './favorites.keys'
-import type { IFavoritesResponse } from './favorites.types'
+import { getFavoritesKey } from './favorites.keys'
 
 export const useRemoveFromFavorites = () => {
   const queryClient = useQueryClient()
@@ -28,23 +27,9 @@ export const useRemoveFromFavorites = () => {
       const queryKey = getFavoritesKey(userDetails?.id)
 
       updateAccountState(movieId, { favorite: false })
-      // Сразу убираем фильм из списков, а потом перезапрашиваем данные, чтобы они совпали
-      // с сервером. Списков два вида: постраничный и загруженный целиком — правим оба.
-      queryClient.setQueriesData<IMovie[]>(
-        { queryKey, predicate: (query) => isFavoritesAllQuery(query.queryKey) },
-        (old) => old && old.filter((movie) => movie.id !== movieId)
-      )
-      queryClient.setQueriesData<InfiniteData<IFavoritesResponse>>(
-        { queryKey, predicate: (query) => !isFavoritesAllQuery(query.queryKey) },
-        (old) =>
-          old && {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              results: page.results.filter((movie) => movie.id !== movieId),
-              total_results: Math.max(page.total_results - 1, 0)
-            }))
-          }
+      // Сразу убираем фильм из списка, а потом перезапрашиваем данные, чтобы они совпали с сервером
+      updateAccountMovieList(queryClient, queryKey, (movies) =>
+        movies.filter((movie) => movie.id !== movieId)
       )
       queryClient.invalidateQueries({ queryKey })
       success('Фильм удалён из избранного')

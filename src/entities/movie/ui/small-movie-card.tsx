@@ -116,7 +116,11 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie, actions }) => {
       </CardActionArea>
 
       {actions && (
-        <CardActions sx={{ justifyContent: 'space-between', px: 1, py: 0.5 }}>
+        // На телефоне 320 px три иконки занимают всю ширину карточки — без боковых отступов
+        <CardActions
+          disableSpacing
+          sx={{ justifyContent: 'space-between', px: { xs: 0, sm: 1 }, py: 0.5 }}
+        >
           {actions}
         </CardActions>
       )}

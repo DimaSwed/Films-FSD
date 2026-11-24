@@ -1,16 +1,22 @@
 import { FC } from 'react'
 
 import { FavoriteToggleIcon } from '@/features/favorites'
+import { RateMovieIcon } from '@/features/rate-movie'
 import { WatchlistToggleIcon } from '@/features/watch-list'
+import { IMovie } from '@/shared/lib'
 
 interface IMovieCardActionsProps {
-  movieId: number
+  movie: IMovie
 }
 
-/** Действия карточки фильма: избранное и «к просмотру». Передаётся в слот `actions` SmallMovieCard. */
-export const MovieCardActions: FC<IMovieCardActionsProps> = ({ movieId }) => (
+/**
+ * Действия карточки фильма: избранное, «к просмотру» и оценка. Передаётся в слот `actions`
+ * SmallMovieCard. Состояние всех трёх приходит одним запросом (`account_states`).
+ */
+export const MovieCardActions: FC<IMovieCardActionsProps> = ({ movie }) => (
   <>
-    <FavoriteToggleIcon movieId={movieId} size="large" />
-    <WatchlistToggleIcon movieId={movieId} size="large" />
+    <FavoriteToggleIcon movieId={movie.id} />
+    <WatchlistToggleIcon movieId={movie.id} />
+    <RateMovieIcon movieId={movie.id} title={movie.title} />
   </>
 )

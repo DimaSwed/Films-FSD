@@ -23,6 +23,7 @@ const WatchListPage = lazyPage(() => import('@/pages/watch-list'), 'WatchListPag
 const CategoryMoviesPage = lazyPage(() => import('@/pages/category'), 'CategoryMoviesPage')
 const GenreMoviesPage = lazyPage(() => import('@/pages/genre'), 'GenreMoviesPage')
 const FavoritesListPage = lazyPage(() => import('@/pages/favorites-list'), 'FavoritesListPage')
+const WatchedPage = lazyPage(() => import('@/pages/watched'), 'WatchedPage')
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
       {
         path: 'watch-list',
         element: <WatchListPage />
+      },
+      {
+        path: 'watched',
+        element: <WatchedPage />
       },
       {
         path: 'favorites-list',

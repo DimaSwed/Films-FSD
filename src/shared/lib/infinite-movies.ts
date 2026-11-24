@@ -20,3 +20,20 @@ export const uniqueMovies = (movies: IMovie[]): IMovie[] => [
  */
 export const selectUniqueMovies = (data: InfiniteData<IPaginatedResponse<IMovie>>): IMovie[] =>
   uniqueMovies(data.pages.flatMap((page) => page.results))
+
+/**
+ * Загружает список целиком: сначала первую страницу (из неё узнаём число страниц), потом остальные
+ * одновременно. Если список изменился посреди загрузки, один фильм может прийти дважды — повторы убираем.
+ */
+export const loadAllPages = async (
+  fetchPage: (page: number) => Promise<IPaginatedResponse<IMovie>>
+): Promise<IMovie[]> => {
+  const first = await fetchPage(1)
+  const pageCount = Math.min(first.total_pages, TMDB_MAX_PAGE)
+
+  const rest = await Promise.all(
+    Array.from({ length: Math.max(pageCount - 1, 0) }, (_, i) => fetchPage(i + 2))
+  )
+
+  return uniqueMovies([first, ...rest].flatMap((page) => page.results))
+}

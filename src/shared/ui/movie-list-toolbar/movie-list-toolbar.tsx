@@ -3,11 +3,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, IconButton, InputAdornment, MenuItem, TextField } from '@mui/material'
 import { FC } from 'react'
 
-import { MOVIE_SORT_OPTIONS, TMovieSort } from '../../lib'
+import { IMovieSortOption, MOVIE_SORT_OPTIONS, TMovieSort } from '../../lib'
 
 interface IMovieListToolbarProps {
   query: string
   sort: TMovieSort
+  sortOptions?: readonly IMovieSortOption[]
   onQueryChange: (query: string) => void
   onSortChange: (sort: TMovieSort) => void
 }
@@ -26,6 +27,7 @@ const fieldSx = {
 export const MovieListToolbar: FC<IMovieListToolbarProps> = ({
   query,
   sort,
+  sortOptions = MOVIE_SORT_OPTIONS,
   onQueryChange,
   onSortChange
 }) => (
@@ -73,7 +75,7 @@ export const MovieListToolbar: FC<IMovieListToolbarProps> = ({
       sx={{ ...fieldSx, minWidth: { sm: 260 } }}
       slotProps={{ select: { SelectDisplayProps: { 'aria-label': 'Сортировка списка' } } }}
     >
-      {MOVIE_SORT_OPTIONS.map((option) => (
+      {sortOptions.map((option) => (
         <MenuItem key={option.value} value={option.value} sx={{ color: 'secondary.contrastText' }}>
           {option.label}
         </MenuItem>

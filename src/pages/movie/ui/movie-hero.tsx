@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from '@mui/material'
 import { FC } from 'react'
 
 import { ToggleFavoriteButton } from '@/features/favorites'
+import { RateMovieButton } from '@/features/rate-movie'
 import { ToggleWatchlistButton } from '@/features/watch-list'
 import { IMovieDetails, MovieFacts, TrailerButton } from '@/entities/movie'
 
@@ -85,6 +86,7 @@ export const MovieHero: FC<IMovieHeroProps> = ({ movie }) => (
         {movie.trailer && <TrailerButton trailer={movie.trailer} title={movie.title} />}
         <ToggleFavoriteButton movieId={movie.id} />
         <ToggleWatchlistButton movieId={movie.id} />
+        <RateMovieButton movieId={movie.id} title={movie.title} />
       </Stack>
     </Box>
   </Box>

@@ -1,5 +1,6 @@
 import { Box, Fade, Typography } from '@mui/material'
 
+import { MarkWatchedButton } from '@/features/rate-movie'
 import {
   NoMovies,
   WatchListCard,
@@ -109,6 +110,7 @@ export const WatchListPage = () => {
               <WatchListCard
                 key={movie.id}
                 movie={movie}
+                actions={<MarkWatchedButton movieId={movie.id} title={movie.title} />}
                 onRemoveFromWatchlist={() => removeFromWatchList(movie.id)}
               />
             ))}

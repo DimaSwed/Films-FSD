@@ -2,6 +2,7 @@ import { SelectChangeEvent } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useState, useMemo, useCallback } from 'react'
 
+import { getWatchlistKey } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { TMovieSort } from '@/shared/lib'
 
@@ -23,7 +24,7 @@ export const useWatchList = () => {
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE)
 
   const { data, isLoading, isError, isFetched } = useQuery({
-    queryKey: ['watchlist-all', sessionId, user?.id],
+    queryKey: getWatchlistKey(sessionId, user?.id),
     queryFn: () => {
       if (!sessionId || !user?.id) throw new Error('Требуется авторизация')
       return watchListApi.getAllWatchlistMovies(sessionId, user.id)

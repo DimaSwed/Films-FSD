@@ -8,6 +8,8 @@ export interface IMovieRaw {
   genre_ids: number[]
   runtime?: number | null
   overview?: string
+  /** Оценка пользователя; приходит только в списке оценённых фильмов (`/account/{id}/rated/movies`). */
+  rating?: number
 }
 
 export interface IMovie {
@@ -22,6 +24,8 @@ export interface IMovie {
   duration: number
   description?: string
   releaseDate?: string
+  /** Оценка пользователя (до 10, шаг 0,5); есть только у фильмов из списка «Просмотрено». */
+  userRating?: number
 }
 
 export interface IGenre {

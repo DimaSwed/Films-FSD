@@ -1,5 +1,6 @@
 import {
   Movie,
+  Visibility,
   Search,
   NewReleases,
   PlaylistPlay,
@@ -126,6 +127,23 @@ export const Sidebar: FC = () => {
             </ListItemIcon>
             <ListItemText
               primary="Список к просмотру"
+              sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
+            />
+          </ListItemButton>
+
+          <ListItemButton
+            component={Link}
+            to="/watched"
+            aria-label="Просмотрено"
+            sx={{ pl: { xs: 1, md: 4 } }}
+          >
+            <ListItemIcon
+              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'primary.contrastText' }}
+            >
+              <Visibility />
+            </ListItemIcon>
+            <ListItemText
+              primary="Просмотрено"
               sx={{ display: { xs: 'none', md: 'block' }, color: 'primary.contrastText' }}
             />
           </ListItemButton>

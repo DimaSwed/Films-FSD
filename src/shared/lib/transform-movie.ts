@@ -14,5 +14,6 @@ export const transformMovie = (raw: IMovieRaw): IMovie => ({
   genre: (raw.genre_ids ?? []).map((id) => genreMap[id] || 'Неизвестно').join(', '),
   duration: raw.runtime ?? 0,
   description: raw.overview,
-  releaseDate: raw.release_date
+  releaseDate: raw.release_date,
+  userRating: raw.rating
 })

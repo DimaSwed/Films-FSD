@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { WatchProviders, useWatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
@@ -12,10 +12,12 @@ import {
 
 interface IMovieCardProps {
   movie: IMovie
+  /** Дополнительные действия — собираются на уровне страницы. */
+  actions?: ReactNode
   onRemoveFromWatchlist: () => void
 }
 
-export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps) => {
+export const WatchListCard = ({ movie, actions, onRemoveFromWatchlist }: IMovieCardProps) => {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
 
   const { data: providers } = useWatchProviders(movie.id)
@@ -104,6 +106,7 @@ export const WatchListCard = ({ movie, onRemoveFromWatchlist }: IMovieCardProps)
           flexWrap={'wrap'}
         >
           <ToggleDescriptionButton isOpen={isDescriptionOpen} onClick={toggleDescription} />
+          {actions}
           <RemoveButton onClick={onRemoveFromWatchlist} text="Убрать из списка" />
         </Stack>
       </Box>

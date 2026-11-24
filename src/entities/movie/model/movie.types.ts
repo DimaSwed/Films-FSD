@@ -42,6 +42,8 @@ export interface IAccountState {
   id: number
   favorite: boolean
   watchlist: boolean
+  /** Оценка пользователя; `false` — фильм не оценён. */
+  rated: { value: number } | false
 }
 
 export interface ICountryRaw {

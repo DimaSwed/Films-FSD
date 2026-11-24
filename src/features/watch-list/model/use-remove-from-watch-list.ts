@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { useUpdateMovieAccountState } from '@/entities/movie'
+import { getWatchlistKey, useUpdateMovieAccountState } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { IMovie } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
@@ -24,7 +24,7 @@ export const useRemoveFromWatchList = () => {
     },
     onSuccess: (_, movieId) => {
       updateAccountState(movieId, { watchlist: false })
-      queryClient.setQueryData<IMovie[]>(['watchlist-all', sessionId, user?.id], (old) =>
+      queryClient.setQueryData<IMovie[]>(getWatchlistKey(sessionId, user?.id), (old) =>
         old?.filter((movie) => movie.id !== movieId)
       )
       success('Фильм успешно удален из списка!')

@@ -9,7 +9,7 @@ import { IAccountState } from './movie.types'
 export const getMovieAccountStateKey = (movieId: number, sessionId: string | null | undefined) =>
   ['movie-account-state', movieId, sessionId] as const
 
-/** Состояние фильма в аккаунте (избранное / к просмотру) — один запрос на фильм. */
+/** Состояние фильма в аккаунте (избранное / к просмотру / оценка) — один запрос на фильм. */
 export const useMovieAccountState = <T = IAccountState>(
   movieId: number,
   select?: (state: IAccountState) => T
@@ -25,12 +25,12 @@ export const useMovieAccountState = <T = IAccountState>(
   })
 }
 
-/** Точечно обновляет флаги в кэше; без записи в кэше — помечает запрос устаревшим. */
+/** Точечно обновляет состояние в кэше; без записи в кэше — помечает запрос устаревшим. */
 export const useUpdateMovieAccountState = () => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
 
-  return (movieId: number, patch: Partial<Pick<IAccountState, 'favorite' | 'watchlist'>>) => {
+  return (movieId: number, patch: Partial<Omit<IAccountState, 'id'>>) => {
     const queryKey = getMovieAccountStateKey(movieId, sessionId)
 
     if (queryClient.getQueryData<IAccountState>(queryKey)) {

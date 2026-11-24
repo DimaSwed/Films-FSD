@@ -1,6 +1,6 @@
 import { api } from '@/shared/api'
 import { TMDB_LANGUAGE } from '@/shared/config'
-import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie, uniqueMovies } from '@/shared/lib'
+import { IMovie, IMovieRaw, IPaginatedResponse, loadAllPages, transformMovie } from '@/shared/lib'
 
 /** В каком порядке `getWatchlistMovies` просит список у TMDB: от давно добавленных к недавним. */
 export const WATCHLIST_SOURCE_ORDER = 'created_at.asc'
@@ -65,20 +65,6 @@ export const watchListApi = {
     )
   },
 
-  /**
-   * Загружает весь список: сначала первую страницу (из неё узнаём число страниц),
-   * потом остальные одновременно. Если список изменился посреди загрузки, один фильм
-   * может прийти дважды — повторы убираем.
-   */
-  getAllWatchlistMovies: async (sessionId: string, accountId: number): Promise<IMovie[]> => {
-    const first = await watchListApi.getWatchlistMovies(sessionId, accountId, 1)
-
-    const rest = await Promise.all(
-      Array.from({ length: Math.max(first.total_pages - 1, 0) }, (_, i) =>
-        watchListApi.getWatchlistMovies(sessionId, accountId, i + 2)
-      )
-    )
-
-    return uniqueMovies([first, ...rest].flatMap((page) => page.results))
-  }
+  getAllWatchlistMovies: (sessionId: string, accountId: number): Promise<IMovie[]> =>
+    loadAllPages((page) => watchListApi.getWatchlistMovies(sessionId, accountId, page))
 }

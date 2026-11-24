@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { useUpdateMovieAccountState } from '@/entities/movie'
+import { getWatchlistKey, useUpdateMovieAccountState } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { useNotification } from '@/shared/notifications'
 
@@ -23,7 +23,7 @@ export const useAddToWatchlist = () => {
     },
     onSuccess: (_, movieId) => {
       updateAccountState(movieId, { watchlist: true })
-      queryClient.invalidateQueries({ queryKey: ['watchlist-all', sessionId, user?.id] })
+      queryClient.invalidateQueries({ queryKey: getWatchlistKey(sessionId, user?.id) })
       success('Фильм успешно добавлен в список!')
     },
     onError: () => {

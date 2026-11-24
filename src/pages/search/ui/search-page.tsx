@@ -26,7 +26,7 @@ export const SearchPage = () => {
         <Typography variant="h3" gutterBottom textAlign={'center'} mb={2}>
           Поиск фильма
         </Typography>
-        <SearchFilters renderMovieActions={(movie) => <MovieCardActions movieId={movie.id} />} />
+        <SearchFilters renderMovieActions={(movie) => <MovieCardActions movie={movie} />} />
         <ScrollButton />
       </Box>
     </>
