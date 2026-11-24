@@ -1,4 +1,7 @@
+export * from './format-movie-facts'
 export * from './pick-movie-trailer'
+export * from './trailer-label'
 export * from './transform-movie-details'
 export * from './transform-watch-providers'
+export * from './youtube-player-message'
 export * from './youtube-url'

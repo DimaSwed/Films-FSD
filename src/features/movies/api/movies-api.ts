@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+import { TMDB_LANGUAGE, TMDB_REGION } from '@/shared/config'
 import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie } from '@/shared/lib'
 
 import type { IMoviesFilters, TMovieCategory } from '../model'
@@ -23,7 +24,7 @@ const toMoviesPage = (
 const getCategoryPage = async (category: TMovieCategory, page: number) => {
   const { path, withRegion } = CATEGORY_ENDPOINTS[category]
   const response = await api.get<IPaginatedResponse<IMovieRaw>>(path, {
-    params: { language: 'ru-RU', page, ...(withRegion && { region: 'RU' }) }
+    params: { language: TMDB_LANGUAGE, page, ...(withRegion && { region: TMDB_REGION }) }
   })
   return toMoviesPage(response.data)
 }
@@ -46,8 +47,8 @@ export const moviesApi = {
       params: {
         ...params,
         page,
-        language: params.language || 'ru-RU',
-        region: params.region || 'RU'
+        language: params.language || TMDB_LANGUAGE,
+        region: params.region || TMDB_REGION
       }
     })
     return toMoviesPage(response.data)

@@ -7,7 +7,13 @@ import { SearchMovieButton } from '@/features/search-movie/'
 import { ChangeThemeButton } from '@/features/theme'
 import { useSessionId } from '@/entities/user'
 
-import { appBarStyles, boxStyles, buttonContainerStyles, stackStyles } from './header.styles'
+import {
+  appBarStyles,
+  boxStyles,
+  buttonContainerStyles,
+  stackStyles,
+  titleStyles
+} from './header.styles'
 import { SettingsButton } from './settings-button'
 
 export const Header: FC = () => {
@@ -29,16 +35,17 @@ export const Header: FC = () => {
           <Box component={'div'}>
             <Link
               to="/"
+              aria-label="КиноТрекер — на главную"
               style={{ display: 'flex', gap: 10, alignItems: 'center', textDecoration: 'none' }}
             >
               <img
                 src="/images/logo.jpg"
-                alt="logo"
+                alt=""
                 width="70"
                 height="50"
                 style={{ borderRadius: '20px' }}
               />
-              <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold', color: 'white' }}>
+              <Typography variant="h6" sx={titleStyles}>
                 КиноТрекер
               </Typography>
             </Link>

@@ -1,141 +1,79 @@
-import { Box, Typography, Card, CardMedia, Grid } from '@mui/material'
-import { Stack } from '@mui/system'
+import { Stack } from '@mui/material'
+import { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ToggleFavoriteButton } from '@/features/favorites'
-import { ToggleWatchlistButton } from '@/features/watch-list'
-import { WatchProvidersSection, useMovie, useWatchProviders } from '@/entities/movie'
-import { EmptyState, LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
+import {
+  MovieCast,
+  MovieRecommendations,
+  WatchProvidersSection,
+  useMovie,
+  useWatchProviders
+} from '@/entities/movie'
+import { LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
+
+import { parseMovieId } from '../lib'
+
+import { MovieHero } from './movie-hero'
+import { MovieNotFound } from './movie-not-found'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
-  const movieId = Number(id)
-  const { data: movie, isLoading, isError } = useMovie(movieId)
+  const movieId = parseMovieId(id)
+  const { data: movie, isError, isPaused, refetch } = useMovie(movieId)
   const {
     data: providers,
     isLoading: isProvidersLoading,
     isError: isProvidersError
   } = useWatchProviders(movieId)
 
-  if (isLoading || isError) {
-    return (
-      <PageShell centered>
-        {isError && <PageMeta title="Ошибка загрузки фильма" noIndex />}
-        <LoadingErrorState
-          isLoading={isLoading}
-          isError={isError}
-          loadingText="Загружаем информацию о фильме..."
-          errorTitle="Ошибка загрузки фильма"
-          errorDescription="Не удалось загрузить информацию о фильме. Попробуйте позже."
-        />
-      </PageShell>
-    )
-  }
+  if (movieId === undefined || movie === null) return <MovieNotFound />
 
   if (!movie) {
+    // Без сети запрос ждёт (не ошибка) и продолжится сам, поэтому кнопки повтора нет
+    const errorTitle = isPaused ? 'Нет соединения' : 'Ошибка загрузки фильма'
+    const isFailed = isError || isPaused
+
     return (
       <PageShell centered>
-        <PageMeta title="Фильм не найден" noIndex />
-        <EmptyState
-          title="Фильм не найден"
-          description="Возможно, он был удалён или ссылка неверна."
+        {isFailed && <PageMeta title={errorTitle} noIndex />}
+        <LoadingErrorState
+          isLoading={!isFailed}
+          isError={isFailed}
+          loadingText="Загружаем информацию о фильме..."
+          errorTitle={errorTitle}
+          errorDescription={
+            isPaused
+              ? 'Загрузим фильм, как только появится интернет.'
+              : 'Не удалось загрузить информацию о фильме. Попробуйте ещё раз.'
+          }
+          retry={isPaused ? undefined : refetch}
         />
       </PageShell>
     )
   }
 
   return (
-    <PageShell
-      sx={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.3)), url(${movie.backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
+    <PageShell>
       <PageMeta
         title={movie.year ? `${movie.title} (${movie.year})` : movie.title}
         description={movie.description || undefined}
         image={movie.image || undefined}
         type="video.movie"
       />
-      <Grid
-        container
-        spacing={4}
-        sx={{
-          padding: { xs: '10px', sm: '15px', md: '30px' }
-        }}
-      >
-        {/* Movie Poster */}
-        <Grid>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia component="img" alt={movie.title} height="500" image={movie.image} />
-          </Card>
-        </Grid>
+      {/* key: переход к похожему фильму закрывает трейлер и возвращает ряды в начало */}
+      <Fragment key={movie.id}>
+        <MovieHero movie={movie} />
 
-        {/* Movie Details */}
-        <Grid color={'white'}>
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              {`"${movie.title}"`}
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              {movie.description}
-            </Typography>
-          </Box>
-
-          {/* Дополнительные данные */}
-          <Grid container spacing={2} sx={{ mb: 1 }}>
-            <Grid>
-              <Typography variant="subtitle1">
-                <strong>Дата релиза:</strong>
-              </Typography>
-              <Typography variant="body2">
-                {movie.releaseDate
-                  ? new Date(movie.releaseDate).toLocaleString('ru-RU', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric'
-                    })
-                  : 'Неизвестно'}
-              </Typography>
-            </Grid>
-            <Grid>
-              <Typography variant="subtitle1">
-                <strong>Жанр:</strong>
-              </Typography>
-              <Typography variant="body2">{movie.genre}</Typography>
-            </Grid>
-            <Grid>
-              <Typography variant="subtitle1">
-                <strong>Рейтинг:</strong>
-              </Typography>
-              <Typography variant="body2">{movie.rating.toFixed(1)}</Typography>
-            </Grid>
-            <Grid>
-              <Typography variant="subtitle1">
-                <strong>Длительность фильма:</strong>
-              </Typography>
-              <Typography variant="body2">
-                {movie.duration > 0
-                  ? `${Math.floor(movie.duration / 60)} ч. ${movie.duration % 60} мин.`
-                  : 'Неизвестно'}
-              </Typography>
-            </Grid>
-          </Grid>
-
+        <Stack sx={{ gap: 4, padding: { xs: '15px', md: '30px' } }}>
           <WatchProvidersSection
             providers={providers}
             isLoading={isProvidersLoading}
             isError={isProvidersError}
           />
-
-          <Stack sx={{ flexDirection: { sm: 'row', xs: 'column' }, gap: 2, my: 3 }}>
-            <ToggleFavoriteButton movieId={movie.id} />
-
-            <ToggleWatchlistButton movieId={movie.id} />
-          </Stack>
-        </Grid>
-      </Grid>
+          <MovieCast cast={movie.cast} />
+          <MovieRecommendations movies={movie.recommendations} />
+        </Stack>
+      </Fragment>
     </PageShell>
   )
 }

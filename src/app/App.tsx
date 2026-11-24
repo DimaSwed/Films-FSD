@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import { Suspense } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Suspense, useLayoutEffect, useRef } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import { Header } from '@/widgets/header'
 import { Sidebar } from '@/widgets/sidebar'
@@ -8,7 +8,15 @@ import { useAuthCallbackHandler } from '@/features/auth'
 import { LoadingErrorState, PageShell } from '@/shared/ui'
 
 export function App() {
+  const { pathname } = useLocation()
+  const mainRef = useRef<HTMLElement>(null)
+
   useAuthCallbackHandler()
+
+  // Прокручивается `<main>`, а не окно: при переходе между страницами он сохранил бы прежнее положение
+  useLayoutEffect(() => {
+    mainRef.current?.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <Box
@@ -35,6 +43,7 @@ export function App() {
         {/* Контент с прокруткой */}
         <Box
           component="main"
+          ref={mainRef}
           sx={{
             flexGrow: 1,
             height: '100%',

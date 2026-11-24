@@ -96,9 +96,9 @@ export const WatchProvidersSection: FC<IWatchProvidersSectionProps> = ({
   }
 
   return (
-    <Box component="section" aria-labelledby="watch-providers-title" sx={{ my: 2 }}>
-      <Typography id="watch-providers-title" variant="subtitle1" component="h2">
-        <strong>Где смотреть в России:</strong>
+    <Box component="section" aria-labelledby="watch-providers-title">
+      <Typography id="watch-providers-title" variant="h4" component="h2">
+        Где смотреть в России
       </Typography>
 
       {renderBody()}

@@ -1,7 +1,8 @@
 import { SxProps } from '@mui/material'
 
 export const searchButtonStyles: SxProps = {
-  position: 'relative',
+  // На телефоне панель поиска отсчитывается от шапки (AppBar), а не от кнопки: см. searchBoxStyles
+  position: { xs: 'static', sm: 'relative' },
   width: '50px'
 }
 
@@ -11,13 +12,15 @@ export const searchBoxStyles: SxProps = {
   alignItems: 'center',
   backgroundColor: 'background.paper',
   borderRadius: 1,
-  width: '320px',
+  width: { xs: 'auto', sm: '320px' },
   height: 'fit-content',
   zIndex: 1000,
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   position: 'absolute',
-  right: 0,
-  top: 0
+  // Телефон: во всю ширину шапки с её полями — 320 px от кнопки вылезали бы за левый край экрана
+  left: { xs: '15px', sm: 'auto' },
+  right: { xs: '15px', sm: 0 },
+  top: { xs: 'calc(12px + env(safe-area-inset-top))', sm: 0 }
 }
 
 export const textFieldStyles: SxProps = {

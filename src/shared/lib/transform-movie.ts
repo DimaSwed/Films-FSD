@@ -1,6 +1,7 @@
 import { genreMap } from '../config'
 
 import { IMovieRaw, IMovie } from './common.types'
+import { getReleaseYear } from './get-release-year'
 import { getTmdbImageUrl } from './tmdb-image'
 
 export const transformMovie = (raw: IMovieRaw): IMovie => ({
@@ -9,7 +10,7 @@ export const transformMovie = (raw: IMovieRaw): IMovie => ({
   rating: raw.vote_average,
   image: getTmdbImageUrl(raw.poster_path),
   backdrop: getTmdbImageUrl(raw.backdrop_path, 'w300'),
-  year: raw.release_date ? new Date(raw.release_date).getFullYear() : 0,
+  year: getReleaseYear(raw.release_date),
   genre: (raw.genre_ids ?? []).map((id) => genreMap[id] || 'Неизвестно').join(', '),
   duration: raw.runtime ?? 0,
   description: raw.overview,

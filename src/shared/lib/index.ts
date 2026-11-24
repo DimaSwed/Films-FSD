@@ -1,4 +1,5 @@
 export * from './common.types'
+export * from './get-release-year'
 export * from './infinite-movies'
 export * from './tmdb-image'
 export * from './transform-movie'

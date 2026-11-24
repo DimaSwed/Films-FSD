@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+import { TMDB_LANGUAGE } from '@/shared/config'
 import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie, uniqueMovies } from '@/shared/lib'
 
 /** В каком порядке `getWatchlistMovies` просит список у TMDB: от давно добавленных к недавним. */
@@ -29,7 +30,7 @@ export const watchListApi = {
 
     const response = await api.get(`/account/${accountId}/watchlist/movies`, {
       params: {
-        language: 'ru-RU',
+        language: TMDB_LANGUAGE,
         sort_by: WATCHLIST_SOURCE_ORDER,
         session_id: sessionId,
         page

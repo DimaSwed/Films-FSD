@@ -1,7 +1,6 @@
-import type { IWatchProvider, IWatchProviders, IWatchProvidersResponse } from '../model'
+import { TMDB_REGION } from '@/shared/config'
 
-/** Регион, для которого показываем доступность (TMDB / JustWatch). */
-export const WATCH_REGION = 'RU'
+import type { IWatchProvider, IWatchProviders, IWatchProvidersResponse } from '../model'
 
 const byPriority = (a: IWatchProvider, b: IWatchProvider) =>
   (a.display_priority ?? Number.MAX_SAFE_INTEGER) - (b.display_priority ?? Number.MAX_SAFE_INTEGER)
@@ -20,7 +19,7 @@ const normalizeGroup = (...groups: (IWatchProvider[] | undefined)[]): IWatchProv
 }
 
 export const transformWatchProviders = (data: IWatchProvidersResponse): IWatchProviders => {
-  const region = data.results?.[WATCH_REGION]
+  const region = data.results?.[TMDB_REGION]
 
   return {
     flatrate: normalizeGroup(region?.flatrate),

@@ -2,11 +2,13 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded'
 import { Box, ButtonBase } from '@mui/material'
 import { FC, SyntheticEvent, useState } from 'react'
 
-import { getYoutubeEmbedUrl, getYoutubePreviewUrl } from '../lib'
+import { getTrailerLabel, getYoutubePreviewUrl } from '../lib'
+import type { IMovieTrailer } from '../model'
+
+import { TrailerFrame } from './trailer-frame'
 
 interface ITrailerPlayerProps {
-  /** Идентификатор ролика на YouTube. */
-  videoKey: string
+  trailer: IMovieTrailer
   title: string
   /** Картинка под превью YouTube: видна, пока оно не загрузилось, и если не загрузится вовсе. */
   placeholder?: string
@@ -25,15 +27,12 @@ const imageSx = {
   objectFit: 'cover'
 } as const
 
-/** Плеер подменяет собой нажатую кнопку — возвращаем фокус, иначе он теряется. */
-const focusOnMount = (node: HTMLIFrameElement | null) => node?.focus({ preventScroll: true })
-
 /**
  * Лёгкий трейлер: до нажатия — только картинка, плеер YouTube загружается по клику.
  * Заполняет родителя: размер задаёт он (`position: relative` и пропорции).
  */
 export const TrailerPlayer: FC<ITrailerPlayerProps> = ({
-  videoKey,
+  trailer,
   title,
   placeholder,
   isPlaying,
@@ -45,24 +44,14 @@ export const TrailerPlayer: FC<ITrailerPlayerProps> = ({
     setIsPreviewReady(currentTarget.naturalWidth > YOUTUBE_STUB_WIDTH)
 
   if (isPlaying) {
-    return (
-      <Box
-        component="iframe"
-        ref={focusOnMount}
-        src={getYoutubeEmbedUrl(videoKey)}
-        title={`Трейлер: ${title}`}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-        // Без referrer YouTube отказывается воспроизводить встроенное видео
-        referrerPolicy="strict-origin-when-cross-origin"
-        sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
-      />
-    )
+    // Плеер подменяет собой нажатую кнопку — забирает фокус, иначе он теряется
+    return <TrailerFrame focusOnMount trailer={trailer} title={title} />
   }
 
   return (
     <ButtonBase
       onClick={onPlay}
-      aria-label={`Смотреть трейлер: ${title}`}
+      aria-label={`Смотреть ${getTrailerLabel(trailer).toLowerCase()}: ${title}`}
       sx={{
         position: 'absolute',
         inset: 0,
@@ -86,7 +75,7 @@ export const TrailerPlayer: FC<ITrailerPlayerProps> = ({
       {/* Прозрачно до загрузки: при замедленном YouTube запрос может висеть без ошибки */}
       <Box
         component="img"
-        src={getYoutubePreviewUrl(videoKey)}
+        src={getYoutubePreviewUrl(trailer.key)}
         alt=""
         loading="lazy"
         decoding="async"

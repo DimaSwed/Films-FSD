@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+import { TMDB_LANGUAGE, TMDB_REGION } from '@/shared/config'
 import { IMovie, IMovieRaw, IPaginatedResponse, transformMovie } from '@/shared/lib'
 
 import type { IMovieFilterParams } from '../model'
@@ -14,8 +15,8 @@ export const searchApi = {
       params: {
         query,
         page,
-        language: 'ru-RU',
-        region: 'RU'
+        language: TMDB_LANGUAGE,
+        region: TMDB_REGION
       }
     })
     return toMoviesPage(response.data)
@@ -26,8 +27,8 @@ export const searchApi = {
       params: {
         ...params,
         page,
-        language: 'ru-RU',
-        region: 'RU'
+        language: TMDB_LANGUAGE,
+        region: TMDB_REGION
       }
     })
     return toMoviesPage(response.data)

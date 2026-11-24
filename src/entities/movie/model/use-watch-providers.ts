@@ -1,16 +1,22 @@
-import { useQuery } from '@tanstack/react-query'
+import { skipToken, useQuery } from '@tanstack/react-query'
+
+import { isNotFoundError } from '@/shared/api'
 
 import { movieApi } from '../api'
 import { transformWatchProviders } from '../lib'
 
-export const useWatchProviders = (id: number) => {
+export const useWatchProviders = (id: number | undefined) => {
   return useQuery({
     queryKey: ['watch-providers', id],
-    queryFn: async () => {
-      const { data } = await movieApi.getWatchProviders(id)
-      return transformWatchProviders(data)
-    },
-    enabled: !!id,
+    queryFn:
+      id === undefined
+        ? skipToken
+        : async () => {
+            const { data } = await movieApi.getWatchProviders(id)
+            return transformWatchProviders(data)
+          },
+    // Фильма нет в TMDB — повтор ничего не изменит
+    retry: (failureCount, error) => failureCount < 1 && !isNotFoundError(error),
     staleTime: 86400 * 1000
   })
 }

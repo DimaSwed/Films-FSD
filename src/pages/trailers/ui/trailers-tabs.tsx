@@ -19,7 +19,14 @@ export const TrailersTabs: FC<ITrailersTabsProps> = ({ category, onChange }) => 
     textColor="inherit"
     aria-label="Подборка трейлеров"
     // primary в тёмной теме сливается с фоном
-    sx={{ mb: 3, '& .MuiTabs-indicator': { bgcolor: 'text.primary' } }}
+    sx={{
+      mb: 3,
+      // safe: если вкладки не поместились, первая остаётся доступной прокруткой
+      '& .MuiTabs-list': { justifyContent: { xs: 'safe center', sm: 'flex-start' } },
+      '& .MuiTabs-indicator': {
+        bgcolor: 'text.primary'
+      }
+    }}
   >
     {TRAILERS_TABS.map((tab) => (
       <Tab
@@ -28,7 +35,7 @@ export const TrailersTabs: FC<ITrailersTabsProps> = ({ category, onChange }) => 
         aria-controls={TRAILERS_PANEL_ID}
         value={tab.category}
         label={tab.label}
-        sx={{ textTransform: 'none' }}
+        sx={{ textTransform: 'none', minWidth: { xs: 0, sm: 90 }, px: { xs: 1, sm: 2 } }}
       />
     ))}
   </Tabs>

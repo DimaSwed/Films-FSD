@@ -26,6 +26,13 @@ export const boxStyles: SxProps = {
   width: '100%'
 }
 
+// На телефоне только логотип: с названием шапка не помещалась и «Настройки» уходили за правый край
+export const titleStyles: SxProps = {
+  display: { xs: 'none', sm: 'block' },
+  fontWeight: 'bold',
+  color: 'white'
+}
+
 export const buttonContainerStyles: SxProps = {
   display: { xs: 'none', sm: 'flex' },
   gap: 3,

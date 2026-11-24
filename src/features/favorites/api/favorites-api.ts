@@ -1,4 +1,5 @@
 import { api } from '@/shared/api'
+import { TMDB_LANGUAGE } from '@/shared/config'
 import {
   IMovie,
   IMovieRaw,
@@ -36,7 +37,7 @@ export const favoritesApi = {
 
     const response = await api.get(`/account/${accountId}/favorite/movies`, {
       params: {
-        language: 'ru-RU',
+        language: TMDB_LANGUAGE,
         sort_by: order,
         session_id: sessionId,
         page
