@@ -30,18 +30,17 @@ export const useRateMovie = () => {
       return rateMovieApi.rate(movieId, value, sessionId)
     },
     onSuccess: async (_, { movieId, value }) => {
-      const ratedKey = getRatedMoviesKey(user?.id)
-
       // TMDB убирает оценённый фильм из «К просмотру», если пользователь не отключил это в настройках
-      // TMDB. Показываем сразу, а списки только помечаем устаревшими: при следующем открытии
-      // они сверятся с сервером.
+      // TMDB. Показываем сразу, а с сервером списки сверятся при следующем открытии.
       updateAccountState(movieId, { rated: { value }, watchlist: false })
       await updateWatchlistCache((movies) => movies.filter((movie) => movie.id !== movieId))
 
-      updateAccountMovieList(queryClient, ratedKey, (movies) =>
-        movies.map((movie) => (movie.id === movieId ? { ...movie, userRating: value } : movie))
-      )
-      queryClient.invalidateQueries({ queryKey: ratedKey, refetchType: 'none' })
+      // Нового фильма в «Просмотрено» ещё нет, и дописать его нечем: данных фильма здесь нет
+      await updateAccountMovieList(queryClient, getRatedMoviesKey(user?.id), {
+        update: (movies) =>
+          movies.map((movie) => (movie.id === movieId ? { ...movie, userRating: value } : movie)),
+        shouldRefetch: (movies) => movies.every((movie) => movie.id !== movieId)
+      })
 
       success(`Фильм в «Просмотрено», ваша оценка — ${formatUserRating(value)}`)
     },

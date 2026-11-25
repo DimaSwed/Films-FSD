@@ -22,15 +22,12 @@ export const useRemoveRating = () => {
       if (!sessionId) throw new Error('Требуется авторизация')
       return rateMovieApi.removeRating(movieId, sessionId)
     },
-    onSuccess: (_, movieId) => {
-      const queryKey = getRatedMoviesKey(user?.id)
-
+    onSuccess: async (_, movieId) => {
       updateAccountState(movieId, { rated: false })
       // Сразу убираем фильм из списка, а потом перезапрашиваем: страницы на сервере сдвинулись
-      updateAccountMovieList(queryClient, queryKey, (movies) =>
-        movies.filter((movie) => movie.id !== movieId)
-      )
-      queryClient.invalidateQueries({ queryKey })
+      await updateAccountMovieList(queryClient, getRatedMoviesKey(user?.id), {
+        update: (movies) => movies.filter((movie) => movie.id !== movieId)
+      })
       success('Оценка удалена, фильм убран из «Просмотрено»')
     },
     onError: () => {

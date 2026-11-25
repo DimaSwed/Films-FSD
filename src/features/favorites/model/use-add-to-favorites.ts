@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { useUpdateMovieAccountState } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
+import { updateAccountMovieList } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { favoritesApi } from '../api'
@@ -22,9 +23,9 @@ export const useAddToFavorites = () => {
       }
       return favoritesApi.addToFavorites(movieId, sessionId, userDetails.id)
     },
-    onSuccess: (_, movieId) => {
+    onSuccess: async (_, movieId) => {
       updateAccountState(movieId, { favorite: true })
-      queryClient.invalidateQueries({ queryKey: getFavoritesKey(userDetails?.id) })
+      await updateAccountMovieList(queryClient, getFavoritesKey(userDetails?.id))
       success('Фильм добавлен в избранное!')
     },
     onError: () => {

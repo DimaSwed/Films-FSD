@@ -23,15 +23,12 @@ export const useRemoveFromFavorites = () => {
       }
       return favoritesApi.removeFromFavorites(movieId, sessionId, userDetails.id)
     },
-    onSuccess: (_, movieId) => {
-      const queryKey = getFavoritesKey(userDetails?.id)
-
+    onSuccess: async (_, movieId) => {
       updateAccountState(movieId, { favorite: false })
       // Сразу убираем фильм из списка, а потом перезапрашиваем данные, чтобы они совпали с сервером
-      updateAccountMovieList(queryClient, queryKey, (movies) =>
-        movies.filter((movie) => movie.id !== movieId)
-      )
-      queryClient.invalidateQueries({ queryKey })
+      await updateAccountMovieList(queryClient, getFavoritesKey(userDetails?.id), {
+        update: (movies) => movies.filter((movie) => movie.id !== movieId)
+      })
       success('Фильм удалён из избранного')
     },
     onError: () => {

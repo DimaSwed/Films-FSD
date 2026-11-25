@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
-import { getWatchlistKey, useUpdateMovieAccountState } from '@/entities/movie'
+import { useUpdateMovieAccountState, useUpdateWatchlistCache } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
 import { useNotification } from '@/shared/notifications'
 
 import { watchListApi } from '../api'
 
 export const useAddToWatchlist = () => {
-  const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: user } = useUserDetails()
   const updateAccountState = useUpdateMovieAccountState()
+  const updateWatchlistCache = useUpdateWatchlistCache()
   const { success, errors } = useNotification()
 
   return useMutation({
@@ -21,9 +21,10 @@ export const useAddToWatchlist = () => {
 
       return watchListApi.addToWatchlist(movieId, sessionId, user.id)
     },
-    onSuccess: (_, movieId) => {
+    onSuccess: async (_, movieId) => {
       updateAccountState(movieId, { watchlist: true })
-      queryClient.invalidateQueries({ queryKey: getWatchlistKey(sessionId, user?.id) })
+      // Данных фильма здесь нет, только номер: дописать его в список нечем
+      await updateWatchlistCache()
       success('Фильм успешно добавлен в список!')
     },
     onError: () => {

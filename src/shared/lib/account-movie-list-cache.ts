@@ -15,21 +15,51 @@ export const getFullListKey = (baseKey: QueryKey, order: TAddedOrder) =>
 
 type TListData = IMovie[] | InfiniteData<IPaginatedResponse<IMovie>>
 
+interface IUpdateAccountMovieListOptions {
+  /** Правка, которую можно показать сразу, не дожидаясь сервера. */
+  update?: (movies: IMovie[]) => IMovie[]
+  /** Нужно ли перезапросить уже загруженный список, если он сейчас на экране. По умолчанию — да. */
+  shouldRefetch?: (movies: IMovie[]) => boolean
+}
+
+const getMovies = (data: TListData): IMovie[] =>
+  Array.isArray(data) ? data : data.pages.flatMap((page) => page.results)
+
 /**
- * Правит фильмы во всех кэшированных видах списка аккаунта: и в постраничном, и в загруженном
- * целиком (массив).
+ * Обновляет все кэшированные виды списка аккаунта — и постраничный, и загруженный целиком (массив) —
+ * после того, как фильм добавили, убрали или оценили.
+ *
+ * Начатые загрузки отменяем: их ответ мог быть собран до изменения и перекрыл бы его. Все виды списка
+ * помечаем устаревшими, а тот, что на экране, загружаем заново, если он ещё не загружен или этого
+ * требует `shouldRefetch`.
  */
-export const updateAccountMovieList = (
+export const updateAccountMovieList = async (
   queryClient: QueryClient,
   baseKey: QueryKey,
-  update: (movies: IMovie[]) => IMovie[]
+  { update, shouldRefetch = () => true }: IUpdateAccountMovieListOptions = {}
 ) => {
-  queryClient.setQueriesData<TListData>({ queryKey: baseKey }, (old) => {
-    if (!old || Array.isArray(old)) return old && update(old)
+  await queryClient.cancelQueries({ queryKey: baseKey })
 
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({ ...page, results: update(page.results) }))
+  if (update) {
+    queryClient.setQueriesData<TListData>({ queryKey: baseKey }, (old) => {
+      if (!old || Array.isArray(old)) return old && update(old)
+
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({ ...page, results: update(page.results) }))
+      }
+    })
+  }
+
+  void queryClient.invalidateQueries({ queryKey: baseKey, refetchType: 'none' })
+
+  // Загрузку не ждём: иначе кнопка и уведомление зависели бы от неё
+  void queryClient.refetchQueries({
+    queryKey: baseKey,
+    type: 'active',
+    predicate: ({ state }) => {
+      const data = state.data as TListData | undefined
+      return !data || shouldRefetch(getMovies(data))
     }
   })
 }
