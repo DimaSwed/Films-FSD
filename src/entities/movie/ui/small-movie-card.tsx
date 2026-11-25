@@ -29,10 +29,11 @@ export const SmallMovieCard: FC<IMovieCardProps> = ({ movie, actions }) => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        bgcolor: 'background.paper',
+        bgcolor: 'background.card',
         borderRadius: '15px',
         overflow: 'hidden',
-        border: '1px solid #444',
+        border: '1px solid',
+        borderColor: 'outline.soft',
         transition: 'transform 0.3s ease',
         // Масштабирование только для устройств с реальным hover — на тач-экране оно «залипает» после тапа
         '@media (hover: hover)': {

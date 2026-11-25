@@ -21,18 +21,23 @@ export const ChangeThemeButton: FC = () => {
           borderRadius: '20px',
           border: '1px solid #f5f5f5',
           transition: 'background-color 0.3s ease',
-          '&:hover': {
-            backgroundColor: 'primary.light'
+          '@media (hover: hover)': { '&:hover': { backgroundColor: 'navigation.hover' } },
+          '&.Mui-focusVisible': {
+            outline: '2px solid',
+            outlineColor: 'navigation.contrastText',
+            outlineOffset: '2px'
           }
         }}
       >
-        <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', color: 'primary.contrastText' }}>
+        <ListItemIcon
+          sx={{ minWidth: 0, justifyContent: 'center', color: 'navigation.contrastText' }}
+        >
           {isDark ? <DarkModeIcon /> : <LightModeIcon />}
         </ListItemIcon>
         <ListItemText
           sx={{
             display: { xs: 'none', sm: 'none', md: 'block' },
-            color: 'primary.contrastText'
+            color: 'navigation.contrastText'
           }}
         >
           {isDark ? 'Темная тема' : 'Светлая тема'}

@@ -58,12 +58,12 @@ export const Header: FC = () => {
           <Box component={'div'} sx={buttonContainerStyles}>
             <Stack sx={{ flexDirection: 'row', display: { xs: 'none', sm: 'flex' } }}>
               {sessionId ? (
-                <Button onClick={handleLogout} sx={{ color: 'primary.contrastText' }}>
+                <Button onClick={handleLogout} sx={{ color: 'navigation.contrastText' }}>
                   Выйти
                 </Button>
               ) : (
                 <>
-                  <Button onClick={handleLogin} sx={{ color: 'primary.contrastText' }}>
+                  <Button onClick={handleLogin} sx={{ color: 'navigation.contrastText' }}>
                     Войти
                   </Button>
 
@@ -72,7 +72,7 @@ export const Header: FC = () => {
                     href="https://www.themoviedb.org/signup"
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{ color: 'primary.contrastText' }}
+                    sx={{ color: 'navigation.contrastText' }}
                   >
                     Регистрация
                   </Button>

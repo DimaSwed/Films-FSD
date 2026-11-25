@@ -38,7 +38,7 @@ export const SettingsPage: FC = () => {
 
         <UserSubscriptionInfo />
 
-        <Divider sx={{ backgroundColor: '#444' }} />
+        <Divider sx={{ backgroundColor: 'outline.soft' }} />
 
         {/* <Box sx={{ mt: 4 }}>
           <Typography variant="h5" gutterBottom>
@@ -81,7 +81,7 @@ export const SettingsPage: FC = () => {
           </List>
         </Box>
 
-        <Divider sx={{ backgroundColor: '#444', my: 4 }} /> */}
+        <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} /> */}
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>
@@ -105,7 +105,7 @@ export const SettingsPage: FC = () => {
           </Typography>
         </Box>
 
-        <Divider sx={{ backgroundColor: '#444', my: 4 }} />
+        <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         {/* ДОБАВИТЬ РЕАЛИЗАЦИЮ ФУНКЦИОНАЛА */}
 
@@ -129,7 +129,7 @@ export const SettingsPage: FC = () => {
         </List>
       </Box>
 
-      <Divider sx={{ backgroundColor: '#444', my: 4 }} /> */}
+      <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} /> */}
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>
@@ -173,7 +173,7 @@ export const SettingsPage: FC = () => {
           </List>
         </Box>
 
-        <Divider sx={{ backgroundColor: '#444', my: 4 }} />
+        <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>
@@ -194,7 +194,7 @@ export const SettingsPage: FC = () => {
           </List>
         </Box>
 
-        <Divider sx={{ backgroundColor: '#444', my: 4 }} />
+        <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>

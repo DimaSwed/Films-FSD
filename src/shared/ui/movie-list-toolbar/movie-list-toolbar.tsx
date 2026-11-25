@@ -16,7 +16,7 @@ interface IMovieListToolbarProps {
 const fieldSx = {
   backgroundColor: 'background.paper',
   '& .MuiInputBase-root': { color: 'secondary.contrastText', height: 40 },
-  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#444' },
+  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'outline.strong' },
   '& .Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'secondary.contrastText' },
   '& .MuiInputLabel-root': { color: 'text.secondary' },
   // Прячем встроенный крестик браузера: у нас есть свой.

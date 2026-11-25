@@ -37,7 +37,11 @@ export const SearchMovieButton = () => {
         <IconButton
           ref={buttonRef}
           aria-label="Открыть поиск фильма"
-          sx={{ color: 'primary.contrastText', visibility: isOpen ? 'hidden' : 'visible' }}
+          sx={{
+            color: 'navigation.contrastText',
+            visibility: isOpen ? 'hidden' : 'visible',
+            '@media (hover: hover)': { '&:hover': { bgcolor: 'navigation.hover' } }
+          }}
           onClick={open}
         >
           <SearchIcon />

@@ -10,13 +10,9 @@ import { useAddToWatchlist, useRemoveFromWatchList } from '../model'
 
 interface IToggleWatchlistButtonProps {
   movieId: number
-  showText?: boolean
 }
 
-export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
-  movieId,
-  showText = true
-}) => {
+export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({ movieId }) => {
   const sessionId = useSessionId()
   const { isInWatchlist, isLoading: isStateLoading } = useIsInWatchlist(movieId)
 
@@ -38,8 +34,8 @@ export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
 
   return (
     <Button
-      variant="contained"
-      color={isInWatchlist ? 'secondary' : 'primary'}
+      variant={isInWatchlist ? 'contained' : 'outlined'}
+      color={isInWatchlist ? 'success' : 'inherit'}
       startIcon={
         isStateLoading || isAdding || isRemoving ? (
           <CircularProgress size={20} color="inherit" />
@@ -51,26 +47,16 @@ export const ToggleWatchlistButton: FC<IToggleWatchlistButtonProps> = ({
       }
       onClick={handleClick}
       disabled={isAdding || isRemoving || !sessionId || isStateLoading}
-      sx={{
-        '&.MuiButton-containedSecondary': {
-          backgroundColor: 'success.main',
-          color: 'primary.contrastText',
-          '&:hover': {
-            backgroundColor: 'success.dark'
-          }
-        }
-      }}
     >
-      {showText &&
-        (isAddError || isRemoveError
-          ? 'Ошибка'
-          : isAdding
-            ? 'Добавление...'
-            : isRemoving
-              ? 'Удаление...'
-              : isInWatchlist
-                ? 'В списке'
-                : 'Добавить в список')}
+      {isAddError || isRemoveError
+        ? 'Ошибка'
+        : isAdding
+          ? 'Добавление...'
+          : isRemoving
+            ? 'Удаление...'
+            : isInWatchlist
+              ? 'В списке'
+              : 'Добавить в список'}
     </Button>
   )
 }

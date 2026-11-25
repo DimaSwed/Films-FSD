@@ -1,4 +1,4 @@
-import { SxProps, Theme, alpha, darken, keyframes } from '@mui/material/styles'
+import { SxProps, Theme, alpha, darken, lighten, keyframes } from '@mui/material/styles'
 
 const reducedMotion = '@media (prefers-reduced-motion: reduce)'
 
@@ -65,27 +65,27 @@ const focusRing = {
 }
 
 /**
- * Цвета зала — только из темы. Светлая тема — «цветное кино»: синий зал, кирпичный бархат, золото.
+ * Цвета зала — только из темы. Светлая тема — «цветное кино»: чёрный зал, киноварный бархат, бронза.
  * Тёмная — чёрно-белое: серый занавес и единственный акцент цвета ошибки.
  */
 const hallColors = ({ palette }: Theme) =>
   palette.mode === 'light'
     ? {
-        '--hall': palette.primary.dark,
-        '--hall-deep': darken(palette.primary.dark, 0.5),
-        '--glow': alpha(palette.primary.light, 0.55),
-        '--curtain': palette.error.main,
-        '--curtain-fold': darken(palette.error.dark, 0.35),
-        '--curtain-light': palette.error.light,
-        '--trim': palette.secondary.main,
+        '--hall': palette.navigation.main,
+        '--hall-deep': darken(palette.navigation.main, 0.5),
+        '--glow': alpha(palette.outline.strong, 0.35),
+        '--curtain': palette.primary.main,
+        '--curtain-fold': darken(palette.primary.dark, 0.45),
+        '--curtain-light': palette.primary.light,
+        '--trim': palette.outline.strong,
         '--screen': palette.background.default,
-        '--ink': palette.primary.dark,
-        '--accent': palette.secondary.light,
-        '--text': palette.primary.contrastText,
-        '--text-muted': alpha(palette.primary.contrastText, 0.8),
-        '--line': alpha(palette.primary.contrastText, 0.24),
-        '--seat-back': darken(palette.primary.dark, 0.25),
-        '--seat-front': darken(palette.primary.dark, 0.7)
+        '--ink': palette.navigation.main,
+        '--accent': lighten(palette.primary.light, 0.15),
+        '--text': palette.navigation.contrastText,
+        '--text-muted': alpha(palette.navigation.contrastText, 0.8),
+        '--line': alpha(palette.navigation.contrastText, 0.24),
+        '--seat-back': darken(palette.primary.dark, 0.45),
+        '--seat-front': darken(palette.primary.dark, 0.75)
       }
     : {
         '--hall': palette.background.default,

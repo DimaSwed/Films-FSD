@@ -16,10 +16,12 @@ export const ToggleDescriptionButton: FC<IToggleDescriptionButtonProps> = ({ isO
         lineHeight: '130%',
         color: 'secondary.contrastText',
         borderColor: 'secondary.contrastText',
-        '&:hover': {
-          backgroundColor: 'primary.light',
-          color: 'primary.contrastText',
-          borderColor: 'primary.light'
+        '@media (hover: hover)': {
+          '&:hover': {
+            backgroundColor: 'primary.light',
+            color: 'primary.contrastText',
+            borderColor: 'primary.light'
+          }
         }
       }}
     >

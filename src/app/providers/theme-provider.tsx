@@ -19,7 +19,7 @@ export const ThemeSnackbarProvider: FC<IThemeSnackbarProviderProps> = ({ childre
   useEffect(() => {
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', muiTheme.palette.primary.main)
+      ?.setAttribute('content', muiTheme.palette.navigation.main)
   }, [muiTheme])
 
   return (

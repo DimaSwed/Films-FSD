@@ -1,4 +1,4 @@
-import { SxProps } from '@mui/material'
+import { alpha, SxProps, Theme } from '@mui/material'
 
 export const searchButtonStyles: SxProps = {
   // На телефоне панель поиска отсчитывается от шапки (AppBar), а не от кнопки: см. searchBoxStyles
@@ -30,13 +30,13 @@ export const textFieldStyles: SxProps = {
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: 'primary.contrastText'
+      borderColor: 'outline.strong'
     },
     '&:hover fieldset': {
-      borderColor: 'primary.contrastText'
+      borderColor: 'text.primary'
     },
     '&.Mui-focused fieldset': {
-      borderColor: 'primary.contrastText'
+      borderColor: 'text.primary'
     }
   }
 }
@@ -70,6 +70,6 @@ export const emptyResultStyles: SxProps = {
 }
 
 export const activeOptionStyles = {
-  backgroundColor: 'rgba(25, 118, 210, 0.08)',
-  outline: '2px solid #1976d2'
-} satisfies SxProps
+  backgroundColor: ({ palette }: Theme) => alpha(palette.accent.main, 0.08),
+  outline: ({ palette }: Theme) => `2px solid ${palette.accent.main}`
+} satisfies SxProps<Theme>

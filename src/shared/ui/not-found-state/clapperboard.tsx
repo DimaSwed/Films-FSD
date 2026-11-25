@@ -32,12 +32,10 @@ export const Clapperboard: FC<IClapperboardProps> = ({ caption }) => {
           width: { xs: 150, sm: 190 },
           height: 'auto',
           overflow: 'visible',
-          // Цвета только из темы: синяя доска и золотые планки (light) / серая доска и белые планки (dark)
-          '--board': isLight ? theme.palette.primary.dark : theme.palette.secondary.main,
-          '--stripe': isLight
-            ? theme.palette.secondary.main
-            : alpha(theme.palette.text.primary, 0.9),
-          '--chalk': isLight ? theme.palette.primary.contrastText : theme.palette.text.primary,
+          // Цвета только из темы: чёрная доска и киноварные планки (light) / серая доска и белые планки (dark)
+          '--board': isLight ? theme.palette.navigation.main : theme.palette.secondary.main,
+          '--stripe': isLight ? theme.palette.primary.main : alpha(theme.palette.text.primary, 0.9),
+          '--chalk': isLight ? theme.palette.navigation.contrastText : theme.palette.text.primary,
           '& .arm': {
             transformOrigin: '14px 50px',
             transformBox: 'view-box',

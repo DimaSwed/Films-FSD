@@ -9,13 +9,9 @@ import { useAddToFavorites, useIsFavorite, useRemoveFromFavorites } from '../mod
 
 interface IToggleFavoriteButtonProps {
   movieId: number
-  showText?: boolean
 }
 
-export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({
-  movieId,
-  showText = true
-}) => {
+export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({ movieId }) => {
   const sessionId = useSessionId()
   const { isFavorite, isLoading, isError } = useIsFavorite(movieId)
 
@@ -32,7 +28,7 @@ export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({
   }
 
   if (isLoading) {
-    return <CircularProgress size={24} />
+    return <CircularProgress size={24} color="inherit" />
   }
 
   if (isError) {
@@ -45,8 +41,8 @@ export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({
 
   return (
     <Button
-      variant="contained"
-      color={isFavorite ? 'secondary' : 'primary'}
+      variant={isFavorite ? 'contained' : 'outlined'}
+      color={isFavorite ? 'error' : 'inherit'}
       startIcon={
         isAdding || isRemoving ? (
           <CircularProgress size={20} color="inherit" />
@@ -58,24 +54,14 @@ export const ToggleFavoriteButton: FC<IToggleFavoriteButtonProps> = ({
       }
       onClick={handleClick}
       disabled={isAdding || isRemoving || !sessionId}
-      sx={{
-        '&.MuiButton-containedSecondary': {
-          backgroundColor: 'error.main',
-          color: 'primary.contrastText',
-          '&:hover': {
-            backgroundColor: 'error.dark'
-          }
-        }
-      }}
     >
-      {showText &&
-        (isAdding
-          ? 'Добавление...'
-          : isRemoving
-            ? 'Удаление...'
-            : isFavorite
-              ? 'В избранном'
-              : 'В избранное')}
+      {isAdding
+        ? 'Добавление...'
+        : isRemoving
+          ? 'Удаление...'
+          : isFavorite
+            ? 'В избранном'
+            : 'В избранное'}
     </Button>
   )
 }

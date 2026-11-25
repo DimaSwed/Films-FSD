@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material'
 
 export const appBarStyles: SxProps = {
-  backgroundColor: 'primary.main',
+  backgroundColor: 'navigation.main',
   backgroundImage: 'none',
   // Верхний отступ учитывает вырез/статус-бар iOS (viewport-fit=cover + black-translucent)
   padding: {

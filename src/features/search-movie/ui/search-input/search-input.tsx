@@ -24,7 +24,7 @@ export const SearchInput = ({ value, onChange }: ISearchInputProps) => (
       sx: {
         color: 'secondary.contrastText',
         backgroundColor: 'background.paper',
-        '.MuiOutlinedInput-notchedOutline': { borderColor: '#444' },
+        '.MuiOutlinedInput-notchedOutline': { borderColor: 'outline.strong' },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'secondary.contrastText' },
         height: '40px'
       },

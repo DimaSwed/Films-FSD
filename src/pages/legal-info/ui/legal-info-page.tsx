@@ -5,11 +5,11 @@ import { JustWatchAttribution, PageMeta, TmdbAttribution } from '@/shared/ui'
 
 const CONTACT_EMAIL = 'vip-performance37@mail.ru'
 
-const linkSx = { textDecoration: 'none', color: '#1976d2' }
+const linkSx = { textDecoration: 'none', color: 'accent.main' }
 
 const Section: FC<{ title: string; children: ReactNode }> = ({ title, children }) => (
   <>
-    <Divider sx={{ backgroundColor: '#444', my: 4 }} />
+    <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
     <Typography variant="h6" component="h2" gutterBottom>
       {title}
     </Typography>

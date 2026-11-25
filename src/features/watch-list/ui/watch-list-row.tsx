@@ -32,7 +32,7 @@ export const WatchListRow: FC<IWatchListCardViewProps> = ({
       mb: 2,
       boxShadow: 4,
       borderRadius: 2,
-      bgcolor: 'background.paper'
+      bgcolor: 'background.card'
     }}
   >
     {/* Постер и название ведут на одну страницу. Чтобы с клавиатуры и в скринридере ссылка не

@@ -99,104 +99,85 @@ const commonSettings: ThemeOptions = {
   }
 }
 
+// Шапка и сайдбар тёмные в обеих темах, поэтому и наведение одно
+const NAVIGATION_HOVER = 'rgba(255, 255, 255, 0.12)'
+
+/**
+ * Палитра светлой темы «Киноварь и русский зелёный». Три цвета чуть темнее исходных ради контраста
+ * не ниже 4,5: на `RATING_*` читается и белый, и чёрный текст, а `UMBER` — на любом фоне страницы.
+ */
+const VERMILION = '#c04034'
+const CHESTNUT = '#982c22'
+const RUSSIAN_GREEN = '#5d8c69'
+const UMBER = '#806055'
+const ROSE_BROWN = '#a37669'
+const CHARCOAL = '#161616'
+const WHITE = '#ffffff'
+
+const RATING_GREEN = '#547e5f'
+const RATING_BROWN = '#936e62'
+
 const lightTheme = createTheme({
   ...commonSettings,
   palette: {
     mode: 'light',
     primary: {
-      light: '#5b79c4',
-      main: '#274898',
-      dark: '#1a3070',
-      contrastText: '#FFFFFF'
+      light: '#cf483a',
+      main: VERMILION,
+      dark: CHESTNUT,
+      contrastText: WHITE
     },
     secondary: {
-      light: '#e5c69a',
-      main: '#c5995b',
-      dark: '#996a28',
-      contrastText: '#303030'
+      light: '#7fa98a',
+      main: RUSSIAN_GREEN,
+      dark: '#466b50',
+      contrastText: CHARCOAL // этим цветом набран почти весь текст на страницах
     },
     error: {
-      light: '#c4553d',
-      main: '#993b28',
-      dark: '#7a2d1d',
-      contrastText: '#FFFFFF'
+      light: '#b5483d',
+      main: CHESTNUT,
+      dark: '#701d16',
+      contrastText: WHITE
+    },
+    warning: {
+      light: ROSE_BROWN,
+      main: RATING_BROWN,
+      dark: '#6e5048',
+      contrastText: WHITE
+    },
+    success: {
+      light: RUSSIAN_GREEN,
+      main: RATING_GREEN,
+      dark: '#41634b',
+      contrastText: WHITE
     },
     background: {
-      default: '#faf1e6',
-      paper: '#FFFFFF'
+      default: '#f1e7e0',
+      paper: '#fbf7f4',
+      card: WHITE
     },
     text: {
-      primary: '#1a1a1a',
-      secondary: '#9d9d9d'
+      primary: CHARCOAL,
+      secondary: UMBER
     },
-    divider: '#d9d9d9'
+    divider: '#e3d5cd',
+    navigation: { main: CHARCOAL, hover: NAVIGATION_HOVER, contrastText: WHITE },
+    outline: { strong: ROSE_BROWN, soft: '#e3d5cd' },
+    accent: { main: CHESTNUT },
+    rating: { good: RATING_GREEN, average: RATING_BROWN }
   },
   components: {
-    MuiCssBaseline: {
+    MuiButton: {
       styleOverrides: {
-        body: {
-          color: '#1a1a1a',
-          backgroundColor: '#faf1e6'
-        },
-        ':root': {
-          /* Backgrounds */
-          '--background-app': '#faf1e6',
-          '--background-block': '#FFFFFF',
-          '--background-button': '#e6eafa',
-          '--background-light-hover': '#ffffdf',
-          '--background-light-chip': '#e6eafa',
-          '--background-light-block': '#faf1e6',
-          '--background-accent-block': '#1a3070',
-          '--background-primary': '#274898',
-          '--background-progress-bar': '#9ab0e5',
-          '--background-skeleton': '#d9d9d9',
-          '--background-nav-item': '#e6eafa',
-          '--background-nav-item-hover': '#faf1e6',
-          '--background-modal-overlay': 'rgb(26 48 112 / 40%)',
-
-          /* Text */
-          '--text-color-primary': '#1a1a1a',
-          '--text-color-bright': '#000000',
-          '--text-color-light': '#474747',
-          '--text-color-lighter': '#5E5E5E',
-          '--text-color-lightest': '#9d9d9d',
-          '--text-color-the-lightest': '#b0b0b0',
-          '--text-color-more-lightest': '#d9d9d9',
-          '--text-color-white': '#FFFFFF',
-          '--text-color-link-active': '#274898',
-          '--text-color-link-disabled': '#9ab0e5',
-          '--text-color-red': '#993b28',
-
-          /* Borders */
-          '--border-color': '#d9d9d9',
-          '--border-right-color': '#9d9d9d',
-          '--border-image-hover': '#274898',
-          '--border-input': '#d9d9d9',
-          '--border-focus-blue': '#5b79c4',
-
-          /* Shadows */
-          '--main-shadow': '0px 4px 10px rgb(39 72 152 / 12%)',
-          '--focus-shadow': '0 0 0 3px #e6eafa',
-          '--focus-shadow-error': '0 0 0 3px #f5d5cc',
-          '--focus-shadow-valid': '0 0 0 3px #dff0cc',
-
-          /* Font sizes */
-          '--font-size-h-xxl': '60px',
-          '--font-size-h-l': '40px',
-          '--font-size-large-34': '34px',
-          '--font-size-h-m': '36px',
-          '--font-size-large-30': '30px',
-          '--font-size-large-28': '28px',
-          '--font-size-h-s': '24px',
-          '--font-size-h-xs': '20px',
-          '--font-size-p-l': '18px',
-          '--font-size-p-m': '16px',
-          '--font-size-h-xxs': '14px',
-          '--font-size-p-s': '14px',
-          '--font-size-p-xs': '12px',
-          '--font-size-p-xss': '10px',
-          '--font-size-p-xxs': '8px'
-        }
+        root: ({ theme }) => ({
+          variants: [
+            {
+              // Надпись чёрная: на `secondary.dark`, который MUI берёт для наведения, она не читается
+              props: { variant: 'contained', color: 'secondary' },
+              style: { '&:hover': { backgroundColor: theme.palette.secondary.light } }
+            }
+          ]
+        })
       }
     }
   }
@@ -220,12 +201,17 @@ const darkTheme = createTheme({
     },
     background: {
       default: '#0d0d0d', // Main page background color
-      paper: '#1d1d1d' // Paper background color
+      paper: '#1d1d1d', // Paper background color
+      card: '#1d1d1d'
     },
     text: {
       primary: '#ffffff', // Primary text color
-      secondary: '#9d9d9d' // Приглушённый серый — тот же тон, что в light-теме;
-    }
+      secondary: '#9d9d9d' // Приглушённый серый — нейтральный, без оттенка
+    },
+    navigation: { main: '#1c1c1c', hover: NAVIGATION_HOVER, contrastText: '#ffffff' },
+    outline: { strong: '#444', soft: '#444' },
+    accent: { main: '#1976d2' },
+    rating: { good: 'green', average: 'orange' }
   }
 })
 

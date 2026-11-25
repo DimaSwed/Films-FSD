@@ -86,7 +86,8 @@ export const UserSubscriptionInfo: FC = () => {
       sx={{
         padding: '10px',
         textAlign: 'center',
-        color: 'text.primary',
+        // Блок стоит и в тёмном сайдбаре, и на странице настроек — цвет текста задаёт окружение
+        color: 'inherit',
         maxWidth: 'fit-content',
         margin: '0 auto'
       }}

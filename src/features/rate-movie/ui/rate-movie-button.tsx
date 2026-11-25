@@ -25,7 +25,8 @@ export const RateMovieButton: FC<IRateMovieButtonProps> = ({ movieId, title }) =
     <RateMovieTrigger movieId={movieId} title={title}>
       {(open) => (
         <Button
-          variant="contained"
+          variant={isRated ? 'contained' : 'outlined'}
+          color={isRated ? 'warning' : 'inherit'}
           startIcon={
             isLoading ? (
               <CircularProgress size={20} color="inherit" />
@@ -43,15 +44,6 @@ export const RateMovieButton: FC<IRateMovieButtonProps> = ({ movieId, title }) =
           }
           onClick={open}
           disabled={!sessionId || isLoading}
-          sx={
-            isRated
-              ? {
-                  bgcolor: 'warning.main',
-                  color: 'common.black',
-                  '&:hover': { bgcolor: 'warning.light' }
-                }
-              : undefined
-          }
         >
           {isRated ? `Просмотрено · ${formatUserRating(userRating)}` : 'Оценить'}
         </Button>

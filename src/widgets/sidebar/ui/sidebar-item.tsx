@@ -23,7 +23,7 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ primary, children }) => {
   return (
     <>
       {isMdUp && (
-        <ListItemButton onClick={handleClick} sx={{ color: 'primary.contrastText' }}>
+        <ListItemButton onClick={handleClick} sx={{ color: 'navigation.contrastText' }}>
           <ListItemText primary={primary} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>

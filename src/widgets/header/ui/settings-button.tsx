@@ -5,8 +5,17 @@ import { Link } from 'react-router-dom'
 
 export const SettingsButton: FC = () => {
   return (
-    <IconButton aria-label="open drawer" edge="start" component={Link} to="/settings">
-      <SettingsIcon sx={{ color: 'white' }} />
+    <IconButton
+      aria-label="Настройки"
+      edge="start"
+      component={Link}
+      to="/settings"
+      sx={{
+        color: 'navigation.contrastText',
+        '@media (hover: hover)': { '&:hover': { bgcolor: 'navigation.hover' } }
+      }}
+    >
+      <SettingsIcon />
     </IconButton>
   )
 }

@@ -84,7 +84,7 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
                 fontWeight: 'bold',
                 top: 0,
                 right: 0,
-                backgroundColor: isGoodRating(movie.rating) ? 'green' : 'orange',
+                backgroundColor: isGoodRating(movie.rating) ? 'rating.good' : 'rating.average',
                 color: 'white',
                 padding: '2px 12px',
                 borderRadius: '0 10px 0 10px'

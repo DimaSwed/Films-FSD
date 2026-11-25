@@ -1,4 +1,4 @@
-import { ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { Theme, ToggleButton, ToggleButtonGroup } from '@mui/material'
 
 interface ICriteriaToggleProps {
   value: string
@@ -9,15 +9,19 @@ interface ICriteriaToggleProps {
 const buttonStyles = {
   color: 'secondary.contrastText',
   backgroundColor: 'background.paper',
-  border: '1px solid #444',
+  border: (theme: Theme) => `1px solid ${theme.palette.outline.strong}`,
   height: '40px',
   lineHeight: '120%',
   '&.Mui-selected': {
-    color: 'text.primary',
+    color: 'primary.contrastText',
     backgroundColor: 'primary.dark'
   },
-  '&:hover': {
-    backgroundColor: 'primary.light'
+  // На сенсорном экране наведение остаётся после нажатия, и снятый критерий выглядел бы выбранным
+  '@media (hover: hover)': {
+    '&:hover, &.Mui-selected:hover': {
+      color: 'primary.contrastText',
+      backgroundColor: 'primary.light'
+    }
   }
 }
 
