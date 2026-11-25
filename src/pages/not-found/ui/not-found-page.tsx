@@ -1,74 +1,94 @@
-import { Box, Typography } from '@mui/material'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { Box, Button, Stack, Typography } from '@mui/material'
+import { useId } from 'react'
 import { Link } from 'react-router-dom'
 
-import { PageMeta } from '@/shared/ui'
+import { PageMeta, PageShell } from '@/shared/ui'
 
+import { CinemaScreen } from './cinema-screen'
+import { CinemaSeats } from './cinema-seats'
+import { notFoundStyles } from './not-found-page.styles'
+
+const PROGRAM = [
+  { label: 'Сейчас в прокате', to: '/category/сейчас-в-прокате' },
+  { label: 'Фильмы по жанрам', to: '/movies' },
+  { label: 'Трейлеры', to: '/trailers' }
+]
+
+/** Несуществующий маршрут. Неизвестные фильм, жанр и подборка — `NotFoundState` в `shared/ui`. */
 export const NotFoundPage = () => {
-  return (
-    <>
-      <PageMeta title="Страница не найдена" noIndex />
-      <Box
-        sx={{
-          background: '#484848',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 9999,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          color: 'text.primary',
-          direction: 'rtl'
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '20px'
-          }}
-        >
-          <img
-            src="https://cdn.rawgit.com/ahmedhosna95/upload/1731955f/sad404.svg"
-            alt="404"
-            width={300}
-            height={300}
-          />
-          <Typography variant="h1" sx={{ mb: 2 }}>
-            404 PAGE
-          </Typography>
-          <Typography sx={{ mb: 3 }} variant="h5">
-            The page you were looking for could not be found
-          </Typography>
+  const programTitleId = useId()
 
-          <Link style={{ textDecoration: 'none' }} to="/">
-            <Typography
-              variant="h5"
-              sx={{
-                background: '#fff',
-                color: '#000',
-                textDecoration: 'none',
-                padding: '10px 15px',
-                borderRadius: '500px',
-                border: '2px solid #232323',
-                boxShadow: '0 20px 70px 4px rgba(0, 0, 0, 0.1), inset 0px 20px 0 0px #1d1d1d',
-                fontWeight: 900,
-                transition: 'all 300ms ease',
-                '&:hover': {
-                  transform: 'translateY(-13px)',
-                  boxShadow: '0 35px 90px 4px rgba(0, 0, 0, 0.3), inset 0px 0 0 3px #232323'
-                }
-              }}
-            >
-              ... Back to main page
-            </Typography>
-          </Link>
+  return (
+    <PageShell sx={notFoundStyles.hall}>
+      <PageMeta title="Страница не найдена" noIndex />
+
+      <Stack sx={notFoundStyles.content}>
+        <Box sx={notFoundStyles.beam} />
+        <CinemaScreen />
+
+        <Typography variant="overline" sx={notFoundStyles.eyebrow}>
+          КиноТрекер · зал 404
+        </Typography>
+
+        <Typography component="h1" sx={notFoundStyles.title}>
+          Страницы{' '}
+          <Box component="span" sx={notFoundStyles.accent}>
+            нет в прокате
+          </Box>
+        </Typography>
+
+        <Typography variant="body1" sx={notFoundStyles.description}>
+          В адресе опечатка, или страницу уже сняли с показа. Вернитесь на главную или найдите фильм
+          по названию.
+        </Typography>
+
+        <Stack sx={notFoundStyles.actions}>
+          <Button
+            component={Link}
+            to="/"
+            size="large"
+            variant="contained"
+            color="secondary"
+            sx={notFoundStyles.primaryAction}
+          >
+            На главную
+          </Button>
+          <Button
+            component={Link}
+            to="/search"
+            size="large"
+            variant="outlined"
+            color="inherit"
+            sx={notFoundStyles.secondaryAction}
+          >
+            Найти фильм
+          </Button>
+        </Stack>
+
+        <Box component="nav" aria-labelledby={programTitleId} sx={notFoundStyles.program}>
+          <Typography
+            id={programTitleId}
+            component="h2"
+            variant="subtitle1"
+            sx={notFoundStyles.programTitle}
+          >
+            Сегодня в программе
+          </Typography>
+          <Box component="ul" sx={notFoundStyles.programList}>
+            {PROGRAM.map(({ label, to }) => (
+              <li key={to}>
+                <Box component={Link} to={to} sx={notFoundStyles.programLink}>
+                  {label}
+                  <ArrowForwardIcon aria-hidden />
+                </Box>
+              </li>
+            ))}
+          </Box>
         </Box>
-      </Box>
-    </>
+      </Stack>
+
+      <CinemaSeats />
+    </PageShell>
   )
 }
