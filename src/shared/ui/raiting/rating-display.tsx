@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 
+import { isGoodRating } from '../../lib'
+
 interface IRatingDisplayProps {
   value: number
   max?: number
@@ -11,7 +13,7 @@ export const RatingDisplay: FC<IRatingDisplayProps> = ({ value, max = 10 }) => {
   const percentage = (normalizedValue / max) * 100
 
   const getBarColor = () => {
-    if (percentage > 70) return 'success.main'
+    if (isGoodRating((normalizedValue / max) * 10)) return 'success.main'
     if (percentage > 40) return 'warning.main'
     return 'error.main'
   }

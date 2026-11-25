@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { getWatchlistKey, useUpdateMovieAccountState } from '@/entities/movie'
+import { useUpdateMovieAccountState, useUpdateWatchlistCache } from '@/entities/movie'
 import { useSessionId, useUserDetails } from '@/entities/user'
-import { IMovie, updateAccountMovieList } from '@/shared/lib'
+import { updateAccountMovieList } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
 import { rateMovieApi } from '../api'
@@ -21,6 +21,7 @@ export const useRateMovie = () => {
   const sessionId = useSessionId()
   const { data: user } = useUserDetails()
   const updateAccountState = useUpdateMovieAccountState()
+  const updateWatchlistCache = useUpdateWatchlistCache()
   const { success, errors } = useNotification()
 
   return useMutation({
@@ -28,18 +29,14 @@ export const useRateMovie = () => {
       if (!sessionId) throw new Error('Требуется авторизация')
       return rateMovieApi.rate(movieId, value, sessionId)
     },
-    onSuccess: (_, { movieId, value }) => {
-      const watchlistKey = getWatchlistKey(sessionId, user?.id)
+    onSuccess: async (_, { movieId, value }) => {
       const ratedKey = getRatedMoviesKey(user?.id)
 
       // TMDB убирает оценённый фильм из «К просмотру», если пользователь не отключил это в настройках
       // TMDB. Показываем сразу, а списки только помечаем устаревшими: при следующем открытии
       // они сверятся с сервером.
       updateAccountState(movieId, { rated: { value }, watchlist: false })
-      queryClient.setQueryData<IMovie[]>(watchlistKey, (old) =>
-        old?.filter((movie) => movie.id !== movieId)
-      )
-      queryClient.invalidateQueries({ queryKey: watchlistKey, refetchType: 'none' })
+      await updateWatchlistCache((movies) => movies.filter((movie) => movie.id !== movieId))
 
       updateAccountMovieList(queryClient, ratedKey, (movies) =>
         movies.map((movie) => (movie.id === movieId ? { ...movie, userRating: value } : movie))

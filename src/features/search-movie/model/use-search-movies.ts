@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
+import { BACK_NAVIGATION_GC_TIME } from '@/shared/config'
 import { getNextTmdbPage, IMovie, selectUniqueMovies } from '@/shared/lib'
 import { useNotification } from '@/shared/notifications'
 
@@ -34,7 +35,8 @@ export const useInfiniteSearchMovies = (query: string) => {
     getNextPageParam: getNextTmdbPage,
     select: selectUniqueMovies,
     enabled: !!query,
-    staleTime: 86400 * 1000
+    staleTime: 86400 * 1000,
+    gcTime: BACK_NAVIGATION_GC_TIME
   })
   useEffect(() => {
     if (result.isError) errors('Ошибка при поиске фильмов')
@@ -53,7 +55,8 @@ export const useMoviesByFilters = (params: IMovieFilterParams, { enabled = true 
     getNextPageParam: getNextTmdbPage,
     select: selectUniqueMovies,
     enabled,
-    staleTime: 86400 * 1000
+    staleTime: 86400 * 1000,
+    gcTime: BACK_NAVIGATION_GC_TIME
   })
   useEffect(() => {
     if (result.isError) errors('Ошибка загрузки фильмов по фильтрам')

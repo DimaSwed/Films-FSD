@@ -49,7 +49,7 @@ export const RateMovieIcon: FC<IRateMovieIconProps> = ({ movieId, title }) => {
           }}
         >
           {isLoading ? (
-            <CircularProgress size={20} color="inherit" />
+            <CircularProgress size={24} color="inherit" />
           ) : isRated ? (
             <Badge badgeContent={formatUserRating(userRating)}>
               <StarIcon />

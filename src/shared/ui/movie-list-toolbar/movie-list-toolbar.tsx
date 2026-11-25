@@ -34,8 +34,8 @@ export const MovieListToolbar: FC<IMovieListToolbarProps> = ({
   <Box
     display="flex"
     justifyContent="center"
-    gap={2}
-    mb={2}
+    gap={{ xs: 1.5, sm: 2 }}
+    mb={{ xs: 1.5, sm: 2 }}
     sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
   >
     <TextField

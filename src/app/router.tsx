@@ -5,6 +5,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import { NotFoundPage } from '@/pages/not-found'
 
 import { App } from './App'
+import { KEEPS_SCROLL } from './lib'
 import { RouteErrorPage } from './providers/route-error-page'
 
 /** Страница подгружается отдельным чанком при первом заходе на маршрут. */
@@ -65,19 +66,23 @@ export const router = createBrowserRouter([
       },
       {
         path: 'search',
-        element: <SearchPage />
+        element: <SearchPage />,
+        handle: KEEPS_SCROLL
       },
       {
         path: 'watch-list',
-        element: <WatchListPage />
+        element: <WatchListPage />,
+        handle: KEEPS_SCROLL
       },
       {
         path: 'watched',
-        element: <WatchedPage />
+        element: <WatchedPage />,
+        handle: KEEPS_SCROLL
       },
       {
         path: 'favorites-list',
-        element: <FavoritesListPage />
+        element: <FavoritesListPage />,
+        handle: KEEPS_SCROLL
       },
       { path: 'category/:categorySlug', element: <CategoryMoviesPage /> },
       {

@@ -40,7 +40,7 @@ export const FavoriteToggleIcon: FC<IFavoriteToggleIconProps> = ({ movieId, size
   if (isLoading) {
     return (
       <IconButton size={size} disabled>
-        <CircularProgress size={20} color="inherit" />
+        <CircularProgress size={24} color="inherit" />
       </IconButton>
     )
   }
@@ -73,7 +73,7 @@ export const FavoriteToggleIcon: FC<IFavoriteToggleIconProps> = ({ movieId, size
       }}
     >
       {isAdding || isRemoving ? (
-        <CircularProgress size={20} color="inherit" />
+        <CircularProgress size={24} color="inherit" />
       ) : isFavorite ? (
         <FavoriteIcon />
       ) : (

@@ -11,7 +11,7 @@ import {
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { IMovie } from '@/shared/lib'
+import { IMovie, isGoodRating } from '@/shared/lib'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -84,7 +84,7 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
                 fontWeight: 'bold',
                 top: 0,
                 right: 0,
-                backgroundColor: movie?.rating < 7 ? 'orange' : 'green',
+                backgroundColor: isGoodRating(movie.rating) ? 'green' : 'orange',
                 color: 'white',
                 padding: '2px 12px',
                 borderRadius: '0 10px 0 10px'

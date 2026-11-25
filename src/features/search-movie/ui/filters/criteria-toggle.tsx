@@ -2,7 +2,8 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 
 interface ICriteriaToggleProps {
   value: string
-  onChange: (value: string) => void
+  /** `null` — нажали на уже выбранную кнопку, то есть сняли выбор. */
+  onChange: (value: string | null) => void
 }
 
 const buttonStyles = {

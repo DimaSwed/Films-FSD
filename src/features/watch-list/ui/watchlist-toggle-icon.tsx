@@ -53,7 +53,7 @@ export const WatchlistToggleIcon: FC<IWatchlistToggleIconProps> = ({
       }}
     >
       {isBusy ? (
-        <CircularProgress size={20} color="inherit" />
+        <CircularProgress size={24} color="inherit" />
       ) : isInWatchlist ? (
         <BookmarkAddedIcon />
       ) : (

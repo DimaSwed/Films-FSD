@@ -11,7 +11,7 @@ import {
 import { FC, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { IMovie } from '@/shared/lib'
+import { clampLines, IMovie, isGoodRating } from '@/shared/lib'
 
 interface IMovieCardProps {
   movie: IMovie
@@ -19,15 +19,8 @@ interface IMovieCardProps {
   actions?: ReactNode
 }
 
-const clampLines = (lines: number) => ({
-  display: '-webkit-box',
-  WebkitBoxOrient: 'vertical',
-  WebkitLineClamp: lines,
-  overflow: 'hidden'
-})
-
 export const SmallMovieCard: FC<IMovieCardProps> = ({ movie, actions }) => {
-  const ratingColor = movie.rating < 7 ? 'warning.main' : 'success.main'
+  const ratingColor = isGoodRating(movie.rating) ? 'success.main' : 'warning.main'
   const meta = [movie.year || null, movie.genre].filter(Boolean).join(' · ')
 
   return (

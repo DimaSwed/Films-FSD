@@ -1,14 +1,15 @@
 import { Box, Fade, Typography } from '@mui/material'
+import { useCallback, useState } from 'react'
 
-import { MarkWatchedButton } from '@/features/rate-movie'
+import { MarkWatchedButton, RateMovieDialog } from '@/features/rate-movie'
 import {
   NoMovies,
-  WatchListCard,
+  WatchListCards,
   WatchListFilters,
-  useRemoveFromWatchList,
+  useRemoveFromWatchListWithUndo,
   useWatchList
 } from '@/features/watch-list'
-import { useInfiniteScroll } from '@/shared/lib'
+import { IMovie, useInfiniteScroll } from '@/shared/lib'
 import {
   EmptyState,
   LoadingErrorState,
@@ -20,11 +21,14 @@ import {
 export const WatchListPage = () => {
   const {
     visibleMovies,
+    expandedIds,
     selectedGenre,
     selectedYear,
     query,
     sort,
+    hasActiveFilters,
     totalCount,
+    handleToggleDescription,
     handleGenreChange,
     handleYearChange,
     handleQueryChange,
@@ -35,7 +39,25 @@ export const WatchListPage = () => {
     isError
   } = useWatchList()
 
-  const { mutate: removeFromWatchList } = useRemoveFromWatchList()
+  const removeFromWatchList = useRemoveFromWatchListWithUndo()
+
+  // Окно оценки одно на весь список и не входит в карточки. Иначе при повороте телефона оно бы
+  // закрывалось: карточка меняет вид, и React создаёт её заново.
+  // После закрытия фильм не сбрасываем, чтобы его название не исчезло раньше, чем само окно.
+  const [movieToRate, setMovieToRate] = useState<IMovie | null>(null)
+  const [isRatingOpen, setIsRatingOpen] = useState(false)
+
+  const renderActions = useCallback(
+    (movie: IMovie) => (
+      <MarkWatchedButton
+        onClick={() => {
+          setMovieToRate(movie)
+          setIsRatingOpen(true)
+        }}
+      />
+    ),
+    []
+  )
 
   const sentinelRef = useInfiniteScroll(handleScrollEnd)
 
@@ -73,6 +95,7 @@ export const WatchListPage = () => {
           <WatchListFilters
             selectedGenre={selectedGenre}
             selectedYear={selectedYear}
+            hasActiveFilters={hasActiveFilters}
             onGenreChange={handleGenreChange}
             onYearChange={handleYearChange}
             onResetFilters={handleResetFilters}
@@ -106,19 +129,27 @@ export const WatchListPage = () => {
       {hasMovies && (
         <Fade in={true}>
           <Box display="flex" flexDirection="column" gap={2} mb={4}>
-            {visibleMovies.map((movie) => (
-              <WatchListCard
-                key={movie.id}
-                movie={movie}
-                actions={<MarkWatchedButton movieId={movie.id} title={movie.title} />}
-                onRemoveFromWatchlist={() => removeFromWatchList(movie.id)}
-              />
-            ))}
+            <WatchListCards
+              movies={visibleMovies}
+              expandedIds={expandedIds}
+              renderActions={renderActions}
+              onToggleDescription={handleToggleDescription}
+              onRemove={removeFromWatchList}
+            />
           </Box>
         </Fade>
       )}
 
       <div ref={sentinelRef} style={{ height: 1 }} />
+
+      {movieToRate && (
+        <RateMovieDialog
+          movieId={movieToRate.id}
+          title={movieToRate.title}
+          isOpen={isRatingOpen}
+          onClose={() => setIsRatingOpen(false)}
+        />
+      )}
 
       <ScrollButton />
     </Box>

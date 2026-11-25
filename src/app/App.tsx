@@ -1,22 +1,21 @@
 import { Box } from '@mui/material'
-import { Suspense, useLayoutEffect, useRef } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Suspense, useRef } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { Header } from '@/widgets/header'
 import { Sidebar } from '@/widgets/sidebar'
 import { useAuthCallbackHandler } from '@/features/auth'
 import { LoadingErrorState, PageShell } from '@/shared/ui'
 
+import { useScrollRestoration } from './lib'
+
 export function App() {
-  const { pathname } = useLocation()
   const mainRef = useRef<HTMLElement>(null)
 
   useAuthCallbackHandler()
 
-  // Прокручивается `<main>`, а не окно: при переходе между страницами он сохранил бы прежнее положение
-  useLayoutEffect(() => {
-    mainRef.current?.scrollTo(0, 0)
-  }, [pathname])
+  // Готовый `ScrollRestoration` из роутера умеет прокручивать только окно, а у нас прокручивается `<main>`
+  useScrollRestoration(mainRef)
 
   return (
     <Box

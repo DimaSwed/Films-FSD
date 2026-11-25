@@ -12,6 +12,7 @@ interface IMovieCardActionsProps {
 /**
  * Действия карточки фильма: избранное, «к просмотру» и оценка. Передаётся в слот `actions`
  * SmallMovieCard. Состояние всех трёх приходит одним запросом (`account_states`).
+ * Спиннеры того же размера, что и иконки (24 px). Иначе после загрузки карточки меняли бы высоту.
  */
 export const MovieCardActions: FC<IMovieCardActionsProps> = ({ movie }) => (
   <>

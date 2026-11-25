@@ -1,115 +1,46 @@
-import { Box, Card, CardMedia, Typography, Stack, Collapse } from '@mui/material'
-import { ReactNode, useState } from 'react'
+import { memo, ReactNode } from 'react'
 
-import { WatchProviders, useWatchProviders } from '@/entities/movie'
+import { useWatchProviders } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
-import {
-  JustWatchAttribution,
-  RemoveButton,
-  ToggleDescriptionButton,
-  RatingDisplay
-} from '@/shared/ui'
 
-interface IMovieCardProps {
+import { WatchListRow } from './watch-list-row'
+import { WatchListTicket } from './watch-list-ticket'
+
+interface IWatchListCardProps {
   movie: IMovie
-  /** Дополнительные действия — собираются на уровне страницы. */
-  actions?: ReactNode
-  onRemoveFromWatchlist: () => void
+  isMobile: boolean
+  isDescriptionOpen: boolean
+  renderActions?: (movie: IMovie) => ReactNode
+  onToggleDescription: (movieId: number) => void
+  onRemove: (movieId: number) => void
 }
 
-export const WatchListCard = ({ movie, actions, onRemoveFromWatchlist }: IMovieCardProps) => {
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
-
+/**
+ * Карточка фильма в списке «К просмотру».
+ *
+ * Обёрнута в `memo`: в списке бывают сотни карточек, и при удалении или поиске незачем перерисовывать
+ * те, что не изменились. Чтобы это работало, функции в пропсах не должны создаваться заново.
+ */
+export const WatchListCard = memo(function WatchListCard({
+  movie,
+  isMobile,
+  isDescriptionOpen,
+  renderActions,
+  onToggleDescription,
+  onRemove
+}: IWatchListCardProps) {
   const { data: providers } = useWatchProviders(movie.id)
-  const flatrate = providers?.flatrate ?? []
 
-  const toggleDescription = () => {
-    setIsDescriptionOpen((prev) => !prev)
-  }
+  const View = isMobile ? WatchListTicket : WatchListRow
 
   return (
-    <Card
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: { xs: 'column', sm: 'row' },
-        mb: 2,
-        boxShadow: 4,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}
-    >
-      <CardMedia
-        component="img"
-        sx={{ width: 150, height: 225 }}
-        image={movie.image}
-        alt={movie.title}
-      />
-      <Box
-        sx={{
-          flex: 1,
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          alignItems: { xs: 'center', sm: 'flex-start' }
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{
-            color: 'secondary.contrastText',
-            mb: { xs: '1px', sm: '3px' },
-            textAlign: 'center'
-          }}
-        >
-          <strong>&quot;{movie.title}&quot;</strong>
-        </Typography>
-
-        <Stack gap={'2px'}>
-          <RatingDisplay value={movie.rating} />
-          <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
-            <strong>Год:</strong> {movie.year}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'secondary.contrastText' }}>
-            <strong>Жанр:</strong> {movie.genre ?? 'Неизвестно'}
-          </Typography>
-        </Stack>
-        <Collapse in={isDescriptionOpen} timeout="auto" unmountOnExit>
-          <Typography
-            variant="body2"
-            sx={{
-              color: 'secondary.contrastText',
-              mt: 1,
-              width: '100%',
-              textAlign: 'justify'
-            }}
-          >
-            <strong>Описание:</strong> {movie.description ?? 'Неизвестно'}
-          </Typography>
-        </Collapse>
-
-        {flatrate.length > 0 && (
-          <>
-            <WatchProviders providers={flatrate} />
-            <JustWatchAttribution sx={{ mt: 0.5, color: 'secondary.contrastText' }} />
-          </>
-        )}
-
-        <Stack
-          direction="row"
-          mt={2}
-          gap={1}
-          alignItems="center"
-          justifyContent={{ xs: 'center', sm: 'flex-start' }}
-          width={'100%'}
-          flexWrap={'wrap'}
-        >
-          <ToggleDescriptionButton isOpen={isDescriptionOpen} onClick={toggleDescription} />
-          {actions}
-          <RemoveButton onClick={onRemoveFromWatchlist} text="Убрать из списка" />
-        </Stack>
-      </Box>
-    </Card>
+    <View
+      movie={movie}
+      providers={providers?.flatrate ?? []}
+      actions={renderActions?.(movie)}
+      isDescriptionOpen={isDescriptionOpen}
+      onToggleDescription={() => onToggleDescription(movie.id)}
+      onRemove={() => onRemove(movie.id)}
+    />
   )
-}
+})

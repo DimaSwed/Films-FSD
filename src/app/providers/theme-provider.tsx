@@ -1,9 +1,9 @@
-import CloseIcon from '@mui/icons-material/Close'
-import { CssBaseline, IconButton, ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { SnackbarProvider, closeSnackbar } from 'notistack'
 import { FC, ReactNode, useEffect } from 'react'
 
 import { ThemeContext, useTheme } from '@/features/theme'
+import { SnackbarCloseButton } from '@/shared/notifications'
 
 import { lightTheme, darkTheme } from '../styles/theme'
 
@@ -31,11 +31,7 @@ export const ThemeSnackbarProvider: FC<IThemeSnackbarProviderProps> = ({ childre
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           preventDuplicate
           classes={{ containerAnchorOriginTopRight: 'snackbar-safe-top' }}
-          action={(snackbarId) => (
-            <IconButton size="small" color="inherit" onClick={() => closeSnackbar(snackbarId)}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          )}
+          action={(snackbarId) => <SnackbarCloseButton onClose={() => closeSnackbar(snackbarId)} />}
         >
           <CssBaseline />
           {children}

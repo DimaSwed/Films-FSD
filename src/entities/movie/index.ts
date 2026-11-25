@@ -5,7 +5,8 @@ export {
   useMovie,
   useMovieAccountState,
   useUpdateMovieAccountState,
+  useUpdateWatchlistCache,
   useWatchProviders
 } from './model'
-export type { IMovieDetails, IMovieTrailer } from './model'
+export type { IMovieDetails, IMovieTrailer, IWatchProvider } from './model'
 export * from './ui'

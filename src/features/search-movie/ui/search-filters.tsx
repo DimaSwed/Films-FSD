@@ -1,18 +1,13 @@
 import { Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import { FC, ReactNode, useState, useEffect } from 'react'
+import { FC, ReactNode } from 'react'
 import { useDebounce } from 'use-debounce'
 
 import { IMovie } from '@/shared/lib'
 import { InfiniteScrollFooter } from '@/shared/ui'
 
 import { getReleaseDateRange } from '../lib'
-import {
-  useMoviesByFilters,
-  useInfiniteSearchMovies,
-  CRITERIA_MAP,
-  RECOMMENDATION_MAP
-} from '../model'
+import { useInfiniteSearchMovies, useMoviesByFilters, useSearchView } from '../model'
 
 import {
   GenreFilter,
@@ -50,25 +45,20 @@ interface ISearchFiltersProps {
 }
 
 export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('')
-  const [selectedGenre, setSelectedGenre] = useState<number | ''>('')
-  const [selectedRecommendation, setSelectedRecommendation] = useState<string>('recommendations')
-  const [additionalCriteria, setAdditionalCriteria] = useState<string[]>([])
-  const [selectedCountry, setSelectedCountry] = useState<string>('')
-  const [selectedYear, setSelectedYear] = useState<string>('')
-  const [sortBy, setSortBy] = useState<string>('popularity.desc')
+  const { view, setQuery, setGenre, setCountry, setYear, setRecommendation, setCriteria } =
+    useSearchView()
 
-  const [debouncedSearchQuery] = useDebounce(searchQuery, 500)
+  const [debouncedSearchQuery] = useDebounce(view.query, 500)
 
   const isTextSearch = !!debouncedSearchQuery
 
   const searchResultsQuery = useInfiniteSearchMovies(debouncedSearchQuery)
   const filtersQuery = useMoviesByFilters(
     {
-      with_genres: selectedGenre,
-      sort_by: sortBy,
-      with_origin_country: selectedCountry,
-      ...getReleaseDateRange(selectedYear)
+      with_genres: view.genre,
+      sort_by: view.sortBy,
+      with_origin_country: view.country,
+      ...getReleaseDateRange(view.year)
     },
     // Фильтры не применяются к поиску по названию — лишний запрос не нужен.
     { enabled: !isTextSearch }
@@ -83,42 +73,22 @@ export const SearchFilters: FC<ISearchFiltersProps> = ({ renderMovieActions }) =
     fetchNextPage
   } = isTextSearch ? searchResultsQuery : filtersQuery
 
-  useEffect(() => {
-    if (selectedRecommendation) {
-      setSortBy(RECOMMENDATION_MAP[selectedRecommendation])
-    }
-  }, [selectedRecommendation])
-
   return (
     <Box sx={containerStyles}>
-      <SearchInput value={searchQuery} onChange={setSearchQuery} />
+      <SearchInput value={view.query} onChange={setQuery} />
 
       <Stack sx={filtersStackStyles}>
         <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-          <RecommendationFilter
-            value={selectedRecommendation}
-            onChange={setSelectedRecommendation}
-          />
-          <GenreFilter value={selectedGenre} onChange={setSelectedGenre} />
+          <RecommendationFilter value={view.recommendation} onChange={setRecommendation} />
+          <GenreFilter value={view.genre} onChange={setGenre} />
         </Box>
 
         <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-          <CountryFilter value={selectedCountry} onChange={setSelectedCountry} />
-          <YearFilter value={selectedYear} onChange={setSelectedYear} />
+          <CountryFilter value={view.country} onChange={setCountry} />
+          <YearFilter value={view.year} onChange={setYear} />
         </Box>
 
-        <CriteriaToggle
-          value={additionalCriteria[0] || ''}
-          onChange={(newValue) => {
-            if (newValue) {
-              setSortBy(CRITERIA_MAP[newValue])
-              setAdditionalCriteria([newValue])
-            } else {
-              setAdditionalCriteria([])
-              setSortBy(RECOMMENDATION_MAP[selectedRecommendation])
-            }
-          }}
-        />
+        <CriteriaToggle value={view.criteria} onChange={setCriteria} />
       </Stack>
 
       <MoviesGrid

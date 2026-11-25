@@ -53,3 +53,6 @@ export const COUNTRIES_LIST: { label: string; code: string }[] = [
   { label: 'Индия', code: 'IN' },
   { label: 'Россия', code: 'RU' }
 ]
+
+/** Показываем, если в TMDB нет описания на русском. Английское вместо него не подставляем. */
+export const NO_DESCRIPTION_TEXT = 'Описания на русском пока нет.'

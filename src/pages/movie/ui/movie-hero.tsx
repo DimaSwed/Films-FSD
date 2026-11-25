@@ -6,6 +6,7 @@ import { ToggleFavoriteButton } from '@/features/favorites'
 import { RateMovieButton } from '@/features/rate-movie'
 import { ToggleWatchlistButton } from '@/features/watch-list'
 import { IMovieDetails, MovieFacts, TrailerButton } from '@/entities/movie'
+import { NO_DESCRIPTION_TEXT } from '@/shared/config'
 
 interface IMovieHeroProps {
   movie: IMovieDetails
@@ -65,7 +66,7 @@ export const MovieHero: FC<IMovieHeroProps> = ({ movie }) => (
         </Typography>
       )}
       <Typography variant="body1" sx={{ my: 2 }}>
-        {movie.description || 'Описания на русском пока нет.'}
+        {movie.description || NO_DESCRIPTION_TEXT}
       </Typography>
 
       <MovieFacts movie={movie} />

@@ -1,11 +1,14 @@
 import { QueryKey, useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useDebounce } from 'use-debounce'
+
+import { BACK_NAVIGATION_GC_TIME } from '../config'
 
 import { getFullListKey, getPagedListKey, TAddedOrder } from './account-movie-list-cache'
 import type { IMovie, IPaginatedResponse } from './common.types'
 import { getNextTmdbPage, loadAllPages, selectUniqueMovies } from './infinite-movies'
 import { applyMovieListView, isAddedOrder, TMovieSort } from './movie-list-view'
+import { useHistoryState } from './use-history-state'
 
 const STALE_TIME = 1000 * 60 * 5
 
@@ -29,8 +32,9 @@ export const useAccountMovieList = ({
   enabled,
   fetchPage
 }: IUseAccountMovieListOptions) => {
-  const [query, setQuery] = useState('')
-  const [sort, setSort] = useState<TMovieSort>('added-desc')
+  // Запоминаем поиск и сортировку, чтобы при возврате «назад» показать список таким же
+  const [query, setQuery] = useHistoryState('list-query', '')
+  const [sort, setSort] = useHistoryState<TMovieSort>('list-sort', 'added-desc')
   // Поиск запускает загрузку всех страниц, поэтому ждём, пока пользователь допечатает.
   // Когда поле очищено, список возвращаем сразу, без задержки.
   const [debouncedQuery] = useDebounce(query, 400)
@@ -49,6 +53,7 @@ export const useAccountMovieList = ({
     select: selectUniqueMovies,
     enabled: enabled && !needsAllPages,
     staleTime: STALE_TIME,
+    gcTime: BACK_NAVIGATION_GC_TIME,
     retry: 2
   })
 
@@ -57,6 +62,7 @@ export const useAccountMovieList = ({
     queryFn: () => loadAllPages((page) => fetchPage(order, page)),
     enabled: enabled && needsAllPages,
     staleTime: STALE_TIME,
+    gcTime: BACK_NAVIGATION_GC_TIME,
     retry: 2
   })
 
