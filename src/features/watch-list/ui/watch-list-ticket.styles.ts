@@ -179,16 +179,8 @@ export const ticketStyles = {
     }
   },
 
-  providers: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    columnGap: 1.5,
-    rowGap: 0.5,
-    mb: 1.5,
-    '& > :first-of-type': { mt: 0 },
-    '& img': { display: 'block', borderRadius: '7px' }
-  },
+  // Отступ сверху отделяет сервисы от линии отрыва
+  providers: { pt: 0.5, mb: 1.5 },
 
   description: { pb: 1.5, lineHeight: 1.45, overflowWrap: 'anywhere' },
 

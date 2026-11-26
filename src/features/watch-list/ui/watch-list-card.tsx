@@ -1,6 +1,6 @@
 import { memo, ReactNode } from 'react'
 
-import { useWatchProviders } from '@/entities/movie'
+import { useWatchProviders, WatchProvidersStrip } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
 
 import { WatchListRow } from './watch-list-row'
@@ -29,14 +29,16 @@ export const WatchListCard = memo(function WatchListCard({
   onToggleDescription,
   onRemove
 }: IWatchListCardProps) {
-  const { data: providers } = useWatchProviders(movie.id)
+  const { data: providers, isError, isPaused } = useWatchProviders(movie.id)
 
   const View = isMobile ? WatchListTicket : WatchListRow
 
   return (
     <View
       movie={movie}
-      providers={providers?.flatrate ?? []}
+      watchProviders={
+        <WatchProvidersStrip providers={providers} isError={isError} isOffline={isPaused} />
+      }
       actions={renderActions?.(movie)}
       isDescriptionOpen={isDescriptionOpen}
       onToggleDescription={() => onToggleDescription(movie.id)}

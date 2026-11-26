@@ -33,3 +33,10 @@ export interface IWatchProviders {
   /** Страница фильма с вариантами просмотра на themoviedb.org; `null`, если для региона данных нет */
   link: string | null
 }
+
+/** Группа компактного вида «где смотреть» (карточка списка); `paid` — аренда и покупка вместе. */
+export interface ICompactWatchProviderGroup {
+  key: 'flatrate' | 'free' | 'paid'
+  title: string
+  providers: IWatchProvider[]
+}

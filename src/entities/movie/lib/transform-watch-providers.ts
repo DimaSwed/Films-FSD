@@ -1,6 +1,11 @@
 import { TMDB_REGION } from '@/shared/config'
 
-import type { IWatchProvider, IWatchProviders, IWatchProvidersResponse } from '../model'
+import type {
+  ICompactWatchProviderGroup,
+  IWatchProvider,
+  IWatchProviders,
+  IWatchProvidersResponse
+} from '../model'
 
 const byPriority = (a: IWatchProvider, b: IWatchProvider) =>
   (a.display_priority ?? Number.MAX_SAFE_INTEGER) - (b.display_priority ?? Number.MAX_SAFE_INTEGER)
@@ -28,6 +33,34 @@ export const transformWatchProviders = (data: IWatchProvidersResponse): IWatchPr
     buy: normalizeGroup(region?.buy),
     link: region?.link ?? null
   }
+}
+
+/**
+ * Группы для компактного вида (карточка списка): подписка, бесплатно и общая «аренда, покупка».
+ * Сервис показывается один раз — в самой выгодной группе: если фильм есть в подписке Okko, то, что
+ * в Okko его можно и купить, в карточке не важно. Пустые группы отброшены.
+ */
+export const getCompactWatchProviderGroups = (
+  providers: IWatchProviders
+): ICompactWatchProviderGroup[] => {
+  const shown = new Set<number>()
+  const takeNew = (list: IWatchProvider[]) => {
+    const fresh = list.filter((provider) => !shown.has(provider.provider_id))
+    fresh.forEach((provider) => shown.add(provider.provider_id))
+    return fresh
+  }
+
+  const groups: ICompactWatchProviderGroup[] = [
+    { key: 'flatrate', title: 'Подписка', providers: takeNew(providers.flatrate) },
+    { key: 'free', title: 'Бесплатно', providers: takeNew(providers.free) },
+    {
+      key: 'paid',
+      title: 'Аренда, покупка',
+      providers: takeNew(normalizeGroup(providers.rent, providers.buy))
+    }
+  ]
+
+  return groups.filter((group) => group.providers.length > 0)
 }
 
 export const hasWatchProviders = (providers: IWatchProviders): boolean =>

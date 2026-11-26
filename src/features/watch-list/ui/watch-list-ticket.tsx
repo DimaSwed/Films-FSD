@@ -6,10 +6,8 @@ import { Box, Button, Collapse, IconButton, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { WatchProviders } from '@/entities/movie'
 import { NO_DESCRIPTION_TEXT } from '@/shared/config'
 import { isGoodRating } from '@/shared/lib'
-import { JustWatchAttribution } from '@/shared/ui'
 
 import { IWatchListCardViewProps } from './watch-list-card.types'
 import { ticketStyles } from './watch-list-ticket.styles'
@@ -22,7 +20,7 @@ const UNKNOWN = '—'
  */
 export const WatchListTicket: FC<IWatchListCardViewProps> = ({
   movie,
-  providers,
+  watchProviders,
   actions,
   isDescriptionOpen,
   onToggleDescription,
@@ -102,12 +100,7 @@ export const WatchListTicket: FC<IWatchListCardViewProps> = ({
       </Box>
 
       <Box sx={ticketStyles.stub}>
-        {providers.length > 0 && (
-          <Box sx={ticketStyles.providers}>
-            <WatchProviders providers={providers} />
-            <JustWatchAttribution />
-          </Box>
-        )}
+        <Box sx={ticketStyles.providers}>{watchProviders}</Box>
 
         <Collapse in={isDescriptionOpen} timeout="auto" unmountOnExit>
           <Typography variant="body2" sx={ticketStyles.description}>

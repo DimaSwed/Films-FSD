@@ -1,12 +1,6 @@
-import { SCREEN_READER_ANNOUNCER_ID } from '../../lib'
+import { visuallyHidden } from '@/shared/lib'
 
-const visuallyHidden = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden'
-} as const
+import { SCREEN_READER_ANNOUNCER_ID } from '../../lib'
 
 /** ARIA live-регион: сюда `announceToScreenReader` пишет сообщения для скринридера. */
 export const ScreenReaderAnnouncer = () => (

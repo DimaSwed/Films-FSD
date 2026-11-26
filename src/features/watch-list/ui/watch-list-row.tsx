@@ -3,14 +3,8 @@ import { Box, Card, CardMedia, Collapse, Stack, Typography } from '@mui/material
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { WatchProviders } from '@/entities/movie'
 import { NO_DESCRIPTION_TEXT } from '@/shared/config'
-import {
-  JustWatchAttribution,
-  RatingDisplay,
-  RemoveButton,
-  ToggleDescriptionButton
-} from '@/shared/ui'
+import { RatingDisplay, RemoveButton, ToggleDescriptionButton } from '@/shared/ui'
 
 import { IWatchListCardViewProps } from './watch-list-card.types'
 
@@ -19,7 +13,7 @@ const UNKNOWN = 'Неизвестно'
 /** Вид карточки «К просмотру» для экранов от `sm`: слева постер, справа сведения и кнопки. */
 export const WatchListRow: FC<IWatchListCardViewProps> = ({
   movie,
-  providers,
+  watchProviders,
   actions,
   isDescriptionOpen,
   onToggleDescription,
@@ -103,6 +97,10 @@ export const WatchListRow: FC<IWatchListCardViewProps> = ({
           <strong>Жанр:</strong> {movie.genre || UNKNOWN}
         </Typography>
       </Stack>
+
+      {/* Над описанием, а не под ним: раскрытое описание не должно сдвигать сервисы */}
+      <Box sx={{ mt: 1.5, width: '100%' }}>{watchProviders}</Box>
+
       <Collapse in={isDescriptionOpen} timeout="auto" unmountOnExit>
         <Typography
           variant="body2"
@@ -116,13 +114,6 @@ export const WatchListRow: FC<IWatchListCardViewProps> = ({
           <strong>Описание:</strong> {movie.description || NO_DESCRIPTION_TEXT}
         </Typography>
       </Collapse>
-
-      {providers.length > 0 && (
-        <>
-          <WatchProviders providers={providers} />
-          <JustWatchAttribution sx={{ mt: 0.5, color: 'secondary.contrastText' }} />
-        </>
-      )}
 
       <Stack direction="row" mt={2} gap={1} alignItems="center" width={'100%'} flexWrap={'wrap'}>
         <ToggleDescriptionButton isOpen={isDescriptionOpen} onClick={onToggleDescription} />

@@ -12,6 +12,7 @@ import {
 import { IMovie, useInfiniteScroll } from '@/shared/lib'
 import {
   EmptyState,
+  JustWatchAttribution,
   LoadingErrorState,
   MovieListToolbar,
   PageMeta,
@@ -129,6 +130,8 @@ export const WatchListPage = () => {
       {hasMovies && (
         <Fade in={true}>
           <Box display="flex" flexDirection="column" gap={2} mb={4}>
+            {/* Одна подпись на страницу: в каждой из сотен карточек она была бы шумом */}
+            <JustWatchAttribution sx={{ mb: -1 }} />
             <WatchListCards
               movies={visibleMovies}
               expandedIds={expandedIds}
