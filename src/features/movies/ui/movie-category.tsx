@@ -14,10 +14,11 @@ export interface IMovieCategoryProps {
   title: string
   movies: IMovie[]
   isLoading: boolean
-  genreId?: number
+  /** Адрес кнопки «Просмотреть все»: полная подборка или жанр. */
+  to: string
 }
 
-export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading, genreId }) => {
+export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoading, to }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -81,13 +82,7 @@ export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoadin
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {title}
         </Typography>
-        <Button
-          variant="contained"
-          component={Link}
-          to={
-            genreId ? `/genre/${genreId}` : `/category/${title.toLowerCase().replace(/\s+/g, '-')}`
-          }
-        >
+        <Button variant="contained" component={Link} to={to}>
           Просмотреть все
         </Button>
       </Box>

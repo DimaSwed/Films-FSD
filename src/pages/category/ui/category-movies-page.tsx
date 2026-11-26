@@ -1,7 +1,14 @@
 import { Box, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 
-import { useCategoryMovies, MovieCategoryList, type TMovieCategory } from '@/features/movies'
+import {
+  useCategoryMovies,
+  MovieCategoryList,
+  MOVIE_CATEGORIES,
+  findMovieCategory,
+  getMovieCategoryPath,
+  getRenamedCategorySlug
+} from '@/features/movies'
 import {
   InfiniteScrollFooter,
   LoadingErrorState,
@@ -10,23 +17,11 @@ import {
   ScrollButton
 } from '@/shared/ui'
 
-const CATEGORY_CONFIG: Record<string, { title: string; category: TMovieCategory }> = {
-  'сейчас-в-тренде': { title: 'Сейчас в тренде', category: 'trending' },
-  'сейчас-в-прокате': { title: 'Сейчас в прокате', category: 'now-playing' },
-  'популярные-в-этом-месяце': { title: 'Популярные в этом месяце', category: 'popular' },
-  'самые-ожидаемые-премьеры': { title: 'Самые ожидаемые премьеры', category: 'upcoming' },
-  'топ-рейтинговые-фильмы-за-все-время': {
-    title: 'Топ рейтинговые фильмы за все время',
-    category: 'top-rated'
-  }
-}
-
 export const CategoryMoviesPage = () => {
   const { categorySlug = '' } = useParams()
-  // hasOwnProperty: slug вроде `constructor` не должен находить унаследованные свойства объекта.
-  const config = Object.prototype.hasOwnProperty.call(CATEGORY_CONFIG, categorySlug)
-    ? CATEGORY_CONFIG[categorySlug]
-    : undefined
+  const { search, hash } = useLocation()
+  const renamedTo = getRenamedCategorySlug(categorySlug)
+  const config = findMovieCategory(categorySlug)
 
   const {
     data: movies = [],
@@ -38,6 +33,10 @@ export const CategoryMoviesPage = () => {
     refetch
   } = useCategoryMovies(config?.category)
 
+  if (renamedTo) {
+    return <Navigate to={{ pathname: getMovieCategoryPath(renamedTo), search, hash }} replace />
+  }
+
   if (!config) {
     return (
       <>
@@ -48,9 +47,9 @@ export const CategoryMoviesPage = () => {
           accent="потерялась"
           description="Такой подборки в нашей фильмотеке нет: возможно, ссылка устарела или в адресе опечатка. Выберите одну из существующих."
           suggestionsTitle="Доступные подборки"
-          suggestions={Object.entries(CATEGORY_CONFIG).map(([slug, { title }]) => ({
+          suggestions={MOVIE_CATEGORIES.map(({ slug, title }) => ({
             label: title,
-            to: `/category/${slug}`
+            to: getMovieCategoryPath(slug)
           }))}
           actions={[{ label: 'На главную', to: '/' }]}
         />

@@ -2,37 +2,26 @@ import { Box, Typography } from '@mui/material'
 
 import {
   MovieCategory,
-  ICategory,
+  MOVIE_CATEGORIES,
+  getMovieCategoryPath,
   useUpcomingMovies,
   useTopRatedMovies,
   usePopularMovies,
   useNowPlayingMovies,
-  useTrendingMovies
+  useTrendingMovies,
+  type TMovieCategory
 } from '@/features/movies'
 import { PageMeta } from '@/shared/ui'
 
 export const HomePage = () => {
-  const { data: nowPlayingMovies, isLoading: isLoadingNowPlaying } = useNowPlayingMovies()
-  const { data: popularMovies, isLoading: isLoadingPopular } = usePopularMovies()
-  const { data: upcomingMovies, isLoading: isLoadingUpcoming } = useUpcomingMovies()
-  const { data: topRatedMovies, isLoading: isLoadingTopRated } = useTopRatedMovies()
-  const { data: trendingMovies, isLoading: isLoadingTrending } = useTrendingMovies()
-
-  const categories: ICategory[] = [
-    { title: 'Сейчас в тренде', movies: trendingMovies || [], isLoading: isLoadingTrending },
-    { title: 'Сейчас в прокате', movies: nowPlayingMovies || [], isLoading: isLoadingNowPlaying },
-    { title: 'Популярные в этом месяце', movies: popularMovies || [], isLoading: isLoadingPopular },
-    {
-      title: 'Самые ожидаемые премьеры',
-      movies: upcomingMovies || [],
-      isLoading: isLoadingUpcoming
-    },
-    {
-      title: 'Топ рейтинговые фильмы за все время',
-      movies: topRatedMovies || [],
-      isLoading: isLoadingTopRated
-    }
-  ]
+  // Хуки вызываются по одному: порядок вызова хуков не должен зависеть от списка подборок.
+  const queries: Record<TMovieCategory, ReturnType<typeof usePopularMovies>> = {
+    trending: useTrendingMovies(),
+    'now-playing': useNowPlayingMovies(),
+    popular: usePopularMovies(),
+    upcoming: useUpcomingMovies(),
+    'top-rated': useTopRatedMovies()
+  }
 
   return (
     <>
@@ -52,8 +41,14 @@ export const HomePage = () => {
           Фильмы
         </Typography>
 
-        {categories.map(({ title, movies, isLoading }) => (
-          <MovieCategory key={title} title={title} movies={movies} isLoading={isLoading} />
+        {MOVIE_CATEGORIES.map(({ slug, title, category }) => (
+          <MovieCategory
+            key={slug}
+            title={title}
+            to={getMovieCategoryPath(slug)}
+            movies={queries[category].data ?? []}
+            isLoading={queries[category].isLoading}
+          />
         ))}
       </Box>
     </>

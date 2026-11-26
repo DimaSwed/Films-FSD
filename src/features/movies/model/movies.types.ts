@@ -1,12 +1,6 @@
 import type { IMovieTrailer } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
 
-export interface ICategory {
-  title: string
-  movies: IMovie[]
-  isLoading: boolean
-}
-
 /** Фильм в списке трейлеров. Фильмов без ролика в списке нет — они отсеиваются. */
 export type TTrailerItem =
   | { status: 'pending' | 'error'; movie: IMovie }
