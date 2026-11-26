@@ -22,6 +22,8 @@ interface IAccountMovieListProps {
   list: TAccountMovieList
   sortOptions?: readonly IMovieSortOption[]
   renderActions: (movie: IMovie) => ReactNode
+  /** Главное действие поверх постера (в избранном — «убрать из избранного»). */
+  renderPosterAction?: (movie: IMovie) => ReactNode
   /** Пользователь не вошёл. */
   signedOutMessage: IMessage
   /** Список пуст. */
@@ -36,6 +38,7 @@ export const AccountMovieList: FC<IAccountMovieListProps> = ({
   list,
   sortOptions,
   renderActions,
+  renderPosterAction,
   signedOutMessage,
   emptyMessage,
   notFoundText
@@ -122,7 +125,12 @@ export const AccountMovieList: FC<IAccountMovieListProps> = ({
           <Box mb={4} sx={gridSx}>
             <MovieGrid>
               {movies.map((movie) => (
-                <SmallMovieCard key={movie.id} movie={movie} actions={renderActions(movie)} />
+                <SmallMovieCard
+                  key={movie.id}
+                  movie={movie}
+                  actions={renderActions(movie)}
+                  posterAction={renderPosterAction?.(movie)}
+                />
               ))}
             </MovieGrid>
           </Box>

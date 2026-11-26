@@ -1,6 +1,7 @@
 export * from './account-movie-list-cache'
 export * from './clamp-lines'
 export * from './common.types'
+export * from './focus-neighbour-card'
 export * from './get-release-year'
 export * from './infinite-movies'
 export * from './is-good-rating'

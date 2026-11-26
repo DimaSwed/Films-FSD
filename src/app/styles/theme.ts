@@ -117,6 +117,8 @@ const WHITE = '#ffffff'
 const RATING_GREEN = '#547e5f'
 const RATING_BROWN = '#936e62'
 
+const POSTER_OVERLAY = { main: 'rgba(0, 0, 0, 0.72)', hover: 'rgba(0, 0, 0, 0.85)' }
+
 const lightTheme = createTheme({
   ...commonSettings,
   palette: {
@@ -164,7 +166,8 @@ const lightTheme = createTheme({
     navigation: { main: CHARCOAL, hover: NAVIGATION_HOVER, contrastText: WHITE },
     outline: { strong: ROSE_BROWN, soft: '#e3d5cd' },
     accent: { main: CHESTNUT },
-    rating: { good: RATING_GREEN, average: RATING_BROWN }
+    rating: { good: RATING_GREEN, average: RATING_BROWN },
+    overlay: POSTER_OVERLAY
   },
   components: {
     MuiButton: {
@@ -211,7 +214,8 @@ const darkTheme = createTheme({
     navigation: { main: '#1c1c1c', hover: NAVIGATION_HOVER, contrastText: '#ffffff' },
     outline: { strong: '#444', soft: '#444' },
     accent: { main: '#1976d2' },
-    rating: { good: 'green', average: 'orange' }
+    rating: { good: 'green', average: 'orange' },
+    overlay: POSTER_OVERLAY
   }
 })
 

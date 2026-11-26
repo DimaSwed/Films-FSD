@@ -7,6 +7,8 @@ import { IMovie } from '@/shared/lib'
 
 interface IMovieCardActionsProps {
   movie: IMovie
+  /** В списке избранного сердце стоит на постере (удаление с отменой) — здесь оно лишнее. */
+  showFavorite?: boolean
 }
 
 /**
@@ -14,9 +16,9 @@ interface IMovieCardActionsProps {
  * SmallMovieCard. Состояние всех трёх приходит одним запросом (`account_states`).
  * Спиннеры того же размера, что и иконки (24 px). Иначе после загрузки карточки меняли бы высоту.
  */
-export const MovieCardActions: FC<IMovieCardActionsProps> = ({ movie }) => (
+export const MovieCardActions: FC<IMovieCardActionsProps> = ({ movie, showFavorite = true }) => (
   <>
-    <FavoriteToggleIcon movieId={movie.id} />
+    {showFavorite && <FavoriteToggleIcon movieId={movie.id} />}
     <WatchlistToggleIcon movieId={movie.id} />
     <RateMovieIcon movieId={movie.id} title={movie.title} />
   </>

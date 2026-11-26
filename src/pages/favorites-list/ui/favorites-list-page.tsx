@@ -1,10 +1,15 @@
 import { AccountMovieList } from '@/widgets/account-movie-list'
 import { MovieCardActions } from '@/widgets/movie-card-actions'
-import { useFavoritesList } from '@/features/favorites'
+import {
+  RemoveFavoriteButton,
+  useFavoritesList,
+  useRemoveFromFavoritesWithUndo
+} from '@/features/favorites'
 import { PageMeta } from '@/shared/ui'
 
 export const FavoritesListPage = () => {
   const list = useFavoritesList()
+  const removeFromFavorites = useRemoveFromFavoritesWithUndo()
 
   return (
     <>
@@ -12,7 +17,10 @@ export const FavoritesListPage = () => {
       <AccountMovieList
         title="Список избранного"
         list={list}
-        renderActions={(movie) => <MovieCardActions movie={movie} />}
+        renderActions={(movie) => <MovieCardActions movie={movie} showFavorite={false} />}
+        renderPosterAction={(movie) => (
+          <RemoveFavoriteButton movie={movie} onRemove={removeFromFavorites} />
+        )}
         signedOutMessage={{
           title: 'Войдите, чтобы увидеть избранное',
           description: 'Список избранных фильмов доступен после авторизации через TMDB.'

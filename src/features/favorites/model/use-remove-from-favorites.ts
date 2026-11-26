@@ -9,7 +9,19 @@ import { favoritesApi } from '../api'
 
 import { getFavoritesKey } from './favorites.keys'
 
-export const useRemoveFromFavorites = () => {
+export const REMOVE_FROM_FAVORITES_KEY = ['remove-from-favorites']
+
+interface IRemoveFromFavoritesOptions {
+  /** Что сделать после удаления вместо обычного уведомления. */
+  onRemoved?: (movieId: number) => void
+  /** Удалить не получилось (уведомление об ошибке показывается в любом случае). */
+  onFailed?: (movieId: number) => void
+}
+
+export const useRemoveFromFavorites = ({
+  onRemoved,
+  onFailed
+}: IRemoveFromFavoritesOptions = {}) => {
   const queryClient = useQueryClient()
   const sessionId = useSessionId()
   const { data: userDetails } = useUserDetails()
@@ -17,6 +29,7 @@ export const useRemoveFromFavorites = () => {
   const { success, errors } = useNotification()
 
   return useMutation({
+    mutationKey: REMOVE_FROM_FAVORITES_KEY,
     mutationFn: (movieId: number) => {
       if (!sessionId || !userDetails?.id) {
         throw new Error('Требуется авторизация')
@@ -29,9 +42,11 @@ export const useRemoveFromFavorites = () => {
       await updateAccountMovieList(queryClient, getFavoritesKey(userDetails?.id), {
         update: (movies) => movies.filter((movie) => movie.id !== movieId)
       })
-      success('Фильм удалён из избранного')
+      if (onRemoved) onRemoved(movieId)
+      else success('Фильм удалён из избранного')
     },
-    onError: () => {
+    onError: (_, movieId) => {
+      onFailed?.(movieId)
       errors('Ошибка при удалении из избранного')
     }
   })
