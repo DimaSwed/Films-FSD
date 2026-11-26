@@ -81,13 +81,15 @@ export const MovieCategory: FC<IMovieCategoryProps> = ({ title, movies, isLoadin
         <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
           {title}
         </Typography>
-        <Link
+        <Button
+          variant="contained"
+          component={Link}
           to={
             genreId ? `/genre/${genreId}` : `/category/${title.toLowerCase().replace(/\s+/g, '-')}`
           }
         >
-          <Button variant="contained">Просмотреть все</Button>
-        </Link>
+          Просмотреть все
+        </Button>
       </Box>
 
       <Slider {...settings}>

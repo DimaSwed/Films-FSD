@@ -42,21 +42,20 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
           margin: { xs: '0 auto', sm: '0' }
         }}
       >
-        <CardActionArea>
+        {/* Сама область — ссылка: <a> внутри <button> невалиден и даёт два шага Tab на один постер */}
+        <CardActionArea component={Link} to={`/movie/${movie.id}`} aria-label={movie.title}>
           {movie.image ? (
-            <Link to={`/movie/${movie.id}`}>
-              <CardMedia
-                component="img"
-                image={movie.image}
-                alt={movie.title}
-                sx={{
-                  color: 'secondary.contrastText',
-                  width: '100%',
-                  height: '225px',
-                  margin: '0 auto'
-                }}
-              />
-            </Link>
+            <CardMedia
+              component="img"
+              image={movie.image}
+              alt=""
+              sx={{
+                color: 'secondary.contrastText',
+                width: '100%',
+                height: '225px',
+                margin: '0 auto'
+              }}
+            />
           ) : (
             <Box
               sx={{
@@ -77,7 +76,8 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
               />
             </Box>
           )}
-          {movie?.rating && (
+          {/* `rating && …` при 0 (фильм без оценок) вывел бы в карточку текст «0» */}
+          {movie.rating > 0 && (
             <Box
               sx={{
                 position: 'absolute',
@@ -90,7 +90,7 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
                 borderRadius: '0 10px 0 10px'
               }}
             >
-              {movie?.rating.toFixed(1)}
+              {movie.rating.toFixed(1)}
             </Box>
           )}
         </CardActionArea>
@@ -127,11 +127,15 @@ export const MovieCard: FC<IMovieCardProps> = ({ movie }) => {
           {movie.year || '-'}
         </Typography>
 
-        <Link to={`/movie/${movie.id}`}>
-          <Button variant="contained" size="small" sx={{ mt: '3px' }}>
-            Подробнее
-          </Button>
-        </Link>
+        <Button
+          variant="contained"
+          size="small"
+          component={Link}
+          to={`/movie/${movie.id}`}
+          sx={{ mt: '3px' }}
+        >
+          Подробнее
+        </Button>
       </CardContent>
     </Box>
   )

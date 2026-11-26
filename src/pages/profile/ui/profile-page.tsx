@@ -127,9 +127,6 @@ export const ProfilePage = () => {
         </Typography>
         {user.email && <Typography variant="body2">{user.email}</Typography>}
         <Typography variant="body2" mb={1}>
-          Авторизация с помощью: {user.avatar?.tmdb?.avatar_path == null ? 'TMDB' : ''}
-        </Typography>
-        <Typography variant="body2" mb={1}>
           Язык: {user.iso_639_1}
         </Typography>
         <Typography variant="body2" mb={1}>
@@ -137,9 +134,6 @@ export const ProfilePage = () => {
         </Typography>
         <Typography variant="body2" mb={1}>
           Имя пользователя: {user.username}
-        </Typography>
-        <Typography variant="body2" color="secondary.contrastText">
-          0 Подписчиков • 0 Подписок
         </Typography>
         <Button variant="contained" onClick={logout} sx={{ mt: 2 }}>
           Выйти

@@ -121,19 +121,6 @@ export const UserSubscriptionInfo: FC = () => {
           {user.email}
         </Typography>
       )}
-      {/* <Typography variant="body2">Авторизация с помощью :</Typography> */}
-      {/* <Typography variant="h6" mb={1}>
-        Название подписки
-      </Typography>
-      <Typography variant="body2" mb={1}>
-        Разблокировать все функции. Поддержка КиноТрекер.
-      </Typography>
-      <Button
-        variant="contained"
-        sx={{ textTransform: 'uppercase', bgcolor: 'primary.light', borderRadius: '20px' }}
-      >
-        Попробовать бесплатно
-      </Button> */}
       <Button variant="contained" size="small" onClick={logout} sx={{ mt: 1 }}>
         Выйти
       </Button>

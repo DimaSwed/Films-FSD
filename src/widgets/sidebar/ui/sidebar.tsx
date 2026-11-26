@@ -2,7 +2,6 @@ import {
   Movie,
   Visibility,
   Search,
-  NewReleases,
   PlaylistPlay,
   FeaturedVideo,
   List as ListIcon
@@ -111,17 +110,6 @@ export const Sidebar: FC = () => {
             </ListItemIcon>
             <ListItemText
               primary="Последние Трейлеры"
-              sx={{ display: { xs: 'none', md: 'block' }, color: 'navigation.contrastText' }}
-            />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: { xs: 1, md: 4 } }}>
-            <ListItemIcon
-              sx={{ minWidth: { xs: 'auto', md: '56px' }, color: 'navigation.contrastText' }}
-            >
-              <NewReleases />
-            </ListItemIcon>
-            <ListItemText
-              primary="Новости"
               sx={{ display: { xs: 'none', md: 'block' }, color: 'navigation.contrastText' }}
             />
           </ListItemButton>

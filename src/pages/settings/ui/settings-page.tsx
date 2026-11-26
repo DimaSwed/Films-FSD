@@ -40,96 +40,29 @@ export const SettingsPage: FC = () => {
 
         <Divider sx={{ backgroundColor: 'outline.soft' }} />
 
-        {/* <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" gutterBottom>
-            Настройки приложения
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Общие" />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Отображение" />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Уведомления" />
-              <Typography variant="body2" color="psecondary.contrastText" sx={{ ml: 'auto' }}>
-                Плюс+
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Где посмотреть" />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Расширенные" />
-            </ListItem>
-          </List>
-        </Box>
-
-        <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} /> */}
-
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>
             О нас
           </Typography>
           <Typography variant="body2">
-            КиноТрекер - новая платформа для поиска онлайн-трансляций, которая поможет вам узнать,
-            где вы можете смотреть фильмы легально. Что нового в кинематографе? Где можно посмотреть
-            фильм, о котором вы говорили? Как не упустить премьеры и составить собственные списки? В
-            нашем приложении вы найдете все это. Чтобы сделать это взаимодействие более удобным, вы
-            можете настроить свои параметры и использовать простые фильтры для разных поставщиков,
-            таких как Кинопоиск, и различных жанров или годов выпуска фильмов.
+            КиноТрекер помогает выбрать фильм и узнать, где его можно легально посмотреть в России.
+            Подборки, трейлеры и поиск с фильтрами по жанру, стране и году выпуска покажут, что
+            нового в кино, а карточка фильма расскажет о нём подробнее: описание, актёры, похожие
+            фильмы и онлайн-кинотеатры, где он доступен по подписке, бесплатно, в аренду или для
+            покупки.
             <br />
             <br />
-            Наша цель - обеспечить любителям кино доступ к их любимым фильмам по всему миру.
+            Войдите через аккаунт TMDB, чтобы вести списки «К просмотру», «Избранное» и
+            «Просмотрено» и ставить фильмам оценки. Списки хранятся в вашем аккаунте TMDB.
             <br />
             <br />
-            КиноТрекер начинает свою работу как веб-приложение, оптимизированное для планшетов и
-            смартфонов. Однако оно также совместимо с ноутбуками и компьютерами. Использование
-            нашего сервиса для пользователей абсолютно бесплатно.
+            КиноТрекер — веб-приложение, рассчитанное в первую очередь на смартфоны и планшеты, но
+            работает и на компьютере. Его можно установить на главный экран телефона. Пользоваться
+            сервисом можно бесплатно.
           </Typography>
         </Box>
 
         <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
-
-        {/* ДОБАВИТЬ РЕАЛИЗАЦИЮ ФУНКЦИОНАЛА */}
-
-        {/* <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
-        <Typography variant="h5" gutterBottom>
-          Ваша благодарность
-        </Typography>
-        <List>
-          <ListItem>
-            <ListItemIcon sx={{ minWidth: { xs: '40px' } }}>
-              <Star />
-            </ListItemIcon>
-            <ListItemText primary="Поставить рейтинг" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon sx={{ minWidth: { xs: '40px' } }}>
-              <Share />
-            </ListItemIcon>
-            <ListItemText primary="Рекомендовать друзьям" />
-          </ListItem>
-        </List>
-      </Box>
-
-      <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} /> */}
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
           <Typography variant="h5" gutterBottom>
