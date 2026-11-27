@@ -9,6 +9,8 @@ interface IScrollRowProps {
   title: string
   /** Элементы списка — `<li>` (например, `<Box component="li">`). */
   children: ReactNode
+  /** Действие справа от заголовка, например ссылка «Смотреть все». */
+  action?: ReactNode
 }
 
 /** Клик не забирает фокус: на краю ряда кнопка отключается, и фокус бы потерялся. */
@@ -18,45 +20,59 @@ const keepFocus = (event: MouseEvent) => event.preventDefault()
  * Секция с горизонтальным рядом карточек: свайп на телефоне, стрелки на устройствах с мышью,
  * стрелки клавиатуры — когда ряд в фокусе.
  */
-export const ScrollRow: FC<IScrollRowProps> = ({ title, children }) => {
+export const ScrollRow: FC<IScrollRowProps> = ({ title, children, action }) => {
   const titleId = useId()
   const { ref, scroll, canScrollLeft, canScrollRight } = useScrollEdges()
   const isScrollable = canScrollLeft || canScrollRight
 
   return (
     <Box component="section" aria-labelledby={titleId}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-        <Typography id={titleId} variant="h4" component="h2">
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 1,
+          mb: 1
+        }}
+      >
+        <Typography
+          id={titleId}
+          variant="h4"
+          component="h2"
+          sx={{ minWidth: 0, textWrap: 'balance' }}
+        >
           {title}
         </Typography>
 
-        {isScrollable && (
-          // Только для мыши: с клавиатуры листается сам ряд, поэтому кнопок нет в обходе по Tab
-          <Box
-            sx={{ display: 'none', '@media (hover: hover)': { display: 'flex', flexShrink: 0 } }}
-          >
-            <IconButton
-              tabIndex={-1}
-              color="inherit"
-              aria-label={`${title}: назад`}
-              disabled={!canScrollLeft}
-              onMouseDown={keepFocus}
-              onClick={() => scroll(-1)}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
-            <IconButton
-              tabIndex={-1}
-              color="inherit"
-              aria-label={`${title}: вперёд`}
-              disabled={!canScrollRight}
-              onMouseDown={keepFocus}
-              onClick={() => scroll(1)}
-            >
-              <ChevronRightIcon />
-            </IconButton>
-          </Box>
-        )}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}>
+          {action}
+          {isScrollable && (
+            // Только для мыши: с клавиатуры листается сам ряд, поэтому кнопок нет в обходе по Tab
+            <Box sx={{ display: 'none', '@media (hover: hover)': { display: 'flex' } }}>
+              <IconButton
+                tabIndex={-1}
+                color="inherit"
+                aria-label={`${title}: назад`}
+                disabled={!canScrollLeft}
+                onMouseDown={keepFocus}
+                onClick={() => scroll(-1)}
+              >
+                <ChevronLeftIcon />
+              </IconButton>
+              <IconButton
+                tabIndex={-1}
+                color="inherit"
+                aria-label={`${title}: вперёд`}
+                disabled={!canScrollRight}
+                onMouseDown={keepFocus}
+                onClick={() => scroll(1)}
+              >
+                <ChevronRightIcon />
+              </IconButton>
+            </Box>
+          )}
+        </Box>
       </Box>
 
       <Box

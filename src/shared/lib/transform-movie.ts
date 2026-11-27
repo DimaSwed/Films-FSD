@@ -10,6 +10,7 @@ export const transformMovie = (raw: IMovieRaw): IMovie => ({
   rating: raw.vote_average,
   image: getTmdbImageUrl(raw.poster_path),
   backdrop: getTmdbImageUrl(raw.backdrop_path, 'w300'),
+  backdropPath: raw.backdrop_path ?? null,
   year: getReleaseYear(raw.release_date),
   // Жанров, которых нет в GENRES_LIST (например, «Документальный», id 99), не показываем: иначе
   // первым в списке стояло бы «Неизвестно». Если не нашлось ни одного, строка пустая.

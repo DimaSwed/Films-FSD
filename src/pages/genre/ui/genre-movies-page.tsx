@@ -1,10 +1,10 @@
-import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
 import {
   useInfiniteMoviesByFilters,
   getGenreMoviesParams,
-  MovieCategoryList
+  MovieCategoryList,
+  MovieCollectionPage
 } from '@/features/movies'
 import { GENRES_LIST } from '@/shared/config'
 import {
@@ -52,21 +52,11 @@ export const GenreMoviesPage = () => {
   const hasMovies = movies.length > 0
 
   return (
-    <Box
-      component="main"
-      sx={{
-        p: { xs: 2, sm: 4 },
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper'
-      }}
-    >
+    <MovieCollectionPage title={genre.name} back={{ to: '/movies', label: 'Все жанры' }}>
       <PageMeta
         title={`Фильмы жанра «${genre.name}»`}
         description={`Популярные фильмы жанра «${genre.name}»: рейтинг, год выхода, где посмотреть.`}
       />
-      <Typography variant="h4" mb={{ xs: 0, sm: 3 }} textAlign="center">
-        {genre.name}
-      </Typography>
       <MovieCategoryList movies={movies} isLoading={isLoading} />
       <LoadingErrorState isLoading={false} isError={isError && !hasMovies} retry={refetch} />
       {hasMovies && (
@@ -79,6 +69,6 @@ export const GenreMoviesPage = () => {
         />
       )}
       <ScrollButton />
-    </Box>
+    </MovieCollectionPage>
   )
 }

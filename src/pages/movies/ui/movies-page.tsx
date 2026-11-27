@@ -12,7 +12,6 @@ export const MoviesPage = () => {
         description="Подборки популярных фильмов по жанрам: боевики, комедии, драмы, ужасы, фантастика и другие."
       />
       <Box
-        component="main"
         minHeight={'100%'}
         sx={{
           padding: { xs: '10px', sm: '15px', md: '30px' },
@@ -22,7 +21,7 @@ export const MoviesPage = () => {
           overflow: 'hidden'
         }}
       >
-        <Typography variant="h3" gutterBottom textAlign={'center'} mb={5}>
+        <Typography variant="h3" component="h1" gutterBottom textAlign={'center'} mb={5}>
           Фильмы
         </Typography>
         {GENRES_LIST.map((genre) => (

@@ -11,10 +11,10 @@ interface IPageShellProps {
 /**
  * Общая оболочка страницы. Держит фон и высоту одинаковыми во всех состояниях
  * (загрузка / ошибка / данные), чтобы фон не схлопывался и не прыгал после загрузки.
+ * Не `<main>`: страница уже внутри `<main>` из `App`.
  */
 export const PageShell: FC<IPageShellProps> = ({ children, centered = false, sx = [] }) => (
   <Box
-    component="main"
     sx={[
       {
         color: 'secondary.contrastText',

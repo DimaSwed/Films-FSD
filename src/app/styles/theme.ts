@@ -166,7 +166,6 @@ const lightTheme = createTheme({
     navigation: { main: CHARCOAL, hover: NAVIGATION_HOVER, contrastText: WHITE },
     outline: { strong: ROSE_BROWN, soft: '#e3d5cd' },
     accent: { main: CHESTNUT },
-    rating: { good: RATING_GREEN, average: RATING_BROWN },
     overlay: POSTER_OVERLAY
   },
   components: {
@@ -214,7 +213,6 @@ const darkTheme = createTheme({
     navigation: { main: '#1c1c1c', hover: NAVIGATION_HOVER, contrastText: '#ffffff' },
     outline: { strong: '#444', soft: '#444' },
     accent: { main: '#1976d2' },
-    rating: { good: 'green', average: 'orange' },
     overlay: POSTER_OVERLAY
   }
 })

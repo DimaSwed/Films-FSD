@@ -1,60 +1,20 @@
-import { Box } from '@mui/material'
-import Grid from '@mui/material/Grid'
 import { FC } from 'react'
 
-import { MovieCard } from '@/entities/movie'
+import { MovieGrid, SmallMovieCard, SmallMovieCardSkeleton } from '@/entities/movie'
 import { IMovie } from '@/shared/lib'
-import { SkeletonMovieCard } from '@/shared/ui'
 
 interface IMovieCategoryListProps {
   movies: IMovie[]
   isLoading: boolean
 }
 
-export const MovieCategoryList: FC<IMovieCategoryListProps> = ({ movies, isLoading }) => {
-  return (
-    <Box
-      sx={{
-        width: '100%',
-        padding: { xs: 1, sm: 2 },
-        boxSizing: 'border-box'
-      }}
-    >
-      <Grid
-        container
-        spacing={{ xs: 0, sm: 2, md: 3 }}
-        sx={{
-          margin: 0,
-          width: '100%'
-        }}
-      >
-        {isLoading
-          ? Array.from({ length: 12 }).map((_, i) => (
-              <Grid
-                key={`skeleton-${i}`}
-                size={{ xs: 6, sm: 4, md: 3, lg: 2.4, xl: 2 }}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}
-              >
-                <SkeletonMovieCard />
-              </Grid>
-            ))
-          : movies.map((movie) => (
-              <Grid
-                key={movie.id}
-                size={{ xs: 6, sm: 4, md: 3, lg: 2.4, xl: 2 }}
-                sx={{
-                  width: 'fit-content',
-                  m: '0 auto',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                <MovieCard movie={movie} />
-              </Grid>
-            ))}
-      </Grid>
-    </Box>
-  )
-}
+const SKELETON_COUNT = 12
+
+/** Сетка подборки или жанра: те же карточки, что в рядах главной и в личных списках. */
+export const MovieCategoryList: FC<IMovieCategoryListProps> = ({ movies, isLoading }) => (
+  <MovieGrid>
+    {isLoading
+      ? Array.from({ length: SKELETON_COUNT }, (_, index) => <SmallMovieCardSkeleton key={index} />)
+      : movies.map((movie) => <SmallMovieCard key={movie.id} movie={movie} />)}
+  </MovieGrid>
+)

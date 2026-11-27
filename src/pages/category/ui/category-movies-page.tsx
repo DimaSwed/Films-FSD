@@ -1,9 +1,9 @@
-import { Box, Typography } from '@mui/material'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 
 import {
   useCategoryMovies,
   MovieCategoryList,
+  MovieCollectionPage,
   MOVIE_CATEGORIES,
   findMovieCategory,
   getMovieCategoryPath,
@@ -61,21 +61,11 @@ export const CategoryMoviesPage = () => {
   const hasMovies = movies.length > 0
 
   return (
-    <Box
-      component="main"
-      sx={{
-        p: { xs: 2, sm: 4 },
-        color: 'secondary.contrastText',
-        bgcolor: 'background.paper'
-      }}
-    >
+    <MovieCollectionPage title={title} back={{ to: '/', label: 'Главная' }}>
       <PageMeta
         title={title}
         description={`${title} — подборка фильмов на КиноТрекере: рейтинг, год выхода, жанры.`}
       />
-      <Typography variant="h4" mb={{ xs: 0, sm: 3 }} textAlign="center">
-        {title}
-      </Typography>
       <MovieCategoryList movies={movies} isLoading={isLoading} />
       <LoadingErrorState isLoading={false} isError={isError && !hasMovies} retry={refetch} />
       {hasMovies && (
@@ -88,6 +78,6 @@ export const CategoryMoviesPage = () => {
         />
       )}
       <ScrollButton />
-    </Box>
+    </MovieCollectionPage>
   )
 }

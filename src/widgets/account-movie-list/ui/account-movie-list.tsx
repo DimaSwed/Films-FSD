@@ -61,7 +61,6 @@ export const AccountMovieList: FC<IAccountMovieListProps> = ({
 
   return (
     <Box
-      component="main"
       minHeight="100%"
       sx={{
         padding: { xs: '10px', sm: '15px', md: '30px' },
@@ -70,7 +69,7 @@ export const AccountMovieList: FC<IAccountMovieListProps> = ({
         width: '100%'
       }}
     >
-      <Typography variant="h3" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
+      <Typography variant="h3" component="h1" gutterBottom textAlign="center" mb={{ xs: 1, md: 4 }}>
         {title}
       </Typography>
 

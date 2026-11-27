@@ -32,7 +32,7 @@ export const SettingsPage: FC = () => {
           width: '100%'
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ textAlign: 'center' }}>
           Дополнительно
         </Typography>
 
@@ -41,7 +41,7 @@ export const SettingsPage: FC = () => {
         <Divider sx={{ backgroundColor: 'outline.soft' }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             О нас
           </Typography>
           <Typography variant="body2">
@@ -65,7 +65,7 @@ export const SettingsPage: FC = () => {
         <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Обратная связь
           </Typography>
           <List sx={{ width: 'fit-content' }}>
@@ -109,7 +109,7 @@ export const SettingsPage: FC = () => {
         <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Важное
           </Typography>
           <List sx={{ width: 'fit-content' }}>
@@ -130,7 +130,7 @@ export const SettingsPage: FC = () => {
         <Divider sx={{ backgroundColor: 'outline.soft', my: 4 }} />
 
         <Box sx={{ mt: 4, padding: { xs: '0px 10px' } }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Источники информации
           </Typography>
           <Stack gap={1}>

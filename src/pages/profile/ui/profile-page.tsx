@@ -38,7 +38,7 @@ export const ProfilePage = () => {
             p: 2
           }}
         >
-          <Typography variant="h5" color="text.primary" textAlign={'center'}>
+          <Typography variant="h5" component="h1" color="text.primary" textAlign={'center'}>
             Для просмотра профиля необходимо авторизоваться
           </Typography>
           <Typography
@@ -93,7 +93,7 @@ export const ProfilePage = () => {
     return (
       <PageShell centered>
         <PageMeta title="Профиль" noIndex />
-        <Typography variant="h6" color="text.primary" textAlign={'center'}>
+        <Typography variant="h6" component="h1" color="text.primary" textAlign={'center'}>
           Пользователь не найден
         </Typography>
       </PageShell>
@@ -121,7 +121,9 @@ export const ProfilePage = () => {
             sx={{ width: 100, height: 100, mx: 'auto', mb: '5px' }}
           />
         )}
-        <Typography variant="h4">{user.name || 'Неизвестно'}</Typography>
+        <Typography variant="h4" component="h1">
+          {user.name || 'Неизвестно'}
+        </Typography>
         <Typography variant="body1" color="secondary.contrastText">
           ID пользователя: {user.id}
         </Typography>

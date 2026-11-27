@@ -19,6 +19,11 @@ export interface IMovie {
   image: string
   /** Небольшой горизонтальный кадр (16:9, 300 px); пустая строка, если у фильма его нет. */
   backdrop: string
+  /**
+   * Путь кадра в TMDB (`/abc.jpg`) или `null`: крупный кадр (баннер главной) строится через
+   * `getTmdbImageUrl` нужного размера, а не растягиванием 300-пиксельного `backdrop`.
+   */
+  backdropPath: string | null
   year: number
   genre: string
   duration: number

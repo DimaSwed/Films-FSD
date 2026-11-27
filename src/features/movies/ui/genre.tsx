@@ -6,11 +6,22 @@ import { useMoviesByFilters, getGenreMoviesParams, IGenreProps } from '../model'
 import { MovieCategory } from './movie-category'
 
 export const Genre: React.FC<IGenreProps> = ({ id, title }) => {
-  const { data, isLoading } = useMoviesByFilters(getGenreMoviesParams(id))
+  const { data, isPending, isPaused, isError, isFetching, refetch } = useMoviesByFilters(
+    getGenreMoviesParams(id)
+  )
 
   return (
-    <Box key={title} sx={{ mb: 4 }}>
-      <MovieCategory title={title} movies={data || []} isLoading={isLoading} to={`/genre/${id}`} />
+    <Box sx={{ mb: { xs: 3.5, md: 5 } }}>
+      <MovieCategory
+        title={title}
+        movies={data ?? []}
+        isPending={isPending}
+        isPaused={isPaused}
+        isError={isError}
+        isFetching={isFetching}
+        onRetry={() => void refetch()}
+        to={`/genre/${id}`}
+      />
     </Box>
   )
 }

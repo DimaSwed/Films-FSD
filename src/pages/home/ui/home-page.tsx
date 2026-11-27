@@ -11,7 +11,10 @@ import {
   useTrendingMovies,
   type TMovieCategory
 } from '@/features/movies'
+import { visuallyHidden } from '@/shared/lib'
 import { PageMeta } from '@/shared/ui'
+
+import { HomeHero } from './home-hero'
 
 export const HomePage = () => {
   // Хуки вызываются по одному: порядок вызова хуков не должен зависеть от списка подборок.
@@ -26,30 +29,51 @@ export const HomePage = () => {
   return (
     <>
       <PageMeta />
+      {/* Не `<main>`: страница уже внутри `<main>` из `App` */}
       <Box
-        component="main"
-        minHeight={'100%'}
         sx={{
-          padding: { xs: '10px', sm: '15px', md: '30px' },
-          color: 'secondary.contrastText',
+          minHeight: '100%',
+          px: { xs: 1.5, sm: 2, md: 3.5 },
+          pt: { xs: 1.5, sm: 2, md: 3 },
+          pb: { xs: 4, md: 6 },
+          color: 'text.primary',
           bgcolor: 'background.paper',
-          width: '100%',
           overflow: 'hidden'
         }}
       >
-        <Typography variant="h3" gutterBottom textAlign={'center'} mb={5}>
-          Фильмы
-        </Typography>
+        <Box
+          sx={{
+            maxWidth: 1680,
+            mx: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: { xs: 3.5, md: 5 }
+          }}
+        >
+          <Typography variant="h1" sx={visuallyHidden}>
+            КиноТрекер: подборки фильмов
+          </Typography>
 
-        {MOVIE_CATEGORIES.map(({ slug, title, category }) => (
-          <MovieCategory
-            key={slug}
-            title={title}
-            to={getMovieCategoryPath(slug)}
-            movies={queries[category].data ?? []}
-            isLoading={queries[category].isLoading}
+          {/* Без сети баннер не рисуется (запрос на паузе), «Нет соединения» покажет ряд трендов */}
+          <HomeHero
+            movies={queries.trending.data ?? []}
+            isLoading={queries.trending.isPending && !queries.trending.isPaused}
           />
-        ))}
+
+          {MOVIE_CATEGORIES.map(({ slug, title, category }) => (
+            <MovieCategory
+              key={slug}
+              title={title}
+              to={getMovieCategoryPath(slug)}
+              movies={queries[category].data ?? []}
+              isPending={queries[category].isPending}
+              isPaused={queries[category].isPaused}
+              isError={queries[category].isError}
+              isFetching={queries[category].isFetching}
+              onRetry={() => void queries[category].refetch()}
+            />
+          ))}
+        </Box>
       </Box>
     </>
   )

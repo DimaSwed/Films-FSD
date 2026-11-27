@@ -13,7 +13,6 @@ export const SearchPage = () => {
         description="Поиск фильмов по названию, жанру, году и стране, сортировка по рейтингу и дате выхода."
       />
       <Box
-        component="main"
         minHeight={'100%'}
         sx={{
           padding: { xs: '10px', sm: '15px', md: '30px' },
@@ -23,7 +22,7 @@ export const SearchPage = () => {
           overflow: 'hidden'
         }}
       >
-        <Typography variant="h3" gutterBottom textAlign={'center'} mb={2}>
+        <Typography variant="h3" component="h1" gutterBottom textAlign={'center'} mb={2}>
           Поиск фильма
         </Typography>
         <SearchFilters renderMovieActions={(movie) => <MovieCardActions movie={movie} />} />

@@ -8,8 +8,6 @@ interface IAppPalette {
   outline: { strong: string; soft: string }
   /** Ссылки в тексте и подсветка активного пункта. */
   accent: { main: string }
-  /** Бейдж рейтинга на карточках каруселей. */
-  rating: { good: string; average: string }
   /** Подложка под значками и кнопками поверх постера. */
   overlay: { main: string; hover: string }
 }
@@ -19,14 +17,12 @@ declare module '@mui/material/styles' {
     navigation: IAppPalette['navigation']
     outline: IAppPalette['outline']
     accent: IAppPalette['accent']
-    rating: IAppPalette['rating']
     overlay: IAppPalette['overlay']
   }
   interface PaletteOptions {
     navigation: IAppPalette['navigation']
     outline: IAppPalette['outline']
     accent: IAppPalette['accent']
-    rating: IAppPalette['rating']
     overlay: IAppPalette['overlay']
   }
   interface TypeBackground {
