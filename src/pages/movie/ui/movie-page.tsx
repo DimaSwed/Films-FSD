@@ -9,16 +9,15 @@ import {
   useMovie,
   useWatchProviders
 } from '@/entities/movie'
+import { parseTmdbId } from '@/shared/api'
 import { LoadingErrorState, PageMeta, PageShell } from '@/shared/ui'
-
-import { parseMovieId } from '../lib'
 
 import { MovieHero } from './movie-hero'
 import { MovieNotFound } from './movie-not-found'
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
-  const movieId = parseMovieId(id)
+  const movieId = parseTmdbId(id)
   const { data: movie, isError, isPaused, refetch } = useMovie(movieId)
   const {
     data: providers,

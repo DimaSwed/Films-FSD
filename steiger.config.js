@@ -22,6 +22,12 @@ export default defineConfig([
     rules: { 'fsd/segments-by-purpose': 'off' }
   },
   {
+    // entities/person пока нужен только pages/person, но это данные предметной области (запрос,
+    // типы, преобразование TMDB), а страницы по правилам проекта — только сборка (решение 2026-11-27)
+    files: ['./src/entities/person/**'],
+    rules: { 'fsd/insignificant-slice': 'off' }
+  },
+  {
     // shared/assets — статические файлы (картинки); это и есть назначение, переименовывать нечего
     files: ['./src/shared/assets/**'],
     rules: { 'fsd/segments-by-purpose': 'off' }

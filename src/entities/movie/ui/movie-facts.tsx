@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material'
-import { FC } from 'react'
+import { Box, Link, Typography } from '@mui/material'
+import { FC, Fragment, ReactNode } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { formatDate, formatDuration, formatMoney, formatVotes } from '../lib'
-import type { IMovieDetails } from '../model'
+import type { IMovieDetails, IPersonLink } from '../model'
 
 interface IMovieFactsProps {
   movie: IMovieDetails
@@ -10,8 +11,33 @@ interface IMovieFactsProps {
 
 const UNKNOWN = 'Неизвестно'
 
+/** Факты стоят на тёмном кадре в обеих темах: ссылка белая, с подчёркиванием. */
+interface IPeopleLinksProps {
+  people: IPersonLink[]
+}
+
+const PeopleLinks: FC<IPeopleLinksProps> = ({ people }) =>
+  people.map(({ id, name }, index) => (
+    <Fragment key={id}>
+      {index > 0 && ', '}
+      <Link
+        component={RouterLink}
+        to={`/person/${id}`}
+        color="inherit"
+        underline="always"
+        sx={{
+          textUnderlineOffset: '3px',
+          textDecorationColor: 'rgba(255, 255, 255, 0.5)',
+          '&:hover': { textDecorationColor: 'currentColor' }
+        }}
+      >
+        {name}
+      </Link>
+    </Fragment>
+  ))
+
 /** Основные факты показываем всегда, остальные — только если TMDB их знает. */
-const getFacts = (movie: IMovieDetails): { label: string; value: string | null }[] => {
+const getFacts = (movie: IMovieDetails): { label: string; value: ReactNode }[] => {
   const releaseDateRu = formatDate(movie.releaseDateRu)
 
   return [
@@ -35,7 +61,7 @@ const getFacts = (movie: IMovieDetails): { label: string; value: string | null }
     },
     {
       label: movie.directors.length > 1 ? 'Режиссёры' : 'Режиссёр',
-      value: movie.directors.join(', ') || null
+      value: movie.directors.length > 0 && <PeopleLinks people={movie.directors} />
     },
     { label: 'Бюджет', value: movie.budget > 0 ? formatMoney(movie.budget) : null },
     { label: 'Возраст', value: movie.ageRating }

@@ -18,6 +18,7 @@ const SettingsPage = lazyPage(() => import('@/pages/settings'), 'SettingsPage')
 const LegalInfoPage = lazyPage(() => import('@/pages/legal-info'), 'LegalInfoPage')
 const TrailersPage = lazyPage(() => import('@/pages/trailers'), 'TrailersPage')
 const MoviePage = lazyPage(() => import('@/pages/movie'), 'MoviePage')
+const PersonPage = lazyPage(() => import('@/pages/person'), 'PersonPage')
 const MoviesPage = lazyPage(() => import('@/pages/movies'), 'MoviesPage')
 const SearchPage = lazyPage(() => import('@/pages/search'), 'SearchPage')
 const WatchListPage = lazyPage(() => import('@/pages/watch-list'), 'WatchListPage')
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: 'movie/:id',
         element: <MoviePage />
+      },
+      {
+        path: 'person/:id',
+        element: <PersonPage />
       },
       {
         path: '*',

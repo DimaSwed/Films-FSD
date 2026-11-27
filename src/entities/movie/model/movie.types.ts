@@ -2,8 +2,16 @@ import type { IGenre, IMovie, IMovieRaw } from '@/shared/lib'
 
 import type { IMovieTrailer, IMovieVideoRaw } from './movie-trailer.types'
 
+/** Человек со ссылкой на его страницу. */
+export interface IPersonLink {
+  id: number
+  name: string
+}
+
 /** Актёр и его роль в фильме. */
 export interface ICastMember {
+  /** Человек в TMDB — для ссылки на `/person/:id`. */
+  id: number
   /** Участие в фильме: один актёр может играть несколько ролей, поэтому ключ — не `id` человека. */
   creditId: string
   name: string
@@ -32,7 +40,7 @@ export interface IMovieDetails {
   countries: string[]
   /** Бюджет в долларах США; 0 — неизвестен. */
   budget: number
-  directors: string[]
+  directors: IPersonLink[]
   cast: ICastMember[]
   trailer: IMovieTrailer | null
   recommendations: IMovie[]
@@ -55,12 +63,13 @@ export interface ICountryRaw {
 
 export interface ICreditsRaw {
   cast: {
+    id: number
     credit_id: string
     name: string
     character?: string
     profile_path: string | null
   }[]
-  crew: { name: string; job: string }[]
+  crew: { id: number; name: string; job: string }[]
 }
 
 export interface IReleaseDateRaw {
